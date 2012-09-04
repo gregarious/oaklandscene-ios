@@ -1,0 +1,4 @@
+# Note that XCode set up other exclusions in the local repo itself (.git/info/exclude)
+*~
+OaklandScene.xcodeproj/project.xcworkspace/
+OaklandScene.xcodeproj/xcuserdata/
