@@ -1,0 +1,321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		37642D7D15F6A0670024B6A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7C15F6A0670024B6A2 /* UIKit.framework */; };
+		37642D7F15F6A0670024B6A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7E15F6A0670024B6A2 /* Foundation.framework */; };
+		37642D8115F6A0670024B6A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D8015F6A0670024B6A2 /* CoreGraphics.framework */; };
+		37642D8715F6A0670024B6A2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37642D8515F6A0670024B6A2 /* InfoPlist.strings */; };
+		37642D8915F6A0670024B6A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D8815F6A0670024B6A2 /* main.m */; };
+		37642D8D15F6A0670024B6A2 /* SCEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */; };
+		37642D9015F6A0670024B6A2 /* SCEFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D8F15F6A0670024B6A2 /* SCEFirstViewController.m */; };
+		37642D9215F6A0670024B6A2 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9115F6A0670024B6A2 /* first.png */; };
+		37642D9415F6A0670024B6A2 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9315F6A0670024B6A2 /* first@2x.png */; };
+		37642D9715F6A0670024B6A2 /* SCESecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D9615F6A0670024B6A2 /* SCESecondViewController.m */; };
+		37642D9915F6A0670024B6A2 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9815F6A0670024B6A2 /* second.png */; };
+		37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9A15F6A0670024B6A2 /* second@2x.png */; };
+		37642D9E15F6A0670024B6A2 /* SCEFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9C15F6A0670024B6A2 /* SCEFirstViewController.xib */; };
+		37642DA115F6A0670024B6A2 /* SCESecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9F15F6A0670024B6A2 /* SCESecondViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		37642D7815F6A0670024B6A2 /* OaklandScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OaklandScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		37642D7C15F6A0670024B6A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		37642D7E15F6A0670024B6A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		37642D8015F6A0670024B6A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		37642D8415F6A0670024B6A2 /* OaklandScene-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OaklandScene-Info.plist"; sourceTree = "<group>"; };
+		37642D8615F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		37642D8815F6A0670024B6A2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		37642D8A15F6A0670024B6A2 /* OaklandScene-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OaklandScene-Prefix.pch"; sourceTree = "<group>"; };
+		37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEAppDelegate.h; sourceTree = "<group>"; };
+		37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCEAppDelegate.m; sourceTree = "<group>"; };
+		37642D8E15F6A0670024B6A2 /* SCEFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFirstViewController.h; sourceTree = "<group>"; };
+		37642D8F15F6A0670024B6A2 /* SCEFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCEFirstViewController.m; sourceTree = "<group>"; };
+		37642D9115F6A0670024B6A2 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		37642D9315F6A0670024B6A2 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		37642D9515F6A0670024B6A2 /* SCESecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCESecondViewController.h; sourceTree = "<group>"; };
+		37642D9615F6A0670024B6A2 /* SCESecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCESecondViewController.m; sourceTree = "<group>"; };
+		37642D9815F6A0670024B6A2 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		37642D9A15F6A0670024B6A2 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		37642D9D15F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCEFirstViewController.xib; sourceTree = "<group>"; };
+		37642DA015F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCESecondViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		37642D7515F6A0670024B6A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37642D7D15F6A0670024B6A2 /* UIKit.framework in Frameworks */,
+				37642D7F15F6A0670024B6A2 /* Foundation.framework in Frameworks */,
+				37642D8115F6A0670024B6A2 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		37642D6D15F6A0670024B6A2 = {
+			isa = PBXGroup;
+			children = (
+				37642D8215F6A0670024B6A2 /* OaklandScene */,
+				37642D7B15F6A0670024B6A2 /* Frameworks */,
+				37642D7915F6A0670024B6A2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		37642D7915F6A0670024B6A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				37642D7815F6A0670024B6A2 /* OaklandScene.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		37642D7B15F6A0670024B6A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37642D7C15F6A0670024B6A2 /* UIKit.framework */,
+				37642D7E15F6A0670024B6A2 /* Foundation.framework */,
+				37642D8015F6A0670024B6A2 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		37642D8215F6A0670024B6A2 /* OaklandScene */ = {
+			isa = PBXGroup;
+			children = (
+				37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */,
+				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
+				37642D8E15F6A0670024B6A2 /* SCEFirstViewController.h */,
+				37642D8F15F6A0670024B6A2 /* SCEFirstViewController.m */,
+				37642D9115F6A0670024B6A2 /* first.png */,
+				37642D9315F6A0670024B6A2 /* first@2x.png */,
+				37642D9515F6A0670024B6A2 /* SCESecondViewController.h */,
+				37642D9615F6A0670024B6A2 /* SCESecondViewController.m */,
+				37642D9815F6A0670024B6A2 /* second.png */,
+				37642D9A15F6A0670024B6A2 /* second@2x.png */,
+				37642D9C15F6A0670024B6A2 /* SCEFirstViewController.xib */,
+				37642D9F15F6A0670024B6A2 /* SCESecondViewController.xib */,
+				37642D8315F6A0670024B6A2 /* Supporting Files */,
+			);
+			path = OaklandScene;
+			sourceTree = "<group>";
+		};
+		37642D8315F6A0670024B6A2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				37642D8415F6A0670024B6A2 /* OaklandScene-Info.plist */,
+				37642D8515F6A0670024B6A2 /* InfoPlist.strings */,
+				37642D8815F6A0670024B6A2 /* main.m */,
+				37642D8A15F6A0670024B6A2 /* OaklandScene-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		37642D7715F6A0670024B6A2 /* OaklandScene */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37642DA415F6A0670024B6A2 /* Build configuration list for PBXNativeTarget "OaklandScene" */;
+			buildPhases = (
+				37642D7415F6A0670024B6A2 /* Sources */,
+				37642D7515F6A0670024B6A2 /* Frameworks */,
+				37642D7615F6A0670024B6A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OaklandScene;
+			productName = OaklandScene;
+			productReference = 37642D7815F6A0670024B6A2 /* OaklandScene.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		37642D6F15F6A0670024B6A2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SCE;
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = Scenable;
+			};
+			buildConfigurationList = 37642D7215F6A0670024B6A2 /* Build configuration list for PBXProject "OaklandScene" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 37642D6D15F6A0670024B6A2;
+			productRefGroup = 37642D7915F6A0670024B6A2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				37642D7715F6A0670024B6A2 /* OaklandScene */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		37642D7615F6A0670024B6A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37642D8715F6A0670024B6A2 /* InfoPlist.strings in Resources */,
+				37642D9215F6A0670024B6A2 /* first.png in Resources */,
+				37642D9415F6A0670024B6A2 /* first@2x.png in Resources */,
+				37642D9915F6A0670024B6A2 /* second.png in Resources */,
+				37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */,
+				37642D9E15F6A0670024B6A2 /* SCEFirstViewController.xib in Resources */,
+				37642DA115F6A0670024B6A2 /* SCESecondViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		37642D7415F6A0670024B6A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37642D8915F6A0670024B6A2 /* main.m in Sources */,
+				37642D8D15F6A0670024B6A2 /* SCEAppDelegate.m in Sources */,
+				37642D9015F6A0670024B6A2 /* SCEFirstViewController.m in Sources */,
+				37642D9715F6A0670024B6A2 /* SCESecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		37642D8515F6A0670024B6A2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37642D8615F6A0670024B6A2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		37642D9C15F6A0670024B6A2 /* SCEFirstViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37642D9D15F6A0670024B6A2 /* en */,
+			);
+			name = SCEFirstViewController.xib;
+			sourceTree = "<group>";
+		};
+		37642D9F15F6A0670024B6A2 /* SCESecondViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37642DA015F6A0670024B6A2 /* en */,
+			);
+			name = SCESecondViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		37642DA215F6A0670024B6A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		37642DA315F6A0670024B6A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		37642DA515F6A0670024B6A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OaklandScene/OaklandScene-Prefix.pch";
+				INFOPLIST_FILE = "OaklandScene/OaklandScene-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		37642DA615F6A0670024B6A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OaklandScene/OaklandScene-Prefix.pch";
+				INFOPLIST_FILE = "OaklandScene/OaklandScene-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		37642D7215F6A0670024B6A2 /* Build configuration list for PBXProject "OaklandScene" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37642DA215F6A0670024B6A2 /* Debug */,
+				37642DA315F6A0670024B6A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		37642DA415F6A0670024B6A2 /* Build configuration list for PBXNativeTarget "OaklandScene" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37642DA515F6A0670024B6A2 /* Debug */,
+				37642DA615F6A0670024B6A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 37642D6F15F6A0670024B6A2 /* Project object */;
+}
