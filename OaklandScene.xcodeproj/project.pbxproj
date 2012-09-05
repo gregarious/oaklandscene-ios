@@ -29,6 +29,10 @@
 		37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */; };
 		37642DFB15F7B9DA0024B6A2 /* SCEPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */; };
 		37642DFD15F7B9EE0024B6A2 /* SCEPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */; };
+		37642E0815F7BBE20024B6A2 /* SCEPlacesFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0715F7BBE20024B6A2 /* SCEPlacesFeedViewController.m */; };
+		37642E0B15F7BCC00024B6A2 /* SCEEventsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0A15F7BCC00024B6A2 /* SCEEventsFeedViewController.m */; };
+		37642E0E15F7BCD70024B6A2 /* SCESpecialsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0D15F7BCD60024B6A2 /* SCESpecialsFeedViewController.m */; };
+		37642E1115F7BCEB0024B6A2 /* SCENewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +70,14 @@
 		37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceViewController.h; sourceTree = "<group>"; };
 		37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceViewController.m; sourceTree = "<group>"; };
 		37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceViewController.xib; sourceTree = "<group>"; };
+		37642E0615F7BBE10024B6A2 /* SCEPlacesFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlacesFeedViewController.h; sourceTree = "<group>"; };
+		37642E0715F7BBE20024B6A2 /* SCEPlacesFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlacesFeedViewController.m; sourceTree = "<group>"; };
+		37642E0915F7BCC00024B6A2 /* SCEEventsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEventsFeedViewController.h; sourceTree = "<group>"; };
+		37642E0A15F7BCC00024B6A2 /* SCEEventsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEEventsFeedViewController.m; sourceTree = "<group>"; };
+		37642E0C15F7BCD60024B6A2 /* SCESpecialsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecialsFeedViewController.h; sourceTree = "<group>"; };
+		37642E0D15F7BCD60024B6A2 /* SCESpecialsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecialsFeedViewController.m; sourceTree = "<group>"; };
+		37642E0F15F7BCEA0024B6A2 /* SCENewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsFeedViewController.h; sourceTree = "<group>"; };
+		37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENewsFeedViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +176,14 @@
 				37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */,
 				37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */,
 				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
+				37642E0615F7BBE10024B6A2 /* SCEPlacesFeedViewController.h */,
+				37642E0715F7BBE20024B6A2 /* SCEPlacesFeedViewController.m */,
+				37642E0915F7BCC00024B6A2 /* SCEEventsFeedViewController.h */,
+				37642E0A15F7BCC00024B6A2 /* SCEEventsFeedViewController.m */,
+				37642E0C15F7BCD60024B6A2 /* SCESpecialsFeedViewController.h */,
+				37642E0D15F7BCD60024B6A2 /* SCESpecialsFeedViewController.m */,
+				37642E0F15F7BCEA0024B6A2 /* SCENewsFeedViewController.h */,
+				37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */,
 			);
 			name = Feeds;
 			sourceTree = "<group>";
@@ -275,6 +295,10 @@
 				37642DEF15F7B8360024B6A2 /* SCEDetailViewController.m in Sources */,
 				37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */,
 				37642DFB15F7B9DA0024B6A2 /* SCEPlaceViewController.m in Sources */,
+				37642E0815F7BBE20024B6A2 /* SCEPlacesFeedViewController.m in Sources */,
+				37642E0B15F7BCC00024B6A2 /* SCEEventsFeedViewController.m in Sources */,
+				37642E0E15F7BCD70024B6A2 /* SCESpecialsFeedViewController.m in Sources */,
+				37642E1115F7BCEB0024B6A2 /* SCENewsFeedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

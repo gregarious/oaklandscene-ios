@@ -9,6 +9,10 @@
 #import "SCEAppDelegate.h"
 
 #import "SCEFeedViewController.h"
+#import "SCEPlacesFeedViewController.h"
+#import "SCEEventsFeedViewController.h"
+#import "SCESpecialsFeedViewController.h"
+#import "SCENewsFeedViewController.h"
 
 #import "SCETodayViewController.h"
 
@@ -21,10 +25,10 @@
     
     // Set up the 5 main tab controllers
     UIViewController *todayController = [[SCETodayViewController alloc] init];
-    UIViewController *placesController = [[SCEFeedViewController alloc] init];
-    UIViewController *eventsController = [[SCEFeedViewController alloc] init];
-    UIViewController *specialsController = [[SCEFeedViewController alloc] init];
-    UIViewController *newsController = [[SCEFeedViewController alloc] init];
+    UIViewController *placesController = [[SCEPlacesFeedViewController alloc] init];
+    UIViewController *eventsController = [[SCEEventsFeedViewController alloc] init];
+    UIViewController *specialsController = [[SCESpecialsFeedViewController alloc] init];
+    UIViewController *newsController = [[SCENewsFeedViewController alloc] init];
     
     // Configure the tab bar controller
     self.tabBarController = [[UITabBarController alloc] init];
