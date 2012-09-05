@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCESecondViewController : UIViewController
+@interface SCETodayViewController : UIViewController
 
 @end

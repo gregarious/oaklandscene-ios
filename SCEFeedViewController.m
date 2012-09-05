@@ -1,33 +1,32 @@
 //
-//  SCESecondViewController.m
+//  SCEFeedViewController.m
 //  OaklandScene
 //
-//  Created by Greg Nicholas on 9/4/12.
+//  Created by Greg Nicholas on 9/5/12.
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCESecondViewController.h"
+#import "SCEFeedViewController.h"
 
-@interface SCESecondViewController ()
+@interface SCEFeedViewController ()
 
 @end
 
-@implementation SCESecondViewController
+@implementation SCEFeedViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Second", @"Second");
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
+        // Custom initialization
     }
     return self;
 }
-							
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	// Do any additional setup after loading the view.
 }
 
 - (void)viewDidUnload
@@ -38,7 +37,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

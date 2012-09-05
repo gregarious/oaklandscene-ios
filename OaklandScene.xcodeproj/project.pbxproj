@@ -13,14 +13,22 @@
 		37642D8715F6A0670024B6A2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 37642D8515F6A0670024B6A2 /* InfoPlist.strings */; };
 		37642D8915F6A0670024B6A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D8815F6A0670024B6A2 /* main.m */; };
 		37642D8D15F6A0670024B6A2 /* SCEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */; };
-		37642D9015F6A0670024B6A2 /* SCEFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D8F15F6A0670024B6A2 /* SCEFirstViewController.m */; };
 		37642D9215F6A0670024B6A2 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9115F6A0670024B6A2 /* first.png */; };
 		37642D9415F6A0670024B6A2 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9315F6A0670024B6A2 /* first@2x.png */; };
-		37642D9715F6A0670024B6A2 /* SCESecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D9615F6A0670024B6A2 /* SCESecondViewController.m */; };
+		37642D9715F6A0670024B6A2 /* SCETodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D9615F6A0670024B6A2 /* SCETodayViewController.m */; };
 		37642D9915F6A0670024B6A2 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9815F6A0670024B6A2 /* second.png */; };
 		37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9A15F6A0670024B6A2 /* second@2x.png */; };
-		37642D9E15F6A0670024B6A2 /* SCEFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9C15F6A0670024B6A2 /* SCEFirstViewController.xib */; };
-		37642DA115F6A0670024B6A2 /* SCESecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9F15F6A0670024B6A2 /* SCESecondViewController.xib */; };
+		37642DA115F6A0670024B6A2 /* SCETodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */; };
+		37642DD715F7B5980024B6A2 /* SCEFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */; };
+		37642DDE15F7B6850024B6A2 /* SCEFeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DDD15F7B6850024B6A2 /* SCEFeedTableViewController.m */; };
+		37642DE215F7B69D0024B6A2 /* SCEFeedMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */; };
+		37642DE315F7B69D0024B6A2 /* SCEFeedMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */; };
+		37642DEB15F7B7DD0024B6A2 /* SCEFeedTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */; };
+		37642DEF15F7B8360024B6A2 /* SCEDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DED15F7B8360024B6A2 /* SCEDetailViewController.m */; };
+		37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */; };
+		37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */; };
+		37642DFB15F7B9DA0024B6A2 /* SCEPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */; };
+		37642DFD15F7B9EE0024B6A2 /* SCEPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,16 +42,30 @@
 		37642D8A15F6A0670024B6A2 /* OaklandScene-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OaklandScene-Prefix.pch"; sourceTree = "<group>"; };
 		37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEAppDelegate.h; sourceTree = "<group>"; };
 		37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCEAppDelegate.m; sourceTree = "<group>"; };
-		37642D8E15F6A0670024B6A2 /* SCEFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFirstViewController.h; sourceTree = "<group>"; };
-		37642D8F15F6A0670024B6A2 /* SCEFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCEFirstViewController.m; sourceTree = "<group>"; };
 		37642D9115F6A0670024B6A2 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		37642D9315F6A0670024B6A2 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		37642D9515F6A0670024B6A2 /* SCESecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCESecondViewController.h; sourceTree = "<group>"; };
-		37642D9615F6A0670024B6A2 /* SCESecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCESecondViewController.m; sourceTree = "<group>"; };
+		37642D9515F6A0670024B6A2 /* SCETodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCETodayViewController.h; sourceTree = "<group>"; };
+		37642D9615F6A0670024B6A2 /* SCETodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCETodayViewController.m; sourceTree = "<group>"; };
 		37642D9815F6A0670024B6A2 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		37642D9A15F6A0670024B6A2 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		37642D9D15F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCEFirstViewController.xib; sourceTree = "<group>"; };
-		37642DA015F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCESecondViewController.xib; sourceTree = "<group>"; };
+		37642DA015F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCETodayViewController.xib; sourceTree = "<group>"; };
+		37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEFeedViewController.h; path = ../SCEFeedViewController.h; sourceTree = "<group>"; };
+		37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCEFeedViewController.m; path = ../SCEFeedViewController.m; sourceTree = "<group>"; };
+		37642DDC15F7B6850024B6A2 /* SCEFeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedTableViewController.h; sourceTree = "<group>"; };
+		37642DDD15F7B6850024B6A2 /* SCEFeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedTableViewController.m; sourceTree = "<group>"; };
+		37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedMapViewController.h; sourceTree = "<group>"; };
+		37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedMapViewController.m; sourceTree = "<group>"; };
+		37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedMapViewController.xib; sourceTree = "<group>"; };
+		37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEFeedTableCell.h; path = ../SCEFeedTableCell.h; sourceTree = "<group>"; };
+		37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCEFeedTableCell.m; path = ../SCEFeedTableCell.m; sourceTree = "<group>"; };
+		37642DEC15F7B8360024B6A2 /* SCEDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEDetailViewController.h; sourceTree = "<group>"; };
+		37642DED15F7B8360024B6A2 /* SCEDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEDetailViewController.m; sourceTree = "<group>"; };
+		37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceTableCell.xib; sourceTree = "<group>"; };
+		37642DF315F7B8DC0024B6A2 /* SCEPlaceTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceTableCell.h; sourceTree = "<group>"; };
+		37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceTableCell.m; sourceTree = "<group>"; };
+		37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceViewController.h; sourceTree = "<group>"; };
+		37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceViewController.m; sourceTree = "<group>"; };
+		37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,18 +112,11 @@
 		37642D8215F6A0670024B6A2 /* OaklandScene */ = {
 			isa = PBXGroup;
 			children = (
+				37642DD115F6BAD10024B6A2 /* Models */,
 				37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */,
 				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
-				37642D8E15F6A0670024B6A2 /* SCEFirstViewController.h */,
-				37642D8F15F6A0670024B6A2 /* SCEFirstViewController.m */,
-				37642D9115F6A0670024B6A2 /* first.png */,
-				37642D9315F6A0670024B6A2 /* first@2x.png */,
-				37642D9515F6A0670024B6A2 /* SCESecondViewController.h */,
-				37642D9615F6A0670024B6A2 /* SCESecondViewController.m */,
-				37642D9815F6A0670024B6A2 /* second.png */,
-				37642D9A15F6A0670024B6A2 /* second@2x.png */,
-				37642D9C15F6A0670024B6A2 /* SCEFirstViewController.xib */,
-				37642D9F15F6A0670024B6A2 /* SCESecondViewController.xib */,
+				37642DD015F6BAC80024B6A2 /* Controllers */,
+				37642DD415F6BBCD0024B6A2 /* Views */,
 				37642D8315F6A0670024B6A2 /* Supporting Files */,
 			);
 			path = OaklandScene;
@@ -110,12 +125,73 @@
 		37642D8315F6A0670024B6A2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				37642DD315F6BBAB0024B6A2 /* Images */,
 				37642D8415F6A0670024B6A2 /* OaklandScene-Info.plist */,
 				37642D8515F6A0670024B6A2 /* InfoPlist.strings */,
 				37642D8815F6A0670024B6A2 /* main.m */,
 				37642D8A15F6A0670024B6A2 /* OaklandScene-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		37642DD015F6BAC80024B6A2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37642D9515F6A0670024B6A2 /* SCETodayViewController.h */,
+				37642D9615F6A0670024B6A2 /* SCETodayViewController.m */,
+				37642DD215F6BAD90024B6A2 /* Feeds */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		37642DD115F6BAD10024B6A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		37642DD215F6BAD90024B6A2 /* Feeds */ = {
+			isa = PBXGroup;
+			children = (
+				37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */,
+				37642DEC15F7B8360024B6A2 /* SCEDetailViewController.h */,
+				37642DED15F7B8360024B6A2 /* SCEDetailViewController.m */,
+				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
+				37642DDC15F7B6850024B6A2 /* SCEFeedTableViewController.h */,
+				37642DDD15F7B6850024B6A2 /* SCEFeedTableViewController.m */,
+				37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */,
+				37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */,
+				37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */,
+				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
+			);
+			name = Feeds;
+			sourceTree = "<group>";
+		};
+		37642DD315F6BBAB0024B6A2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				37642D9115F6A0670024B6A2 /* first.png */,
+				37642D9315F6A0670024B6A2 /* first@2x.png */,
+				37642D9815F6A0670024B6A2 /* second.png */,
+				37642D9A15F6A0670024B6A2 /* second@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		37642DD415F6BBCD0024B6A2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37642DF315F7B8DC0024B6A2 /* SCEPlaceTableCell.h */,
+				37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */,
+				37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */,
+				37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */,
+				37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */,
+				37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */,
+				37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */,
+				37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,8 +251,10 @@
 				37642D9415F6A0670024B6A2 /* first@2x.png in Resources */,
 				37642D9915F6A0670024B6A2 /* second.png in Resources */,
 				37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */,
-				37642D9E15F6A0670024B6A2 /* SCEFirstViewController.xib in Resources */,
-				37642DA115F6A0670024B6A2 /* SCESecondViewController.xib in Resources */,
+				37642DA115F6A0670024B6A2 /* SCETodayViewController.xib in Resources */,
+				37642DE315F7B69D0024B6A2 /* SCEFeedMapViewController.xib in Resources */,
+				37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */,
+				37642DFD15F7B9EE0024B6A2 /* SCEPlaceViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,8 +267,14 @@
 			files = (
 				37642D8915F6A0670024B6A2 /* main.m in Sources */,
 				37642D8D15F6A0670024B6A2 /* SCEAppDelegate.m in Sources */,
-				37642D9015F6A0670024B6A2 /* SCEFirstViewController.m in Sources */,
-				37642D9715F6A0670024B6A2 /* SCESecondViewController.m in Sources */,
+				37642D9715F6A0670024B6A2 /* SCETodayViewController.m in Sources */,
+				37642DD715F7B5980024B6A2 /* SCEFeedViewController.m in Sources */,
+				37642DDE15F7B6850024B6A2 /* SCEFeedTableViewController.m in Sources */,
+				37642DE215F7B69D0024B6A2 /* SCEFeedMapViewController.m in Sources */,
+				37642DEB15F7B7DD0024B6A2 /* SCEFeedTableCell.m in Sources */,
+				37642DEF15F7B8360024B6A2 /* SCEDetailViewController.m in Sources */,
+				37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */,
+				37642DFB15F7B9DA0024B6A2 /* SCEPlaceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,20 +289,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		37642D9C15F6A0670024B6A2 /* SCEFirstViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				37642D9D15F6A0670024B6A2 /* en */,
-			);
-			name = SCEFirstViewController.xib;
-			sourceTree = "<group>";
-		};
-		37642D9F15F6A0670024B6A2 /* SCESecondViewController.xib */ = {
+		37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				37642DA015F6A0670024B6A2 /* en */,
 			);
-			name = SCESecondViewController.xib;
+			name = SCETodayViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -314,6 +390,7 @@
 				37642DA615F6A0670024B6A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

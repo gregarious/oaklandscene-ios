@@ -8,9 +8,9 @@
 
 #import "SCEAppDelegate.h"
 
-#import "SCEFirstViewController.h"
+#import "SCEFeedViewController.h"
 
-#import "SCESecondViewController.h"
+#import "SCETodayViewController.h"
 
 @implementation SCEAppDelegate
 
@@ -18,10 +18,23 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    UIViewController *viewController1 = [[SCEFirstViewController alloc] initWithNibName:@"SCEFirstViewController" bundle:nil];
-    UIViewController *viewController2 = [[SCESecondViewController alloc] initWithNibName:@"SCESecondViewController" bundle:nil];
+    
+    // Set up the 5 main tab controllers
+    UIViewController *todayController = [[SCETodayViewController alloc] init];
+    UIViewController *placesController = [[SCEFeedViewController alloc] init];
+    UIViewController *eventsController = [[SCEFeedViewController alloc] init];
+    UIViewController *specialsController = [[SCEFeedViewController alloc] init];
+    UIViewController *newsController = [[SCEFeedViewController alloc] init];
+    
+    // Configure the tab bar controller
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1, viewController2];
+    self.tabBarController.viewControllers = @[todayController,
+                                                placesController,
+                                                eventsController,
+                                                specialsController,
+                                                newsController];
+    
+    // set the window root controller
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
