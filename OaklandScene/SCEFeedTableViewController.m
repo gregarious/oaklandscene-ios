@@ -7,31 +7,35 @@
 //
 
 #import "SCEFeedTableViewController.h"
-
-@interface SCEFeedTableViewController ()
-
-@end
+#import "SCEPlaceViewController.h"
 
 @implementation SCEFeedTableViewController
 
+#warning This isn't the designated initializer. Figure out better way to do this.
 - (id)initWithStyle:(UITableViewStyle)style
+      cellNibName:(NSString *)cellClass;
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        self.cellNibName = cellClass;
     }
     return self;
+}
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    @throw [NSException exceptionWithName:@"Unsupported initializer"
+                                   reason:@"please use cellNibName: instead"
+                                 userInfo:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UINib *nib = [UINib nibWithNibName:[self cellNibName] bundle:nil];
+    [[self tableView] registerNib:nib
+           forCellReuseIdentifier:[self cellNibName]];
 }
 
 - (void)viewDidUnload
@@ -48,27 +52,16 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
-    
+    NSString *cellId = [self cellNibName];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     return cell;
 }
 
@@ -115,13 +108,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+#warning Hard coded Detail VC needs to be pushed up to parent class
+    SCEPlaceViewController *detailController = [[SCEPlaceViewController alloc] init];
+    [[self navigationController] pushViewController:detailController animated:YES];
 }
 
 @end

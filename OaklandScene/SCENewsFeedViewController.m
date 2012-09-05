@@ -16,11 +16,22 @@
     if (self) {
         [self setTitle:@"News"];
         // TODO: other type-specific initialization
+        // TODO: release the map controller child: unnecessary for this vc
     }
     
     return self;
 }
 
+
+- (void) setViewMode:(NSUInteger)viewMode
+{
+    if (viewMode != SCEFeedViewModeTable) {
+        @throw [NSException exceptionWithName:@"Invalid view mode"
+                                       reason:@"only SCEFeedViewModelTable is supported for news feeds"
+                                    userInfo:nil];
+    }
+    [super setViewMode:viewMode];
+}
 // TODO: other type-specific configuration methods
 
 @end

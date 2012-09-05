@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         [self setTitle:@"Places"];
+        [[self tabBarItem] setImage:[UIImage imageNamed:@"second"]];
         // TODO: other type-specific initialization
     }
     

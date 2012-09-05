@@ -167,9 +167,9 @@
 			isa = PBXGroup;
 			children = (
 				37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */,
+				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
 				37642DEC15F7B8360024B6A2 /* SCEDetailViewController.h */,
 				37642DED15F7B8360024B6A2 /* SCEDetailViewController.m */,
-				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
 				37642DDC15F7B6850024B6A2 /* SCEFeedTableViewController.h */,
 				37642DDD15F7B6850024B6A2 /* SCEFeedTableViewController.m */,
 				37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */,

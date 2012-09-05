@@ -23,6 +23,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    
     // Set up the 5 main tab controllers
     UIViewController *todayController = [[SCETodayViewController alloc] init];
     UIViewController *placesController = [[SCEPlacesFeedViewController alloc] init];
@@ -31,15 +32,37 @@
     UIViewController *newsController = [[SCENewsFeedViewController alloc] init];
     
     // Configure the tab bar controller
-    self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[todayController,
-                                                placesController,
-                                                eventsController,
-                                                specialsController,
-                                                newsController];
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    [tabBarController setViewControllers:@[todayController,
+                                            placesController,
+                                            eventsController,
+                                            specialsController,
+                                            newsController]];
+
+    // TODO: move this somewhere more appropriate (probably a custom tab bar class)
+    [[tabBarController navigationItem] setTitle:@"Feeds"];
+    UIBarButtonItem *viewModeButton = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"Map"
+                                       style:UIBarButtonItemStylePlain
+                                       target:self
+                                       action:@selector(toggleViewMode:)];
+    [[tabBarController navigationItem] setLeftBarButtonItem:viewModeButton];
+    
+    
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
+                                     initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                     target:self
+                                     action:@selector(searchFeed:)];
+    [[tabBarController navigationItem] setRightBarButtonItem:searchButton];
+
+    
+    
+    // wrap the tab bar controller in the main nav controller
+    self.navController = [[UINavigationController alloc]
+                             initWithRootViewController:tabBarController];
     
     // set the window root controller
-    self.window.rootViewController = self.tabBarController;
+    self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -10,4 +10,10 @@
 
 @interface SCEFeedTableViewController : UITableViewController
 
+- (id) initWithStyle:(UITableViewStyle)style
+       cellNibName:(NSString *)cellClass;
+
+// this should be one of the UITableCell-derived classes (e.g. SCEPlaceTableCell)
+@property (nonatomic, copy) NSString *cellNibName;
+
 @end
