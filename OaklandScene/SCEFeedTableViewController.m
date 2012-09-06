@@ -17,8 +17,8 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.cellNibName = s;
-        self.feedViewController = controller;
+        [self setCellNibName:s];
+        [self setFeedViewController:controller];
     }
     return self;
 }
@@ -26,7 +26,7 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     @throw [NSException exceptionWithName:@"Unsupported initializer"
-                                   reason:@"please use initWithCellNibName: instead"
+                                   reason:@"please use initWithCellNibName:feedController: instead"
                                  userInfo:nil];
 }
 

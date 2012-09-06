@@ -6,26 +6,21 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-
 #import "SCESpecialFeedViewController.h"
 #import "SCESpecialViewController.h"
 
 @implementation SCESpecialFeedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithTableCellNibName:@"SCESpecialTableCell" mapAnnotationNibName:nil];
     if (self) {
-        // set the nib files for subviews
-        tableCellNibName = @"SCESpecialTableCell";
-        mapAnnotationNibName = @"";
-        
         // set up the tab bar entry
         [self setTitle:@"Specials"];
         // TODO: add tab bar image
         
         // configure nav bar
-        [[self navigationItem] setTitle:@"Available Specials"];
+//        [[self navigationItem] setTitle:@"Available Specials"];
         [self addViewToggleButton];
         [self addSearchButton];
     }

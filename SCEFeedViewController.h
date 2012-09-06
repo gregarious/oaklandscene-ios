@@ -12,14 +12,12 @@
 
 @interface SCEFeedViewController : UIViewController
 {
-    @protected
-    // declare these backing variables to allow subclass to set them (necessary since properties are readonly)
-    NSString *tableCellNibName;
-    NSString *mapAnnotationNibName;
-    
-    @public
     UIViewController *contentViewController;
 }
+
+// designated constructor for this class
+-(id)initWithTableCellNibName:(NSString *)cellNibNameOrNil
+         mapAnnotationNibName:(NSBundle *)nibBundleOrNil;
 
 enum {
     SCEFeedViewModeTable = 0,
@@ -27,8 +25,7 @@ enum {
 };
 typedef NSUInteger SCEFeedViewMode;
 
-@property (nonatomic, assign) NSUInteger viewMode;
-
+@property (nonatomic, assign) SCEFeedViewMode viewMode;
 @property (nonatomic, strong) SCEFeedTableViewController *tableViewController;
 @property (nonatomic, strong) SCEFeedMapViewController *mapViewController;
 

@@ -11,20 +11,16 @@
 
 @implementation SCEPlaceFeedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithTableCellNibName:@"SCEPlaceTableCell" mapAnnotationNibName:nil];
     if (self) {
-        // set the nib files for subviews
-        tableCellNibName = @"SCEPlaceTableCell";
-        mapAnnotationNibName = @"";
-
         // set up the tab bar entry
         [self setTitle:@"Places"];
         [[self tabBarItem] setImage:[UIImage imageNamed:@"second"]];
         
         // configure nav bar
-        [[self navigationItem] setTitle:@"Places Near You"];
+//        [[self navigationItem] setTitle:@"Places Near You"];
         [self addViewToggleButton];
         [self addSearchButton];
     }

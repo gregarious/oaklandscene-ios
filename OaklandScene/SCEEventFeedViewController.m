@@ -11,20 +11,16 @@
 
 @implementation SCEEventFeedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithTableCellNibName:@"SCEEventTableCell" mapAnnotationNibName:nil];
     if (self) {
-        // set the nib files for subviews
-        tableCellNibName = @"SCEEventTableCell";
-        mapAnnotationNibName = @"";
-        
         // set up the tab bar entry
         [self setTitle:@"Events"];
         // TODO: add tab bar image
         
         // configure nav bar
-        [[self navigationItem] setTitle:@"Upcoming Events"];
+//        [[self navigationItem] setTitle:@"Upcoming Events"];
         [self addViewToggleButton];
         [self addSearchButton];
     }

@@ -12,37 +12,56 @@
 
 @implementation SCEFeedViewController
 
-@synthesize viewMode, tableViewController, mapViewController;
+@synthesize viewMode;
+@synthesize tableViewController, mapViewController;
 
 // Designated
 // Extend this in child classes to also set the cell and annotation Nib names
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithTableCellNibName:(NSString *)cellNibNameOrNil
+          mapAnnotationNibName:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
-        // default to table mode
-        viewMode = SCEFeedViewModeTable;
+        // set up the child view controllers
+#warning Container functionality removed for the moment -- needs more research (see notes)
+        [self setTableViewController:[[SCEFeedTableViewController alloc]
+                                      initWithCellNibName:cellNibNameOrNil
+                                      feedController:self]];
+//        [self addChildViewController:[self tableViewController]];
+//        [tableViewController didMoveToParentViewController:self];
+        
+        [self setMapViewController:[[SCEFeedMapViewController alloc] init]];
+//        [self addChildViewController:[self mapViewController]];
+//        [mapViewController didMoveToParentViewController:self];
+
+        [self setViewMode:SCEFeedViewModeTable];
     }
+    
     return self;
+}
+
+-(void)loadView
+{
+    [contentViewController loadView];
+    [contentViewController viewDidLoad];
+    
+    // TODO: is this the best way to get the frame?
+    CGRect frame = [[[self parentViewController] view] bounds];
+    
+    UIView *v = [[UIView alloc] initWithFrame:frame];
+    [v addSubview:[contentViewController view]];
+    [self setView:v];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // set up the sub view controllers
-    [self setTableViewController:[[SCEFeedTableViewController alloc]
-                                  initWithCellNibName:tableCellNibName
-                                  feedController:self]];
-    [self setMapViewController:[[SCEFeedMapViewController alloc] init]];
-    
-#warning This is a temporary hack to get the default table mode to register (does nothing in init)
-    [self setViewMode:SCEFeedViewModeTable];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    [self setView:nil];
     // Release any retained subviews of the main view.
 }
 
@@ -53,41 +72,36 @@
 
 - (void)setViewMode:(SCEFeedViewMode)mode
 {
-    if (mode == [self viewMode] && contentViewController) {
-        return;
-    }
     viewMode = mode;
 
-    UIViewController *oldContentViewController = contentViewController;
-
+    UIViewController *old = contentViewController;
+    UIViewController *new = nil;
+    
     if (viewMode == SCEFeedViewModeTable) {
-        contentViewController = [self tableViewController];
+        new = [self tableViewController];
     }
     else if (viewMode == SCEFeedViewModeMap) {
-        contentViewController = [self mapViewController];
+        new = [self mapViewController];
     }
     else {
         [NSException exceptionWithName:@"Invalid view mode"
                                 reason:@"supplied mode constant is unsupported"
                               userInfo:nil];
     }
-
-#warning Pretty ugly stuff here. Look into combining both descendant settings as well as the TODO notes
-    NSArray *origSubviews = [[self view] subviews]; // should only be one
+    contentViewController = new;
     
-    // replace the view controllers
-    // TODO: Could be better to just have both on the stack and show/hide?
-    [self addChildViewController:contentViewController];
-
-    // add the new content view and remove the old
-    // TODO: probably better to handle this with view tags (especially if we put in a header subview)
-    [[self view] addSubview:[contentViewController view]];
-
-    // remove the old subview, if it exists
-    [oldContentViewController removeFromParentViewController];
-    for (UIView *subview in origSubviews) {
-        [subview setHidden:YES];
-        [subview removeFromSuperview];
+    if (old && old != new) {
+        NSLog(@"Transitioning!");
+//        [self transitionFromViewController:old
+//                          toViewController:new
+//                                  duration:0
+//                                   options:UIViewAnimationTransitionNone
+//                                animations:nil
+//                                completion:nil];
+        if ([self isViewLoaded]) {
+            // reload the view if it's already been loaded
+            [self loadView];
+        }
     }
 }
 
@@ -120,16 +134,21 @@
 
 - (void)toggleViewMode:(id)sender
 {
-    NSLog(@"Toggling!");
     if (viewMode == SCEFeedViewModeMap) {
         [self setViewMode:SCEFeedViewModeTable];
-        // TODO: also toggle button title
+        [[[self navigationItem] leftBarButtonItem] setTitle:@"Map"];
     }
     else {
-        // TODO: also toggle button title
         [self setViewMode:SCEFeedViewModeMap];
+        [[[self navigationItem] leftBarButtonItem] setTitle:@"List"];
     }
 }
 
+- (void)itemSelected
+{
+    @throw [NSException exceptionWithName:@"Pure virtual method called"
+                                   reason:@"itemSelected must be implemented by a subclass of SCEFeedViewController"
+                                 userInfo:nil];
+}
 
 @end

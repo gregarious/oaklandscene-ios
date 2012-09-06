@@ -11,20 +11,17 @@
 
 @implementation SCENewsFeedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // set the nib files for subviews
-        tableCellNibName = @"SCENewsTableCell";
-        mapAnnotationNibName = @"";
-        
+    self = [super initWithTableCellNibName:@"SCENewsTableCell" mapAnnotationNibName:nil];
+    
+    if (self) {        
         // set up the tab bar entry
         [self setTitle:@"News"];
         // TODO: add tab bar image
         
         // configure nav bar
-        [[self navigationItem] setTitle:@"Latest News"];
+//        [[self navigationItem] setTitle:@"Latest News"];
         [self addSearchButton];
     }
     

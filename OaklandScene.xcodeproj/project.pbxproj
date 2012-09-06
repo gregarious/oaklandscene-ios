@@ -33,6 +33,7 @@
 		37642E0B15F7BCC00024B6A2 /* SCEEventFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0A15F7BCC00024B6A2 /* SCEEventFeedViewController.m */; };
 		37642E0E15F7BCD70024B6A2 /* SCESpecialFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0D15F7BCD60024B6A2 /* SCESpecialFeedViewController.m */; };
 		37642E1115F7BCEB0024B6A2 /* SCENewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */; };
+		37D995A215F940040045CAE5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D995A115F940030045CAE5 /* MapKit.framework */; };
 		37FCE8F115F8D9C600666F1D /* SCEEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FCE8EF15F8D9C600666F1D /* SCEEventViewController.m */; };
 		37FCE8F215F8D9C600666F1D /* SCEEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37FCE8F015F8D9C600666F1D /* SCEEventViewController.xib */; };
 		37FCE8F615F8D9E300666F1D /* SCESpecialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FCE8F415F8D9E300666F1D /* SCESpecialViewController.m */; };
@@ -90,6 +91,7 @@
 		37642E0D15F7BCD60024B6A2 /* SCESpecialFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecialFeedViewController.m; sourceTree = "<group>"; };
 		37642E0F15F7BCEA0024B6A2 /* SCENewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsFeedViewController.h; sourceTree = "<group>"; };
 		37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENewsFeedViewController.m; sourceTree = "<group>"; };
+		37D995A115F940030045CAE5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		37FCE8EE15F8D9C600666F1D /* SCEEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEventViewController.h; sourceTree = "<group>"; };
 		37FCE8EF15F8D9C600666F1D /* SCEEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEEventViewController.m; sourceTree = "<group>"; };
 		37FCE8F015F8D9C600666F1D /* SCEEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEEventViewController.xib; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37D995A215F940040045CAE5 /* MapKit.framework in Frameworks */,
 				37642D7D15F6A0670024B6A2 /* UIKit.framework in Frameworks */,
 				37642D7F15F6A0670024B6A2 /* Foundation.framework in Frameworks */,
 				37642D8115F6A0670024B6A2 /* CoreGraphics.framework in Frameworks */,
@@ -144,6 +147,7 @@
 		37642D7B15F6A0670024B6A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37D995A115F940030045CAE5 /* MapKit.framework */,
 				37642D7C15F6A0670024B6A2 /* UIKit.framework */,
 				37642D7E15F6A0670024B6A2 /* Foundation.framework */,
 				37642D8015F6A0670024B6A2 /* CoreGraphics.framework */,
