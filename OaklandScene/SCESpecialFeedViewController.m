@@ -36,6 +36,7 @@
 - (void)itemSelected
 {
     SCESpecialViewController *detailController = [[SCESpecialViewController alloc] init];
+    [detailController setHidesBottomBarWhenPushed:YES];
     [[self navigationController] pushViewController:detailController animated:YES];
 }
 

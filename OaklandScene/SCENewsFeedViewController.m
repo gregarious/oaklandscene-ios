@@ -44,6 +44,7 @@
 - (void)itemSelected
 {
     SCENewsViewController *detailController = [[SCENewsViewController alloc] init];
+    [detailController setHidesBottomBarWhenPushed:YES];
     [[self navigationController] pushViewController:detailController animated:YES];
 }
 
