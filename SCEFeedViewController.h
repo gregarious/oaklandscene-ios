@@ -12,6 +12,12 @@
 
 @interface SCEFeedViewController : UIViewController
 {
+    @protected
+    // declare these backing variables to allow subclass to set them (necessary since properties are readonly)
+    NSString *tableCellNibName;
+    NSString *mapAnnotationNibName;
+    
+    @public
     UIViewController *contentViewController;
 }
 
@@ -26,7 +32,14 @@ typedef NSUInteger SCEFeedViewMode;
 @property (nonatomic, strong) SCEFeedTableViewController *tableViewController;
 @property (nonatomic, strong) SCEFeedMapViewController *mapViewController;
 
+
 - (void)searchFeed:(id)sender;
 - (void)toggleViewMode:(id)sender;
+
+- (void)addViewToggleButton;
+- (void)addSearchButton;
+
+// TODO: decide what the message parameter should be here
+- (void)itemSelected;   // Abstract: MUST be implemented in derived class
 
 @end

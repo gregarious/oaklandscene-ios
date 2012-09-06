@@ -14,18 +14,14 @@
 
 @synthesize viewMode, tableViewController, mapViewController;
 
-// Designated constructor
+// Designated
+// Extend this in child classes to also set the cell and annotation Nib names
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self setTableViewController:[[SCEFeedTableViewController alloc]
-                                      initWithStyle:UITableViewStylePlain
-                                      cellNibName:@"SCEPlaceTableCell"]];
-        [self setMapViewController:[[SCEFeedMapViewController alloc] init]];
-
         // default to table mode
-        [self setViewMode:SCEFeedViewModeTable];
+        viewMode = SCEFeedViewModeTable;
     }
     return self;
 }
@@ -33,7 +29,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    // set up the sub view controllers
+    [self setTableViewController:[[SCEFeedTableViewController alloc]
+                                  initWithCellNibName:tableCellNibName
+                                  feedController:self]];
+    [self setMapViewController:[[SCEFeedMapViewController alloc] init]];
+    
+#warning This is a temporary hack to get the default table mode to register (does nothing in init)
+    [self setViewMode:SCEFeedViewModeTable];
 }
 
 - (void)viewDidUnload
@@ -87,6 +91,27 @@
     }
 }
 
+// Makes the left nav bar button a view mode selector connected to toggleViewMode:
+- (void)addViewToggleButton
+{
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc]
+                                initWithTitle:@"Map"
+                                        style:UIBarButtonItemStylePlain
+                                       target:self
+                                       action:@selector(toggleViewMode:)];
+    [[self navigationItem] setLeftBarButtonItem:btn];
+}
+
+// Makes the right nav bar button a search icon connected to searchFeed:
+- (void)addSearchButton
+{
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc]
+                                initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                    target:self
+                                                    action:@selector(searchFeed:)];
+    [[self navigationItem] setRightBarButtonItem:btn];
+}
+
 // TODO: customize in subviews
 - (void)searchFeed:(id)sender
 {
@@ -95,6 +120,7 @@
 
 - (void)toggleViewMode:(id)sender
 {
+    NSLog(@"Toggling!");
     if (viewMode == SCEFeedViewModeMap) {
         [self setViewMode:SCEFeedViewModeTable];
         // TODO: also toggle button title
@@ -104,5 +130,6 @@
         [self setViewMode:SCEFeedViewModeMap];
     }
 }
+
 
 @end

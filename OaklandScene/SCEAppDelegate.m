@@ -24,45 +24,23 @@
     // Override point for customization after application launch.
     
     
-    // Set up the 5 main tab controllers
-    UIViewController *todayController = [[SCETodayViewController alloc] init];
-    UIViewController *placesController = [[SCEPlaceFeedViewController alloc] init];
-    UIViewController *eventsController = [[SCEEventFeedViewController alloc] init];
-    UIViewController *specialsController = [[SCESpecialFeedViewController alloc] init];
-    UIViewController *newsController = [[SCENewsFeedViewController alloc] init];
+    // Create the 5 VCs that will live under each tab
+    SCETodayViewController* todayVC = [[SCETodayViewController alloc] init];
+    UINavigationController* placeVC = [[UINavigationController alloc]
+                                       initWithRootViewController:[[SCEPlaceFeedViewController alloc] init]];
+    UINavigationController* eventVC = [[UINavigationController alloc]
+                                       initWithRootViewController:[[SCEEventFeedViewController alloc] init]];
+    UINavigationController* specialVC = [[UINavigationController alloc]
+                                         initWithRootViewController:[[SCESpecialFeedViewController alloc] init]];
+    UINavigationController* newsVC = [[UINavigationController alloc]
+                                      initWithRootViewController:[[SCENewsFeedViewController alloc] init]];
     
-    // Configure the tab bar controller
+    // Set up the tab bar controller with the 5 sub VCs
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    [tabBarController setViewControllers:@[todayController,
-                                            placesController,
-                                            eventsController,
-                                            specialsController,
-                                            newsController]];
-
-    // TODO: move this somewhere more appropriate (probably a custom tab bar class)
-    [[tabBarController navigationItem] setTitle:@"Feeds"];
-    UIBarButtonItem *viewModeButton = [[UIBarButtonItem alloc]
-                                       initWithTitle:@"Map"
-                                       style:UIBarButtonItemStylePlain
-                                       target:self
-                                       action:@selector(toggleViewMode:)];
-    [[tabBarController navigationItem] setLeftBarButtonItem:viewModeButton];
-    
-    
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]
-                                     initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-                                     target:self
-                                     action:@selector(searchFeed:)];
-    [[tabBarController navigationItem] setRightBarButtonItem:searchButton];
-
-    
-    
-    // wrap the tab bar controller in the main nav controller
-    self.navController = [[UINavigationController alloc]
-                             initWithRootViewController:tabBarController];
-    
+    [tabBarController setViewControllers:@[todayVC, placeVC, eventVC, specialVC, newsVC]];
+        
     // set the window root controller
-    self.window.rootViewController = self.navController;
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }

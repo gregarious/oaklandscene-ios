@@ -8,10 +8,6 @@
 
 #import "SCETodayViewController.h"
 
-@interface SCETodayViewController ()
-
-@end
-
 @implementation SCETodayViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -20,6 +16,9 @@
     if (self) {
         self.title = @"Today";
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        
+        // Set up a largely blank navigation bar
+        [[[self tabBarController] navigationItem] setTitle:@"The Oakland Scene"];
     }
     return self;
 }
@@ -27,13 +26,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

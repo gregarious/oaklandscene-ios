@@ -7,20 +7,35 @@
 //
 
 #import "SCEEventFeedViewController.h"
+#import "SCEEventViewController.h"
 
 @implementation SCEEventFeedViewController
 
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super init];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // set the nib files for subviews
+        tableCellNibName = @"SCEEventTableCell";
+        mapAnnotationNibName = @"";
+        
+        // set up the tab bar entry
         [self setTitle:@"Events"];
-        // TODO: other type-specific initialization
+        // TODO: add tab bar image
+        
+        // configure nav bar
+        [[self navigationItem] setTitle:@"Upcoming Events"];
+        [self addViewToggleButton];
+        [self addSearchButton];
     }
     
     return self;
 }
 
-// TODO: other type-specific configuration methods
+- (void)itemSelected
+{
+    SCEEventViewController *detailController = [[SCEEventViewController alloc] init];
+    [[self navigationController] pushViewController:detailController animated:YES];
+}
 
 @end

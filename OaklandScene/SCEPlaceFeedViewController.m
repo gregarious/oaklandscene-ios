@@ -1,5 +1,5 @@
 //
-//  SCEPlacesFeedViewController.m
+//  SCEPlaceFeedViewController.m
 //  OaklandScene
 //
 //  Created by Greg Nicholas on 9/5/12.
@@ -7,21 +7,34 @@
 //
 
 #import "SCEPlaceFeedViewController.h"
+#import "SCEPlaceViewController.h"
 
 @implementation SCEPlaceFeedViewController
 
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super init];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // set the nib files for subviews
+        tableCellNibName = @"SCEPlaceTableCell";
+        mapAnnotationNibName = @"";
+
+        // set up the tab bar entry
         [self setTitle:@"Places"];
         [[self tabBarItem] setImage:[UIImage imageNamed:@"second"]];
-        // TODO: other type-specific initialization
+        
+        // configure nav bar
+        [[self navigationItem] setTitle:@"Places Near You"];
+        [self addViewToggleButton];
+        [self addSearchButton];
     }
-    
     return self;
 }
 
-// TODO: other type-specific configuration methods
+- (void)itemSelected
+{
+    SCEPlaceViewController *detailController = [[SCEPlaceViewController alloc] init];
+    [[self navigationController] pushViewController:detailController animated:YES];
+}
 
 @end

@@ -7,21 +7,29 @@
 //
 
 #import "SCENewsFeedViewController.h"
+#import "SCENewsViewController.h"
 
 @implementation SCENewsFeedViewController
 
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super init];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // set the nib files for subviews
+        tableCellNibName = @"SCENewsTableCell";
+        mapAnnotationNibName = @"";
+        
+        // set up the tab bar entry
         [self setTitle:@"News"];
-        // TODO: other type-specific initialization
-        // TODO: release the map controller child: unnecessary for this vc
+        // TODO: add tab bar image
+        
+        // configure nav bar
+        [[self navigationItem] setTitle:@"Latest News"];
+        [self addSearchButton];
     }
     
     return self;
 }
-
 
 - (void) setViewMode:(NSUInteger)viewMode
 {
@@ -32,6 +40,11 @@
     }
     [super setViewMode:viewMode];
 }
-// TODO: other type-specific configuration methods
+
+- (void)itemSelected
+{
+    SCENewsViewController *detailController = [[SCENewsViewController alloc] init];
+    [[self navigationController] pushViewController:detailController animated:YES];
+}
 
 @end
