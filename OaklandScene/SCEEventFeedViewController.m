@@ -1,21 +1,20 @@
 //
-//  SCEPlacesFeedViewController.m
+//  SCEEventsFeedViewController.m
 //  OaklandScene
 //
 //  Created by Greg Nicholas on 9/5/12.
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCEPlacesFeedViewController.h"
+#import "SCEEventFeedViewController.h"
 
-@implementation SCEPlacesFeedViewController
+@implementation SCEEventFeedViewController
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        [self setTitle:@"Places"];
-        [[self tabBarItem] setImage:[UIImage imageNamed:@"second"]];
+        [self setTitle:@"Events"];
         // TODO: other type-specific initialization
     }
     

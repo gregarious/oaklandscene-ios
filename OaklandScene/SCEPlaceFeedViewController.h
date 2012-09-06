@@ -1,5 +1,5 @@
 //
-//  SCEEventsFeedViewController.h
+//  SCEPlacesFeedViewController.h
 //  OaklandScene
 //
 //  Created by Greg Nicholas on 9/5/12.
@@ -8,6 +8,6 @@
 
 #import "SCEFeedViewController.h"
 
-@interface SCEEventsFeedViewController : SCEFeedViewController
+@interface SCEPlaceFeedViewController : SCEFeedViewController
 
 @end

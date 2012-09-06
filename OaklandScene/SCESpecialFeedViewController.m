@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCESpecialsFeedViewController.h"
+#import "SCESpecialFeedViewController.h"
 
-@implementation SCESpecialsFeedViewController
+@implementation SCESpecialFeedViewController
 
 - (id)init
 {
