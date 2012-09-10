@@ -91,7 +91,6 @@
     contentViewController = new;
     
     if (old && old != new) {
-        NSLog(@"Transitioning!");
 //        [self transitionFromViewController:old
 //                          toViewController:new
 //                                  duration:0
