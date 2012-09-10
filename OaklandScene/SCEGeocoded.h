@@ -11,6 +11,6 @@
 
 @protocol SCEGeocoded <NSObject>
 
-- (CLLocation *)location;
+- (CLLocationCoordinate2D *)location;
 
 @end

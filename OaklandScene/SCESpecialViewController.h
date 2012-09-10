@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCEDetailViewController.h"
-
-@interface SCESpecialViewController : SCEDetailViewController
+@interface SCESpecialViewController : UIViewController
 
 @end

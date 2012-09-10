@@ -28,6 +28,6 @@
 // SCEPlace that special is sponsored by
 @property (nonatomic, weak) SCEPlace* place;
 
-- (CLLocation *)location;
+- (CLLocationCoordinate2D *)location;
 
 @end

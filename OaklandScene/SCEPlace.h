@@ -12,9 +12,16 @@
 @class SCEEvent;
 @class SCESpecial;
 
-@interface SCEPlace : CLPlacemark <SCEGeocoded>
+@interface SCEPlace : NSObject <SCEGeocoded>
+
+// basic "Scenable Location" properties
+@property (nonatomic, copy) NSString *streetAddress;
+@property (nonatomic, copy) NSString *city;
+@property (nonatomic, copy) NSString *postalCode;
+@property (nonatomic, assign) CLLocationCoordinate2D *location;
 
 // basic string-based items
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *description;
 @property (nonatomic, copy) NSString *phone;
 @property (nonatomic, copy) NSString *url;
@@ -30,5 +37,7 @@
 // related objects
 @property (nonatomic, strong) NSArray *events;
 @property (nonatomic, strong) NSArray *specials;
+
+- (CLLocationCoordinate2D *)location;
 
 @end

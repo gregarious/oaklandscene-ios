@@ -8,10 +8,6 @@
 
 #import "SCENewsViewController.h"
 
-@interface SCENewsViewController ()
-
-@end
-
 @implementation SCENewsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

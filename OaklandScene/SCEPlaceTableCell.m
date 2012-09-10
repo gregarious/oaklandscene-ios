@@ -10,4 +10,6 @@
 
 @implementation SCEPlaceTableCell
 
+@synthesize nameLabel;
+
 @end

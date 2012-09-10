@@ -15,4 +15,9 @@
 @synthesize categories;
 @synthesize events, specials;
 
+- (CLLocationCoordinate2D *)location
+{
+    return self.location;
+}
+
 @end

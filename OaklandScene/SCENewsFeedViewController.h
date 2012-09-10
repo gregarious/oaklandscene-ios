@@ -9,5 +9,6 @@
 #import "SCEFeedViewController.h"
 
 @interface SCENewsFeedViewController : SCEFeedViewController
+                                        <UITableViewDataSource, UITableViewDelegate>
 
 @end

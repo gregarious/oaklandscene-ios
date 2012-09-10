@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCEDetailViewController.h"
+@class SCEPlace;
 
-@interface SCEPlaceViewController : SCEDetailViewController
+@interface SCEPlaceViewController : UIViewController
+
+@property (nonatomic, weak) SCEPlace *place;
+
+- (id)initWithPlace:(SCEPlace *)p;
 
 @end

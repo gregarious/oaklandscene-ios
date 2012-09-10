@@ -28,6 +28,6 @@
 @property (nonatomic, weak) SCEPlace* place;
 
 // conforms to SCEGeocoded
-- (CLLocation *)location;
+- (CLLocationCoordinate2D *)location;
 
 @end

@@ -7,33 +7,16 @@
 //
 
 #import "SCEFeedViewController.h"
-#import "SCEFeedTableViewController.h"
-#import "SCEFeedMapViewController.h"
 
 @implementation SCEFeedViewController
 
 @synthesize viewMode;
-@synthesize tableViewController, mapViewController;
 
-// Designated
-// Extend this in child classes to also set the cell and annotation Nib names
-- (id)initWithTableCellNibName:(NSString *)cellNibNameOrNil
-          mapAnnotationNibName:(NSBundle *)nibBundleOrNil
+- (id)init
 {
     self = [super init];
     if (self) {
-        // set up the child view controllers
-#warning Container functionality removed for the moment -- needs more research (see notes)
-        [self setTableViewController:[[SCEFeedTableViewController alloc]
-                                      initWithCellNibName:cellNibNameOrNil
-                                      feedController:self]];
-//        [self addChildViewController:[self tableViewController]];
-//        [tableViewController didMoveToParentViewController:self];
-        
-        [self setMapViewController:[[SCEFeedMapViewController alloc] init]];
-//        [self addChildViewController:[self mapViewController]];
-//        [mapViewController didMoveToParentViewController:self];
-
+        // default to table mode
         [self setViewMode:SCEFeedViewModeTable];
     }
     
@@ -42,15 +25,20 @@
 
 -(void)loadView
 {
-    [contentViewController loadView];
-    [contentViewController viewDidLoad];
+    [super loadView];
     
     // TODO: is this the best way to get the frame?
     CGRect frame = [[[self parentViewController] view] bounds];
     
-    UIView *v = [[UIView alloc] initWithFrame:frame];
-    [v addSubview:[contentViewController view]];
-    [self setView:v];
+    // first load the subviews
+    tableView = [[UITableView alloc] initWithFrame:frame
+                                             style:UITableViewStylePlain];
+    mapView = [[UIView alloc] init];
+    
+    // IMPORTANT: Derived classes should connect delegates in their loadView methods
+    
+    // get primary view is in sync with the viewMode variable
+    [self setViewMode:[self viewMode]];
 }
 
 - (void)viewDidLoad
@@ -61,8 +49,10 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
     [self setView:nil];
-    // Release any retained subviews of the main view.
+    tableView = nil;
+    mapView = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -73,35 +63,20 @@
 - (void)setViewMode:(SCEFeedViewMode)mode
 {
     viewMode = mode;
-
-    UIViewController *old = contentViewController;
-    UIViewController *new = nil;
+//    UIView *old = contentView;
     
     if (viewMode == SCEFeedViewModeTable) {
-        new = [self tableViewController];
+        contentView = tableView;
     }
     else if (viewMode == SCEFeedViewModeMap) {
-        new = [self mapViewController];
+        contentView = mapView;
     }
     else {
         [NSException exceptionWithName:@"Invalid view mode"
                                 reason:@"supplied mode constant is unsupported"
                               userInfo:nil];
     }
-    contentViewController = new;
-    
-    if (old && old != new) {
-//        [self transitionFromViewController:old
-//                          toViewController:new
-//                                  duration:0
-//                                   options:UIViewAnimationTransitionNone
-//                                animations:nil
-//                                completion:nil];
-        if ([self isViewLoaded]) {
-            // reload the view if it's already been loaded
-            [self loadView];
-        }
-    }
+    [self setView:contentView];
 }
 
 // Makes the left nav bar button a view mode selector connected to toggleViewMode:
@@ -141,13 +116,6 @@
         [self setViewMode:SCEFeedViewModeMap];
         [[[self navigationItem] leftBarButtonItem] setTitle:@"List"];
     }
-}
-
-- (void)itemSelected
-{
-    @throw [NSException exceptionWithName:@"Pure virtual method called"
-                                   reason:@"itemSelected must be implemented by a subclass of SCEFeedViewController"
-                                 userInfo:nil];
 }
 
 @end

@@ -16,7 +16,7 @@
 @synthesize imageKey;
 @synthesize place;
 
-- (CLLocation *)location
+- (CLLocationCoordinate2D *)location
 {
     if ([self place]) {
         return [[self place] location];

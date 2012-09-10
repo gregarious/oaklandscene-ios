@@ -7,7 +7,17 @@
 //
 
 #import "SCEPlaceViewController.h"
+#import "SCEPlace.h"
 
 @implementation SCEPlaceViewController
+
+- (id)initWithPlace:(SCEPlace *)p
+{
+    self = [super init];
+    if (self) {
+        [self setPlace:p];
+    }
+    return self;
+}
 
 @end
