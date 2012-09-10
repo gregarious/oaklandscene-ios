@@ -10,14 +10,10 @@
 
 @implementation SCEPlace
 
-@synthesize description, phone, url, facebookId, twitterUsername;
+@synthesize name, description, phone, url, facebookId, twitterUsername;
+@synthesize streetAddress, postalCode, location;
 @synthesize imageKey;
 @synthesize categories;
 @synthesize events, specials;
-
-- (CLLocationCoordinate2D *)location
-{
-    return self.location;
-}
 
 @end

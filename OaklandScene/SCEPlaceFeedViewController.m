@@ -10,6 +10,7 @@
 #import "SCEPlaceViewController.h"
 #import "SCEPlace.h"
 #import "SCEPlaceStore.h"
+#import "SCEPlaceTableCell.h"
 
 @implementation SCEPlaceFeedViewController
 
@@ -57,7 +58,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
+    SCEPlace* place = [[[SCEPlaceStore sharedStore] items] objectAtIndex:[indexPath row]];
+    SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
+    [[cell nameLabel] setText:[place name]];
     return cell;
 }
 

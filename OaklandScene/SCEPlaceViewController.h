@@ -9,8 +9,11 @@
 @class SCEPlace;
 
 @interface SCEPlaceViewController : UIViewController
+{
+    __weak IBOutlet UILabel *nameLabel;
+}
 
-@property (nonatomic, weak) SCEPlace *place;
+@property (nonatomic, strong) SCEPlace *place;
 
 - (id)initWithPlace:(SCEPlace *)p;
 

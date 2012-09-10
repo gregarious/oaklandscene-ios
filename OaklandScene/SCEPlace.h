@@ -38,6 +38,4 @@
 @property (nonatomic, strong) NSArray *events;
 @property (nonatomic, strong) NSArray *specials;
 
-- (CLLocationCoordinate2D *)location;
-
 @end
