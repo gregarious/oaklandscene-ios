@@ -7,7 +7,13 @@
 //
 
 #import "SCEFeedViewController.h"
+#import "SCEPlaceStore.h"
+
+
 
 @interface SCEPlaceFeedViewController : SCEFeedViewController
+                                        <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) SCEPlaceStore *contentStore;
 
 @end

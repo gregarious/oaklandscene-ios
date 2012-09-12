@@ -8,10 +8,6 @@
 
 #import "SCEEventViewController.h"
 
-@interface SCEEventViewController ()
-
-@end
-
 @implementation SCEEventViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

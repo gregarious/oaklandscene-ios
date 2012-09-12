@@ -8,12 +8,15 @@
 
 #import "SCEPlaceFeedViewController.h"
 #import "SCEPlaceViewController.h"
+#import "SCEPlace.h"
+#import "SCEPlaceStore.h"
+#import "SCEPlaceTableCell.h"
 
 @implementation SCEPlaceFeedViewController
 
 - (id)init
 {
-    self = [super initWithTableCellNibName:@"SCEPlaceTableCell" mapAnnotationNibName:nil];
+    self = [super init];
     if (self) {
         // set up the tab bar entry
         [self setTitle:@"Places"];
@@ -23,13 +26,62 @@
 //        [[self navigationItem] setTitle:@"Places Near You"];
         [self addViewToggleButton];
         [self addSearchButton];
+
+        // initialize the data store
+        [self setContentStore:[SCEPlaceStore sharedStore]];
+        
+        [[SCEPlaceStore sharedStore] fetchContentWithCompletion:
+            ^void(NSArray *places, NSError* err) {
+                 if (places) {
+                     NSLog(@"Fetched %d places.", [places count]);
+                 }
+                 if (err) {
+                     NSLog(@"Error! %@", err);
+                 }
+             }
+         ];
     }
     return self;
 }
 
-- (void)itemSelected
+- (void)viewDidLoad
 {
-    SCEPlaceViewController *detailController = [[SCEPlaceViewController alloc] init];
+    [super viewDidLoad];
+    
+    // self will handle all UITableView delegation
+    [tableView setDelegate:self];
+    [tableView setDataSource:self];
+    
+    // register the NIB for cell reuse
+    UINib *nib = [UINib nibWithNibName:@"SCEPlaceTableCell" bundle:nil];
+    [tableView registerNib:nib
+        forCellReuseIdentifier:@"PlaceTableCell"];
+}
+
+
+//// UITableViewDataSource methods ////
+
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
+{
+    return [[[self contentStore] places] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tv
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCEPlace* place = [[[SCEPlaceStore sharedStore] places] objectAtIndex:[indexPath row]];
+    SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
+    [[cell nameLabel] setText:[place name]];
+    return cell;
+}
+
+//// UITableViewDelegate methods ////
+
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SCEPlace *place = [[[self contentStore] places] objectAtIndex:[indexPath row]];
+    SCEPlaceViewController *detailController = [[SCEPlaceViewController alloc] initWithPlace:place];
+    
     [detailController setHidesBottomBarWhenPushed:YES];
     [[self navigationController] pushViewController:detailController animated:YES];
 }

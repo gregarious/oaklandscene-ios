@@ -13,7 +13,7 @@
 
 - (id)init
 {
-    self = [super initWithTableCellNibName:@"SCENewsTableCell" mapAnnotationNibName:nil];
+    self = [super init];
     
     if (self) {        
         // set up the tab bar entry
@@ -23,22 +23,44 @@
         // configure nav bar
 //        [[self navigationItem] setTitle:@"Latest News"];
         [self addSearchButton];
+
+    
     }
     
     return self;
 }
 
-- (void) setViewMode:(NSUInteger)viewMode
+- (void)viewDidLoad
 {
-    if (viewMode != SCEFeedViewModeTable) {
-        @throw [NSException exceptionWithName:@"Invalid view mode"
-                                       reason:@"only SCEFeedViewModelTable is supported for news feeds"
-                                    userInfo:nil];
-    }
-    [super setViewMode:viewMode];
+    [super viewDidLoad];
+    
+    // self will handle all UITableView delegation
+    [tableView setDelegate:self];
+    [tableView setDataSource:self];
+
+    // register the NIB for cell reuse
+    UINib *nib = [UINib nibWithNibName:@"SCENewsTableCell" bundle:nil];
+    [tableView registerNib:nib forCellReuseIdentifier:@"NewsTableCell"];
 }
 
-- (void)itemSelected
+
+//// UITableViewDataSource methods ////
+
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tv
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"NewsTableCell"];
+    return cell;
+}
+
+//// UITableViewDelegate methods ////
+
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCENewsViewController *detailController = [[SCENewsViewController alloc] init];
     [detailController setHidesBottomBarWhenPushed:YES];

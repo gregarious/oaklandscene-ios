@@ -13,4 +13,6 @@
 @property (nonatomic, copy) NSString* label;
 @property (nonatomic, assign) NSInteger value;
 
+- (id)initWithLabel:(NSString *)l value:(NSInteger)v;
+
 @end

@@ -1,5 +1,5 @@
 //
-//  SCEGeocoded.h
+//  JSONSerializable.h
 //  OaklandScene
 //
 //  Created by Greg Nicholas on 9/7/12.
@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 
-@protocol SCEGeocoded <NSObject>
+@protocol JSONSerializable <NSObject>
 
-- (CLLocationCoordinate2D)location;
+- (void)readFromJSONDictionary:(NSDictionary *)d;
 
 @end

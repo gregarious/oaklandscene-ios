@@ -7,7 +7,27 @@
 //
 
 #import "SCEPlaceViewController.h"
+#import "SCEPlace.h"
 
 @implementation SCEPlaceViewController
 
+- (id)initWithPlace:(SCEPlace *)p
+{
+    self = [super init];
+    if (self) {
+        [self setPlace:p];
+        [self setTitle:[p name]];
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [nameLabel setText:[[self place] name]];
+}
+
+- (void)viewDidUnload {
+    nameLabel = nil;
+    [super viewDidUnload];
+}
 @end

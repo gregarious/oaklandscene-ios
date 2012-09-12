@@ -13,7 +13,7 @@
 
 - (id)init
 {
-    self = [super initWithTableCellNibName:@"SCESpecialTableCell" mapAnnotationNibName:nil];
+    self = [super init];
     if (self) {
         // set up the tab bar entry
         [self setTitle:@"Specials"];
@@ -28,12 +28,40 @@
     return self;
 }
 
-- (void)itemSelected
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    // self will handle all UITableView delegation
+    [tableView setDelegate:self];
+    [tableView setDataSource:self];
+
+    // register the NIB for cell reuse
+    UINib *nib = [UINib nibWithNibName:@"SCESpecialTableCell" bundle:nil];
+    [tableView registerNib:nib forCellReuseIdentifier:@"SpecialTableCell"];
+}
+
+//// UITableViewDataSource methods ////
+
+- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tv
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"SpecialTableCell"];
+    return cell;
+}
+
+//// UITableViewDelegate methods ////
+
+- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCESpecialViewController *detailController = [[SCESpecialViewController alloc] init];
     [detailController setHidesBottomBarWhenPushed:YES];
     [[self navigationController] pushViewController:detailController animated:YES];
 }
-
 
 @end
