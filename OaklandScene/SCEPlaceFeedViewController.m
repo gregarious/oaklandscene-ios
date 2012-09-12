@@ -11,6 +11,7 @@
 #import "SCEPlace.h"
 #import "SCEPlaceStore.h"
 #import "SCEPlaceTableCell.h"
+#import "SCECategory.h"
 
 @implementation SCEPlaceFeedViewController
 
@@ -70,8 +71,23 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SCEPlace* place = [[[SCEPlaceStore sharedStore] places] objectAtIndex:[indexPath row]];
+    
     SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
     [[cell nameLabel] setText:[place name]];
+    [[cell addressLabel] setText:[place streetAddress]];
+
+    // TODO: consider category logic
+    if ([[place categories] count] >= 1) {
+        SCECategory *cat = [[place categories] objectAtIndex:0];
+        [[cell category1Label] setText:[cat label]];
+    }
+    if ([[place categories] count] >= 2) {
+        SCECategory *cat = [[place categories] objectAtIndex:1];
+        [[cell category1Label] setText:[cat label]];
+    }
+
+    // TODO: thumbnail setting
+    
     return cell;
 }
 

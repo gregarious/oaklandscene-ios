@@ -23,11 +23,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [nameLabel setText:[[self place] name]];
 }
 
 - (void)viewDidUnload {
-    nameLabel = nil;
     [super viewDidUnload];
 }
 @end

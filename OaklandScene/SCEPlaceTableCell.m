@@ -9,5 +9,10 @@
 #import "SCEPlaceTableCell.h"
 
 @implementation SCEPlaceTableCell
+@synthesize nameLabel;
+@synthesize addressLabel;
+@synthesize category1Label;
+@synthesize category2Label;
+@synthesize thumbnailImage;
 
 @end
