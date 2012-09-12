@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONSerializable.h"
 
 @interface SCEPlaceStore : NSObject
 
-@property (nonatomic, copy) NSArray* items;
+@property (nonatomic, copy) NSArray* places;
 
 // wait for cache support to implement this
 //@property (nonatomic, readonly) NSDate* lastSuccessfulFetch;

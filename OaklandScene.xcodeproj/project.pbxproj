@@ -40,6 +40,8 @@
 		37E3EA3915FA697900964876 /* SCECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E3EA3815FA697900964876 /* SCECategory.m */; };
 		37E3EA3C15FA71CA00964876 /* SCEEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E3EA3B15FA71C900964876 /* SCEEvent.m */; };
 		37FAF11F15FFC1D600048F72 /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 37FAF11E15FFC1D600048F72 /* places.json */; };
+		37FAF1231600D17200048F72 /* SCEAPIConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FAF1221600D17100048F72 /* SCEAPIConnection.m */; };
+		37FAF1261600D9DE00048F72 /* SCEAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */; };
 		37FCE8F115F8D9C600666F1D /* SCEEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FCE8EF15F8D9C600666F1D /* SCEEventViewController.m */; };
 		37FCE8F215F8D9C600666F1D /* SCEEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37FCE8F015F8D9C600666F1D /* SCEEventViewController.xib */; };
 		37FCE8F615F8D9E300666F1D /* SCESpecialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FCE8F415F8D9E300666F1D /* SCESpecialViewController.m */; };
@@ -110,6 +112,10 @@
 		37E3EA3A15FA71C900964876 /* SCEEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEvent.h; sourceTree = "<group>"; };
 		37E3EA3B15FA71C900964876 /* SCEEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEEvent.m; sourceTree = "<group>"; };
 		37FAF11E15FFC1D600048F72 /* places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = places.json; path = OaklandScene/places.json; sourceTree = "<group>"; };
+		37FAF1211600D17000048F72 /* SCEAPIConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEAPIConnection.h; sourceTree = "<group>"; };
+		37FAF1221600D17100048F72 /* SCEAPIConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEAPIConnection.m; sourceTree = "<group>"; };
+		37FAF1241600D9DE00048F72 /* SCEAPIResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEAPIResponse.h; sourceTree = "<group>"; };
+		37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEAPIResponse.m; sourceTree = "<group>"; };
 		37FCE8EE15F8D9C600666F1D /* SCEEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEventViewController.h; sourceTree = "<group>"; };
 		37FCE8EF15F8D9C600666F1D /* SCEEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEEventViewController.m; sourceTree = "<group>"; };
 		37FCE8F015F8D9C600666F1D /* SCEEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEEventViewController.xib; sourceTree = "<group>"; };
@@ -223,6 +229,8 @@
 				37642DD015F6BAC80024B6A2 /* Controllers */,
 				37642DD415F6BBCD0024B6A2 /* Views */,
 				37642D8315F6A0670024B6A2 /* Supporting Files */,
+				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
+				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
 			);
 			path = OaklandScene;
 			sourceTree = "<group>";
@@ -252,6 +260,8 @@
 		37642DD115F6BAD10024B6A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				37FAF1241600D9DE00048F72 /* SCEAPIResponse.h */,
+				37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */,
 				37E3EA3715FA697900964876 /* SCECategory.h */,
 				37E3EA3815FA697900964876 /* SCECategory.m */,
 				37E3EA3015FA67DC00964876 /* SCEGeocoded.h */,
@@ -495,6 +505,8 @@
 				3747AC6015FA74840053BC32 /* SCESpecial.m in Sources */,
 				3747AC6415FA76BB0053BC32 /* SCENewsStub.m in Sources */,
 				3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */,
+				37FAF1231600D17200048F72 /* SCEAPIConnection.m in Sources */,
+				37FAF1261600D9DE00048F72 /* SCEAPIResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

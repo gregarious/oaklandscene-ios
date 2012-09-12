@@ -52,13 +52,13 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return [[[self contentStore] items] count];
+    return [[[self contentStore] places] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEPlace* place = [[[SCEPlaceStore sharedStore] items] objectAtIndex:[indexPath row]];
+    SCEPlace* place = [[[SCEPlaceStore sharedStore] places] objectAtIndex:[indexPath row]];
     SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
     [[cell nameLabel] setText:[place name]];
     return cell;
@@ -68,7 +68,7 @@
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEPlace *place = [[[self contentStore] items] objectAtIndex:[indexPath row]];
+    SCEPlace *place = [[[self contentStore] places] objectAtIndex:[indexPath row]];
     SCEPlaceViewController *detailController = [[SCEPlaceViewController alloc] initWithPlace:place];
     
     [detailController setHidesBottomBarWhenPushed:YES];

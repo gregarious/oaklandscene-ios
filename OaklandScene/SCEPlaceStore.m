@@ -8,10 +8,12 @@
 
 #import "SCEPlaceStore.h"
 #import "SCEPlace.h"
+#import "SCEAPIConnection.h"
+#import "SCEAPIResponse.h"
 
 @implementation SCEPlaceStore
 
-@synthesize items;
+@synthesize places;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -22,7 +24,6 @@
         [staticStore fetchContentWithCompletion:
             ^void(NSArray *places, NSError* err) {
                 if (places) {
-                    [staticStore setItems:places];
                     NSLog(@"Fetched %d places.", [places count]);
                 }
                 if (err) {
@@ -36,44 +37,35 @@
 
 - (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"places"
-                                                         ofType:@"json"];
+    NSURL *url = [NSURL URLWithString:@"https://www.scenable.com/api/v1/place/?format=json&listed=true"];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
+    [connection setCompletionBlock:block];
 
-    NSData *rawJSON = [[NSData alloc] initWithContentsOfFile:filePath
-                                                      options:NSUTF8StringEncoding
-                                                        error:nil];
- 
-    NSDictionary *root = [NSJSONSerialization JSONObjectWithData:rawJSON
-                                                         options:0
-                                                           error:nil];
+    // connection will let this response object interpret the JSON
+    SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
+    [connection setJSONRootObject:rootJSONObj];
     
-    NSArray *objects = [root objectForKey:@"objects"];
-    if (!objects) {
-        if (block) {
-            block(nil, [NSError errorWithDomain:@"JSON Deserialization"
-                                          code:1
-                                      userInfo:nil]);
+    // on completed connection, set the internal place cache and call the given
+    // block with the next array of places (or on error, just pass it through)
+    [connection setCompletionBlock:
+        ^void(SCEAPIResponse *response, NSError *err) {
+             if (response) {
+                 [self setPlaces:[response objects]];
+                 if (block) {
+                     block([self places], nil);
+                 }
+             }
+             else {
+                 if (block) {
+                     block(nil, err);
+                 }
+             }
         }
-        return;
-    }
-
-    NSMutableArray *places = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-    for (NSDictionary *placeDict in objects) {
-        SCEPlace *place = [[SCEPlace alloc] init];
-        [place readFromJSONDictionary:placeDict];
-        [places addObject:place];
-    }
+     ];
     
-// wait for cache support to implement these
-//    // set the internal set of places and the update time to now
-//    items = places;
-//    lastSuccessfulFetch = [NSDate date];
     
-    if (block) {
-        block(places, nil);
-    }
-
-    // TODO: will need to store places in here eventually. for now just simple callback with plain data.
+    [connection start];
 }
 
 @end
