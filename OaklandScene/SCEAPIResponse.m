@@ -26,7 +26,7 @@
     [self setTotalCount:[nTotal integerValue]];
     [self setPreviousURL:[NSURL URLWithString:sPrev]];
     [self setNextURL:[NSURL URLWithString:sNext]];
-    
+
     [self setObjects:[d objectForKey:@"objects"]];
 }
 

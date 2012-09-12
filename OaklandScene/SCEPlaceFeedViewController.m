@@ -29,6 +29,17 @@
 
         // initialize the data store
         [self setContentStore:[SCEPlaceStore sharedStore]];
+        
+        [[SCEPlaceStore sharedStore] fetchContentWithCompletion:
+            ^void(NSArray *places, NSError* err) {
+                 if (places) {
+                     NSLog(@"Fetched %d places.", [places count]);
+                 }
+                 if (err) {
+                     NSLog(@"Error! %@", err);
+                 }
+             }
+         ];
     }
     return self;
 }

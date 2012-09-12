@@ -19,7 +19,7 @@
 @property (nonatomic, copy) void (^completionBlock)(id obj, NSError *err);
 
 // will either store an NSDict or an NSArray (depending on the API response)
-@property (nonatomic, strong) id <JSONSerializable> JSONRootObject;
+@property (nonatomic, strong) id <JSONSerializable> jsonRootObject;
 
 - (id)initWithRequest:(NSURLRequest*)r;
 

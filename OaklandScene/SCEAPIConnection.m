@@ -27,7 +27,21 @@
 
 - (void)start
 {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"places"
+                                                         ofType:@"json"];
     
+    NSData *rawJSON = [[NSData alloc] initWithContentsOfFile:filePath
+                                                     options:NSUTF8StringEncoding
+                                                       error:nil];
+    
+    NSDictionary *root = [NSJSONSerialization JSONObjectWithData:rawJSON
+                                                         options:0
+                                                           error:nil];
+
+    [[self jsonRootObject] readFromJSONDictionary:root];
+    if ([self completionBlock]) {
+        [self completionBlock]([self jsonRootObject], nil);
+    }
 }
 
 @end

@@ -20,17 +20,6 @@
     static SCEPlaceStore* staticStore = nil;
     if (!staticStore) {
         staticStore = [[SCEPlaceStore alloc] init];
-        
-        [staticStore fetchContentWithCompletion:
-            ^void(NSArray *places, NSError* err) {
-                if (places) {
-                    NSLog(@"Fetched %d places.", [places count]);
-                }
-                if (err) {
-                    NSLog(@"Error! %@", err);
-                }
-            }
-        ];
     }
     return staticStore;
 }
@@ -44,14 +33,23 @@
 
     // connection will let this response object interpret the JSON
     SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
-    [connection setJSONRootObject:rootJSONObj];
+    [connection setJsonRootObject:rootJSONObj];
     
     // on completed connection, set the internal place cache and call the given
     // block with the next array of places (or on error, just pass it through)
     [connection setCompletionBlock:
         ^void(SCEAPIResponse *response, NSError *err) {
              if (response) {
-                 [self setPlaces:[response objects]];
+                 NSMutableArray *newPlaces = [[NSMutableArray alloc]
+                                              initWithCapacity:[[response objects] count]];
+
+                 for (NSDictionary *d in [response objects]) {
+                     SCEPlace *p = [[SCEPlace alloc] init];
+                     [p readFromJSONDictionary:d];
+                     [newPlaces addObject:p];
+                 }
+                 [self setPlaces:newPlaces];
+
                  if (block) {
                      block([self places], nil);
                  }

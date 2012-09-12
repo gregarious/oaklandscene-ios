@@ -226,11 +226,11 @@
 				37642DD115F6BAD10024B6A2 /* Models */,
 				37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */,
 				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
+				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
+				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
 				37642DD015F6BAC80024B6A2 /* Controllers */,
 				37642DD415F6BBCD0024B6A2 /* Views */,
 				37642D8315F6A0670024B6A2 /* Supporting Files */,
-				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
-				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
 			);
 			path = OaklandScene;
 			sourceTree = "<group>";
