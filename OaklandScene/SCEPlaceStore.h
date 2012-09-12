@@ -12,6 +12,9 @@
 
 @property (nonatomic, copy) NSArray* items;
 
+// wait for cache support to implement this
+//@property (nonatomic, readonly) NSDate* lastSuccessfulFetch;
+
 + (SCEPlaceStore *)sharedStore; // overrides base return type
 - (void)fetchContentWithCompletion:(void (^)(NSArray *items, NSError *err))block;
 

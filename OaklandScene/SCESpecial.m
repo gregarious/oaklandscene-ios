@@ -16,12 +16,13 @@
 @synthesize startDate, expiresDate;
 @synthesize place;
 
-- (CLLocationCoordinate2D *)location
+// to conform to SCEGeocoded
+- (CLLocationCoordinate2D)location
 {
     if ([self place]) {
         return [[self place] location];
     }
-    return nil;
+    return CLLocationCoordinate2DMake(0.0, 0.0);
 }
 
 @end

@@ -27,7 +27,4 @@
 // SCEPlace that event is happening at
 @property (nonatomic, weak) SCEPlace* place;
 
-// conforms to SCEGeocoded
-- (CLLocationCoordinate2D *)location;
-
 @end

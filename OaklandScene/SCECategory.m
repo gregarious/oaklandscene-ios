@@ -12,4 +12,20 @@
 
 @synthesize label, value;
 
+- (id)init
+{
+    return [self initWithLabel:@"" value:0];
+}
+
+// designiated initializer
+- (id)initWithLabel:(NSString *)l value:(NSInteger)v
+{
+    self = [super init];
+    if (self) {
+        [self setLabel:l];
+        [self setValue:v];
+    }
+    return self;
+}
+
 @end

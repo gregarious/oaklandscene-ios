@@ -8,17 +8,20 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "SCEGeocoded.h"
+#import "JSONSerializable.h"
 
 @class SCEEvent;
 @class SCESpecial;
 
-@interface SCEPlace : NSObject <SCEGeocoded>
+@interface SCEPlace : NSObject <SCEGeocoded, JSONSerializable>
 
 // basic "Scenable Location" properties
 @property (nonatomic, copy) NSString *streetAddress;
-@property (nonatomic, copy) NSString *city;
+@property (nonatomic, copy) NSString *town;
 @property (nonatomic, copy) NSString *postalCode;
-@property (nonatomic, assign) CLLocationCoordinate2D *location;
+@property (nonatomic, copy) NSString *state;
+@property (nonatomic, copy) NSString *country;
+@property (nonatomic, assign) CLLocationCoordinate2D location;
 
 // basic string-based items
 @property (nonatomic, copy) NSString *name;
