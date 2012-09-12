@@ -10,6 +10,4 @@
 
 @interface SCEPlaceTableCell : SCEFeedTableCell
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-
 @end
