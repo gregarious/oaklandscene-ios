@@ -8,6 +8,8 @@
 
 #import "SCEAPIConnection.h"
 
+static NSMutableArray *sharedConnectionList = nil;
+
 @implementation SCEAPIConnection
 
 - (id)initWithRequest:(NSURLRequest *)r
@@ -27,21 +29,42 @@
 
 - (void)start
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"places"
-                                                         ofType:@"json"];
+    container = [[NSMutableData alloc] init];
+    internalConnection = [[NSURLConnection alloc] initWithRequest:[self request]
+                                                         delegate:self
+                                                 startImmediately:YES];
     
-    NSData *rawJSON = [[NSData alloc] initWithContentsOfFile:filePath
-                                                     options:NSUTF8StringEncoding
-                                                       error:nil];
-    
-    NSDictionary *root = [NSJSONSerialization JSONObjectWithData:rawJSON
-                                                         options:0
-                                                           error:nil];
+    // since connection has a delegate-based callback system, we need to ensure
+    // the delegate (self) is in memory when connection returns
+    if(!sharedConnectionList) {
+        sharedConnectionList = [[NSMutableArray alloc] init];
+    }
+    [sharedConnectionList addObject:self];
+}
 
-    [[self jsonRootObject] readFromJSONDictionary:root];
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [container appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSDictionary *d = [NSJSONSerialization JSONObjectWithData:container
+                                                      options:0
+                                                        error:nil];
+    [[self jsonRootObject] readFromJSONDictionary:d];
     if ([self completionBlock]) {
         [self completionBlock]([self jsonRootObject], nil);
     }
+    [sharedConnectionList removeObject:self];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    if ([self completionBlock]) {
+        [self completionBlock](nil, error);
+    }
+    [sharedConnectionList removeObject:self];
 }
 
 @end

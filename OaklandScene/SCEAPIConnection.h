@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "JSONSerializable.h"
 
-@interface SCEAPIConnection : NSObject
+@interface SCEAPIConnection : NSObject <NSURLConnectionDataDelegate>
 {
     NSURLConnection *internalConnection;
     NSMutableData *container;
@@ -22,7 +22,6 @@
 @property (nonatomic, strong) id <JSONSerializable> jsonRootObject;
 
 - (id)initWithRequest:(NSURLRequest*)r;
-
 - (void)start;
 
 @end
