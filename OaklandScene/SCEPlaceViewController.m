@@ -18,6 +18,7 @@
         [self setPlace:p];
         [self setTitle:[p name]];
     }
+
     return self;
 }
 

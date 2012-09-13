@@ -71,7 +71,6 @@
 {
     SCEPlace* place = [[[SCEPlaceStore sharedStore] places] objectAtIndex:[indexPath row]];
     SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
-    [[cell nameLabel] setText:[place name]];
     return cell;
 }
 
