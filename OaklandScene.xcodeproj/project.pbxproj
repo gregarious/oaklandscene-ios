@@ -152,7 +152,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3747AC6515FA88490053BC32 /* Places */ = {
+		374759E1160286D7009CBA55 /* Places */ = {
+			isa = PBXGroup;
+			children = (
+				374759E3160286DD009CBA55 /* Models */,
+				374759E5160286F2009CBA55 /* Controllers */,
+				374759E4160286E5009CBA55 /* Views */,
+			);
+			name = Places;
+			sourceTree = "<group>";
+		};
+		374759E3160286DD009CBA55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3747AC6615FA886A0053BC32 /* SCEPlaceStore.h */,
@@ -160,34 +170,210 @@
 				37E3EA2C15FA67BD00964876 /* SCEPlace.h */,
 				37E3EA2D15FA67BD00964876 /* SCEPlace.m */,
 			);
-			name = Places;
+			name = Models;
 			sourceTree = "<group>";
 		};
-		3747AC6915FA88750053BC32 /* Events */ = {
+		374759E4160286E5009CBA55 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				37E3EA3A15FA71C900964876 /* SCEEvent.h */,
-				37E3EA3B15FA71C900964876 /* SCEEvent.m */,
+				37642DF315F7B8DC0024B6A2 /* SCEPlaceTableCell.h */,
+				37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */,
+				37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */,
+				37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		374759E5160286F2009CBA55 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */,
+				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
+				37642E0615F7BBE10024B6A2 /* SCEPlaceFeedViewController.h */,
+				37642E0715F7BBE20024B6A2 /* SCEPlaceFeedViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		374759E616028728009CBA55 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */,
+				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
+				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
+				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
+				374759E71602872D009CBA55 /* Models */,
+				374759E816028733009CBA55 /* Controllers */,
+				374759F6160288F4009CBA55 /* Views */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		374759E71602872D009CBA55 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				37FAF1241600D9DE00048F72 /* SCEAPIResponse.h */,
+				37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */,
+				37E3EA3715FA697900964876 /* SCECategory.h */,
+				37E3EA3815FA697900964876 /* SCECategory.m */,
+				37E3EA3015FA67DC00964876 /* SCEGeocoded.h */,
+				3747AC7015FA92940053BC32 /* JSONSerializable.h */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		374759E816028733009CBA55 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */,
+				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
+				37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */,
+				37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		374759E916028766009CBA55 /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				37642D9515F6A0670024B6A2 /* SCETodayViewController.h */,
+				37642D9615F6A0670024B6A2 /* SCETodayViewController.m */,
+			);
+			name = Today;
+			sourceTree = "<group>";
+		};
+		374759EA16028796009CBA55 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				374759EF16028854009CBA55 /* Models */,
+				374759F116028861009CBA55 /* Controllers */,
+				374759F01602885D009CBA55 /* Views */,
 			);
 			name = Events;
 			sourceTree = "<group>";
 		};
-		3747AC6A15FA88820053BC32 /* News */ = {
+		374759EB1602879C009CBA55 /* Specials */ = {
 			isa = PBXGroup;
 			children = (
-				3747AC6215FA76BB0053BC32 /* SCENewsStub.h */,
-				3747AC6315FA76BB0053BC32 /* SCENewsStub.m */,
+				374759EC160287A0009CBA55 /* Models */,
+				374759EE160287AA009CBA55 /* Controllers */,
+				374759ED160287A5009CBA55 /* Views */,
 			);
-			name = News;
+			name = Specials;
 			sourceTree = "<group>";
 		};
-		3747AC6B15FA88920053BC32 /* Specials */ = {
+		374759EC160287A0009CBA55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3747AC5E15FA74840053BC32 /* SCESpecial.h */,
 				3747AC5F15FA74840053BC32 /* SCESpecial.m */,
 			);
-			name = Specials;
+			name = Models;
+			sourceTree = "<group>";
+		};
+		374759ED160287A5009CBA55 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37FCE90515F8DC7400666F1D /* SCESpecialTableCell.h */,
+				37FCE90615F8DC7400666F1D /* SCESpecialTableCell.m */,
+				37FCE90815F8DC8A00666F1D /* SCESpecialTableCell.xib */,
+				37FCE8F515F8D9E300666F1D /* SCESpecialViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		374759EE160287AA009CBA55 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37642E0C15F7BCD60024B6A2 /* SCESpecialFeedViewController.h */,
+				37642E0D15F7BCD60024B6A2 /* SCESpecialFeedViewController.m */,
+				37FCE8F315F8D9E300666F1D /* SCESpecialViewController.h */,
+				37FCE8F415F8D9E300666F1D /* SCESpecialViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		374759EF16028854009CBA55 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				37E3EA3A15FA71C900964876 /* SCEEvent.h */,
+				37E3EA3B15FA71C900964876 /* SCEEvent.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		374759F01602885D009CBA55 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37FCE8FF15F8DBA900666F1D /* SCEEventTableCell.h */,
+				37FCE90015F8DBA900666F1D /* SCEEventTableCell.m */,
+				37FCE90215F8DBCD00666F1D /* SCEEventTableCell.xib */,
+				37FCE8F015F8D9C600666F1D /* SCEEventViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		374759F116028861009CBA55 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37642E0915F7BCC00024B6A2 /* SCEEventFeedViewController.h */,
+				37642E0A15F7BCC00024B6A2 /* SCEEventFeedViewController.m */,
+				37FCE8EE15F8D9C600666F1D /* SCEEventViewController.h */,
+				37FCE8EF15F8D9C600666F1D /* SCEEventViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		374759F2160288A6009CBA55 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				374759F3160288AF009CBA55 /* Models */,
+				374759F5160288B8009CBA55 /* Controllers */,
+				374759F4160288B3009CBA55 /* Views */,
+			);
+			name = News;
+			sourceTree = "<group>";
+		};
+		374759F3160288AF009CBA55 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3747AC6215FA76BB0053BC32 /* SCENewsStub.h */,
+				3747AC6315FA76BB0053BC32 /* SCENewsStub.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		374759F4160288B3009CBA55 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37FCE90B15F8DCDF00666F1D /* SCENewsTableCell.h */,
+				37FCE90C15F8DCDF00666F1D /* SCENewsTableCell.m */,
+				37FCE90E15F8DD2C00666F1D /* SCENewsTableCell.xib */,
+				37FCE8FA15F8D9FE00666F1D /* SCENewsViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		374759F5160288B8009CBA55 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37642E0F15F7BCEA0024B6A2 /* SCENewsFeedViewController.h */,
+				37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */,
+				37FCE8F815F8D9FE00666F1D /* SCENewsViewController.h */,
+				37FCE8F915F8D9FE00666F1D /* SCENewsViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		374759F6160288F4009CBA55 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */,
+				37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */,
+				37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */,
+				37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		37642D6D15F6A0670024B6A2 = {
@@ -223,13 +409,12 @@
 		37642D8215F6A0670024B6A2 /* OaklandScene */ = {
 			isa = PBXGroup;
 			children = (
-				37642DD115F6BAD10024B6A2 /* Models */,
-				37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */,
-				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
-				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
-				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
-				37642DD015F6BAC80024B6A2 /* Controllers */,
-				37642DD415F6BBCD0024B6A2 /* Views */,
+				374759E616028728009CBA55 /* Core */,
+				374759E1160286D7009CBA55 /* Places */,
+				374759EA16028796009CBA55 /* Events */,
+				374759EB1602879C009CBA55 /* Specials */,
+				374759F2160288A6009CBA55 /* News */,
+				374759E916028766009CBA55 /* Today */,
 				37642D8315F6A0670024B6A2 /* Supporting Files */,
 			);
 			path = OaklandScene;
@@ -247,48 +432,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		37642DD015F6BAC80024B6A2 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				37642D9515F6A0670024B6A2 /* SCETodayViewController.h */,
-				37642D9615F6A0670024B6A2 /* SCETodayViewController.m */,
-				37642DD215F6BAD90024B6A2 /* Feeds */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		37642DD115F6BAD10024B6A2 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				37FAF1241600D9DE00048F72 /* SCEAPIResponse.h */,
-				37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */,
-				37E3EA3715FA697900964876 /* SCECategory.h */,
-				37E3EA3815FA697900964876 /* SCECategory.m */,
-				37E3EA3015FA67DC00964876 /* SCEGeocoded.h */,
-				3747AC6515FA88490053BC32 /* Places */,
-				3747AC6915FA88750053BC32 /* Events */,
-				3747AC6B15FA88920053BC32 /* Specials */,
-				3747AC6A15FA88820053BC32 /* News */,
-				3747AC7015FA92940053BC32 /* JSONSerializable.h */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		37642DD215F6BAD90024B6A2 /* Feeds */ = {
-			isa = PBXGroup;
-			children = (
-				37FCE8E915F8D7A400666F1D /* Places */,
-				37FCE8EB15F8D7F900666F1D /* Events */,
-				37FCE8EC15F8D80700666F1D /* Specials */,
-				37FCE8ED15F8D80F00666F1D /* News */,
-				37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */,
-				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
-				37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */,
-				37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */,
-			);
-			name = Feeds;
-			sourceTree = "<group>";
-		};
 		37642DD315F6BBAB0024B6A2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,109 +441,6 @@
 				37642D9A15F6A0670024B6A2 /* second@2x.png */,
 			);
 			name = Images;
-			sourceTree = "<group>";
-		};
-		37642DD415F6BBCD0024B6A2 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				37FCE8FD15F8DB6E00666F1D /* Places */,
-				37FCE8FE15F8DB7A00666F1D /* Events */,
-				37FCE90415F8DC5200666F1D /* Specials */,
-				37FCE90A15F8DCC900666F1D /* News */,
-				37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */,
-				37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */,
-				37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */,
-				37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		37FCE8E915F8D7A400666F1D /* Places */ = {
-			isa = PBXGroup;
-			children = (
-				37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */,
-				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
-				37642E0615F7BBE10024B6A2 /* SCEPlaceFeedViewController.h */,
-				37642E0715F7BBE20024B6A2 /* SCEPlaceFeedViewController.m */,
-			);
-			name = Places;
-			sourceTree = "<group>";
-		};
-		37FCE8EB15F8D7F900666F1D /* Events */ = {
-			isa = PBXGroup;
-			children = (
-				37642E0915F7BCC00024B6A2 /* SCEEventFeedViewController.h */,
-				37642E0A15F7BCC00024B6A2 /* SCEEventFeedViewController.m */,
-				37FCE8EE15F8D9C600666F1D /* SCEEventViewController.h */,
-				37FCE8EF15F8D9C600666F1D /* SCEEventViewController.m */,
-			);
-			name = Events;
-			sourceTree = "<group>";
-		};
-		37FCE8EC15F8D80700666F1D /* Specials */ = {
-			isa = PBXGroup;
-			children = (
-				37642E0C15F7BCD60024B6A2 /* SCESpecialFeedViewController.h */,
-				37642E0D15F7BCD60024B6A2 /* SCESpecialFeedViewController.m */,
-				37FCE8F315F8D9E300666F1D /* SCESpecialViewController.h */,
-				37FCE8F415F8D9E300666F1D /* SCESpecialViewController.m */,
-			);
-			name = Specials;
-			sourceTree = "<group>";
-		};
-		37FCE8ED15F8D80F00666F1D /* News */ = {
-			isa = PBXGroup;
-			children = (
-				37642E0F15F7BCEA0024B6A2 /* SCENewsFeedViewController.h */,
-				37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */,
-				37FCE8F815F8D9FE00666F1D /* SCENewsViewController.h */,
-				37FCE8F915F8D9FE00666F1D /* SCENewsViewController.m */,
-			);
-			name = News;
-			sourceTree = "<group>";
-		};
-		37FCE8FD15F8DB6E00666F1D /* Places */ = {
-			isa = PBXGroup;
-			children = (
-				37642DF315F7B8DC0024B6A2 /* SCEPlaceTableCell.h */,
-				37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */,
-				37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */,
-				37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */,
-			);
-			name = Places;
-			sourceTree = "<group>";
-		};
-		37FCE8FE15F8DB7A00666F1D /* Events */ = {
-			isa = PBXGroup;
-			children = (
-				37FCE8FF15F8DBA900666F1D /* SCEEventTableCell.h */,
-				37FCE90015F8DBA900666F1D /* SCEEventTableCell.m */,
-				37FCE90215F8DBCD00666F1D /* SCEEventTableCell.xib */,
-				37FCE8F015F8D9C600666F1D /* SCEEventViewController.xib */,
-			);
-			name = Events;
-			sourceTree = "<group>";
-		};
-		37FCE90415F8DC5200666F1D /* Specials */ = {
-			isa = PBXGroup;
-			children = (
-				37FCE90515F8DC7400666F1D /* SCESpecialTableCell.h */,
-				37FCE90615F8DC7400666F1D /* SCESpecialTableCell.m */,
-				37FCE90815F8DC8A00666F1D /* SCESpecialTableCell.xib */,
-				37FCE8F515F8D9E300666F1D /* SCESpecialViewController.xib */,
-			);
-			name = Specials;
-			sourceTree = "<group>";
-		};
-		37FCE90A15F8DCC900666F1D /* News */ = {
-			isa = PBXGroup;
-			children = (
-				37FCE90B15F8DCDF00666F1D /* SCENewsTableCell.h */,
-				37FCE90C15F8DCDF00666F1D /* SCENewsTableCell.m */,
-				37FCE90E15F8DD2C00666F1D /* SCENewsTableCell.xib */,
-				37FCE8FA15F8D9FE00666F1D /* SCENewsViewController.xib */,
-			);
-			name = News;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
