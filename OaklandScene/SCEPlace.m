@@ -11,6 +11,7 @@
 
 @implementation SCEPlace
 
+@synthesize resourceId;
 @synthesize name, description, phone, url, facebookId, twitterUsername;
 @synthesize streetAddress, postalCode, location;
 @synthesize imageKey;
@@ -19,6 +20,8 @@
 
 - (void)readFromJSONDictionary:(NSDictionary *)d
 {
+    [self setResourceId:[d objectForKey:@"id"]];
+
     [self setName:[d objectForKey:@"name"]];
     [self setDescription:[d objectForKey:@"description"]];
     [self setFacebookId:[d objectForKey:@"fb_id"]];

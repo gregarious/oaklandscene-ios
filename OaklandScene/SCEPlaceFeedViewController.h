@@ -13,6 +13,9 @@
 
 @interface SCEPlaceFeedViewController : SCEFeedViewController
                                         <UITableViewDataSource, UITableViewDelegate>
+{
+    NSArray *feedItems; // the currently displayed feed items
+}
 
 @property (nonatomic, strong) SCEPlaceStore *contentStore;
 

@@ -33,6 +33,7 @@
         [[SCEPlaceStore sharedStore] fetchContentWithCompletion:
             ^void(NSArray *places, NSError* err) {
                  if (places) {
+                     feedItems = places;
                      NSLog(@"Fetched %d places.", [places count]);
                  }
                  if (err) {
@@ -63,14 +64,15 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return [[[self contentStore] places] count];
+    return [feedItems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEPlace* place = [[[SCEPlaceStore sharedStore] places] objectAtIndex:[indexPath row]];
+    SCEPlace* place = [feedItems objectAtIndex:[indexPath row]];
     SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
+    [[cell nameLabel] setText:[place name]];
     return cell;
 }
 
@@ -78,11 +80,39 @@
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEPlace *place = [[[self contentStore] places] objectAtIndex:[indexPath row]];
+    SCEPlace *place = [feedItems objectAtIndex:[indexPath row]];
     SCEPlaceViewController *detailController = [[SCEPlaceViewController alloc] initWithPlace:place];
     
     [detailController setHidesBottomBarWhenPushed:YES];
     [[self navigationController] pushViewController:detailController animated:YES];
+}
+
+//// SCESearchDialogDelegate methods ////
+- (void)searchDialog:(SCESearchDialogController *)controller
+didSubmitSearchWithCategory:(NSInteger)categoryId
+        keywordQuery:(NSString *)queryString
+{
+    [super searchDialog:controller
+didSubmitSearchWithCategory:categoryId
+           keywordQuery:queryString];
+    
+    // TODO: turn on activity indicator
+    
+    // get a filtered list of places from the query
+    [[self contentStore] findPlacesMatchingQuery:queryString
+                                        onReturn:^(NSArray *places, NSError* err) {
+        if (places) {
+            // TODO: handle category filter
+            feedItems = places;
+        }
+        else {
+            // TODO: handle error conditions
+            feedItems = [[NSArray alloc] init];
+        }
+
+        // TODO: turn off activity indicator
+        [tableView reloadData];
+    }];
 }
 
 @end

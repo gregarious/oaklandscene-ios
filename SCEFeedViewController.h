@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCESearchDialogDelegate.h"
+
 @class SCEFeedTableViewController;
 @class SCEFeedMapViewController;
 @class SCEContentStore;
 
-@interface SCEFeedViewController : UIViewController
+@interface SCEFeedViewController : UIViewController <SCESearchDialogDelegate>
 {
     UIView *contentView;
     UITableView *tableView;

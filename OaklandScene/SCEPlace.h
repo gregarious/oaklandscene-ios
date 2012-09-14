@@ -15,6 +15,9 @@
 
 @interface SCEPlace : NSObject <SCEGeocoded, JSONSerializable>
 
+// id of place object on server
+@property (nonatomic, copy) NSString *resourceId;
+
 // basic "Scenable Location" properties
 @property (nonatomic, copy) NSString *streetAddress;
 @property (nonatomic, copy) NSString *town;

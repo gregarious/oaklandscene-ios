@@ -7,6 +7,7 @@
 //
 
 #import "SCEFeedViewController.h"
+#import "SCESearchDialogController.h"
 
 @implementation SCEFeedViewController
 
@@ -100,10 +101,11 @@
     [[self navigationItem] setRightBarButtonItem:btn];
 }
 
-// TODO: customize in subviews
 - (void)searchFeed:(id)sender
 {
-    NSLog(@"Search!");
+    SCESearchDialogController *searchDialog = [[SCESearchDialogController alloc] init];
+    [searchDialog setDelegate:self];
+    [self presentModalViewController:searchDialog animated:YES];
 }
 
 - (void)toggleViewMode:(id)sender
@@ -116,6 +118,14 @@
         [self setViewMode:SCEFeedViewModeMap];
         [[[self navigationItem] leftBarButtonItem] setTitle:@"List"];
     }
+}
+
+- (void)searchDialog:(SCESearchDialogController *)controller
+didSubmitSearchWithCategory:(NSInteger)categoryId
+        keywordQuery:(NSString *)queryString
+{
+    [self dismissModalViewControllerAnimated:YES];
+    // subclasses should handle the query
 }
 
 @end
