@@ -11,6 +11,8 @@
 #import "SCEPlace.h"
 #import "SCEPlaceStore.h"
 #import "SCEPlaceTableCell.h"
+#import "SCECategory.h"
+#import "SCEFeedSearchDialogController.h"
 
 @implementation SCEPlaceFeedViewController
 
@@ -29,18 +31,7 @@
 
         // initialize the data store
         [self setContentStore:[SCEPlaceStore sharedStore]];
-        
-        [[SCEPlaceStore sharedStore] fetchContentWithCompletion:
-            ^void(NSArray *places, NSError* err) {
-                 if (places) {
-                     feedItems = places;
-                     NSLog(@"Fetched %d places.", [places count]);
-                 }
-                 if (err) {
-                     NSLog(@"Error! %@", err);
-                 }
-             }
-         ];
+        [self resetFeedContent];
     }
     return self;
 }
@@ -59,6 +50,48 @@
         forCellReuseIdentifier:@"PlaceTableCell"];
 }
 
+-(void)resetFeedContent
+{
+    // if a successful fetch EVER happened, use the data
+    // TODO: make this time sensitive
+    if ([[self contentStore] lastSuccessfulFetch]) {
+        feedItems = [[self contentStore] places];
+    }
+    else {
+        [[self contentStore] fetchContentWithCompletion:
+         ^void(NSArray *places, NSError* err) {
+             if (places) {
+                 feedItems = places;
+                 NSLog(@"Fetched %d places.", [places count]);
+             }
+             if (err) {
+                 NSLog(@"Error! %@", err);
+             }
+         }];
+    }
+}
+
+- (void)filterFeedContentByCategoryId:(NSInteger)categoryId
+{
+    NSMutableArray* filteredPlaces = [[NSMutableArray alloc] init];
+    for (SCEPlace* place in feedItems) {
+        for (SCECategory* c in [place categories]) {
+            if ([c value] == categoryId) {
+                [filteredPlaces addObject:place];
+                break;
+            }
+        }
+    }
+    feedItems = filteredPlaces;
+}
+
+- (void)displaySearchDialog:(id)sender
+{
+    [super displaySearchDialog:sender];
+    SCEFeedSearchDialogController* dialog =
+        (SCEFeedSearchDialogController *)[self presentedViewController];
+    [dialog setDelegate:self];
+}
 
 //// UITableViewDataSource methods ////
 
@@ -87,20 +120,22 @@
     [[self navigationController] pushViewController:detailController animated:YES];
 }
 
-//// SCESearchDialogDelegate methods ////
-- (void)searchDialog:(SCESearchDialogController *)controller
-didSubmitSearchWithCategory:(NSInteger)categoryId
+//// SCEFeedSearchDelegate methods ////
+- (void)searchDialog:(SCEFeedSearchDialogController *)dialog
+    didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
         keywordQuery:(NSString *)queryString
 {
-    [super searchDialog:controller
-didSubmitSearchWithCategory:categoryId
-           keywordQuery:queryString];
-    
     // TODO: turn on activity indicator
+    NSNumber *categoryId = nil;
+    // if category is 0, it means no filter
+    if (categoryRow != 0) {
+        SCECategory *category = [[[self contentStore] categories] objectAtIndex:categoryRow-1];
+        categoryId = [NSNumber numberWithInteger:[category value]];
+    }
     
-    // get a filtered list of places from the query
-    [[self contentStore] findPlacesMatchingQuery:queryString
-                                        onReturn:^(NSArray *places, NSError* err) {
+    SCEPlaceFeedViewController* this = self;
+    // define block to handle update of internal feed items after filter result is established
+    void(^updateFeedItems)(NSArray *places, NSError* err) = ^(NSArray *places, NSError* err) {
         if (places) {
             // TODO: handle category filter
             feedItems = places;
@@ -109,10 +144,52 @@ didSubmitSearchWithCategory:categoryId
             // TODO: handle error conditions
             feedItems = [[NSArray alloc] init];
         }
-
+        
+        if (categoryId) {
+            [this filterFeedContentByCategoryId:[categoryId integerValue]];
+        }
+        
         // TODO: turn off activity indicator
         [tableView reloadData];
-    }];
+    };
+
+    if (queryString && [queryString length] > 0) {
+        // if query was provided, need to let store handle query
+        [[self contentStore] findPlacesMatchingQuery:queryString
+                                            onReturn:updateFeedItems];
+    }
+    else {
+        // otherwise, reset back to stored places
+        NSArray *allPlaces = [[self contentStore] places];
+        if (allPlaces) {
+            updateFeedItems([[self contentStore] places], nil);
+        }
+        else {
+            updateFeedItems(nil, [NSError errorWithDomain:@"Places not set" code:0 userInfo:nil]);
+        }
+    }
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row
+            forComponent:(NSInteger)component
+{
+    if (row == 0) {
+        return @"All Places";
+    }
+    return [[[[self contentStore] categories] objectAtIndex:row-1] label];
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView
+    numberOfRowsInComponent:(NSInteger)component
+{
+    return [[[self contentStore] categories] count] + 1;
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
 }
 
 @end

@@ -6,17 +6,20 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+@class SCEPlaceStore;
+
 #import "SCEFeedViewController.h"
-#import "SCEPlaceStore.h"
-
-
+#import "SCEFeedSearchDelegate.h"
 
 @interface SCEPlaceFeedViewController : SCEFeedViewController
-                                        <UITableViewDataSource, UITableViewDelegate>
+            <UITableViewDataSource, UITableViewDelegate, SCEFeedSearchDelegate>
 {
     NSArray *feedItems; // the currently displayed feed items
 }
 
 @property (nonatomic, strong) SCEPlaceStore *contentStore;
+
+- (void)resetFeedContent;
+- (void)filterFeedContentByCategoryId:(NSInteger)categoryId;
 
 @end

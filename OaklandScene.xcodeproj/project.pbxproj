@@ -39,8 +39,8 @@
 		37E3EA3615FA683800964876 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3EA3515FA683800964876 /* CoreLocation.framework */; };
 		37E3EA3915FA697900964876 /* SCECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E3EA3815FA697900964876 /* SCECategory.m */; };
 		37E3EA3C15FA71CA00964876 /* SCEEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E3EA3B15FA71C900964876 /* SCEEvent.m */; };
-		37ED1DBA160370E3009CA46D /* SCESearchDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DB8160370E3009CA46D /* SCESearchDialogController.m */; };
-		37ED1DBB160370E3009CA46D /* SCESearchDialogController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37ED1DB9160370E3009CA46D /* SCESearchDialogController.xib */; };
+		37ED1DD71607BE4C009CA46D /* SCEFeedSearchDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD51607BE4B009CA46D /* SCEFeedSearchDialogController.m */; };
+		37ED1DD81607BE4C009CA46D /* SCEFeedSearchDialogController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37ED1DD61607BE4B009CA46D /* SCEFeedSearchDialogController.xib */; };
 		37FAF11F15FFC1D600048F72 /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 37FAF11E15FFC1D600048F72 /* places.json */; };
 		37FAF1231600D17200048F72 /* SCEAPIConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FAF1221600D17100048F72 /* SCEAPIConnection.m */; };
 		37FAF1261600D9DE00048F72 /* SCEAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */; };
@@ -113,10 +113,10 @@
 		37E3EA3815FA697900964876 /* SCECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCECategory.m; sourceTree = "<group>"; };
 		37E3EA3A15FA71C900964876 /* SCEEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEvent.h; sourceTree = "<group>"; };
 		37E3EA3B15FA71C900964876 /* SCEEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEEvent.m; sourceTree = "<group>"; };
-		37ED1DB5160370AB009CA46D /* SCESearchDialogDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCESearchDialogDelegate.h; sourceTree = "<group>"; };
-		37ED1DB7160370E3009CA46D /* SCESearchDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESearchDialogController.h; sourceTree = "<group>"; };
-		37ED1DB8160370E3009CA46D /* SCESearchDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESearchDialogController.m; sourceTree = "<group>"; };
-		37ED1DB9160370E3009CA46D /* SCESearchDialogController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCESearchDialogController.xib; sourceTree = "<group>"; };
+		37ED1DCB16079928009CA46D /* SCEFeedSearchDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFeedSearchDelegate.h; sourceTree = "<group>"; };
+		37ED1DD41607BE4B009CA46D /* SCEFeedSearchDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedSearchDialogController.h; sourceTree = "<group>"; };
+		37ED1DD51607BE4B009CA46D /* SCEFeedSearchDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedSearchDialogController.m; sourceTree = "<group>"; };
+		37ED1DD61607BE4B009CA46D /* SCEFeedSearchDialogController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedSearchDialogController.xib; sourceTree = "<group>"; };
 		37FAF11E15FFC1D600048F72 /* places.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = places.json; path = OaklandScene/places.json; sourceTree = "<group>"; };
 		37FAF1211600D17000048F72 /* SCEAPIConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEAPIConnection.h; sourceTree = "<group>"; };
 		37FAF1221600D17100048F72 /* SCEAPIConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEAPIConnection.m; sourceTree = "<group>"; };
@@ -222,6 +222,7 @@
 			children = (
 				37E3EA3715FA697900964876 /* SCECategory.h */,
 				37E3EA3815FA697900964876 /* SCECategory.m */,
+				37ED1DCB16079928009CA46D /* SCEFeedSearchDelegate.h */,
 				37E3EA3015FA67DC00964876 /* SCEGeocoded.h */,
 				3747AC7015FA92940053BC32 /* JSONSerializable.h */,
 			);
@@ -235,10 +236,8 @@
 				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
 				37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */,
 				37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */,
-				37ED1DB7160370E3009CA46D /* SCESearchDialogController.h */,
-				37ED1DB8160370E3009CA46D /* SCESearchDialogController.m */,
-				37ED1DB9160370E3009CA46D /* SCESearchDialogController.xib */,
-				37ED1DB5160370AB009CA46D /* SCESearchDialogDelegate.h */,
+				37ED1DD41607BE4B009CA46D /* SCEFeedSearchDialogController.h */,
+				37ED1DD51607BE4B009CA46D /* SCEFeedSearchDialogController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -380,6 +379,7 @@
 			children = (
 				37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */,
 				37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */,
+				37ED1DD61607BE4B009CA46D /* SCEFeedSearchDialogController.xib */,
 				37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */,
 				37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */,
 			);
@@ -521,7 +521,7 @@
 				37FCE90915F8DC8A00666F1D /* SCESpecialTableCell.xib in Resources */,
 				37FCE90F15F8DD2C00666F1D /* SCENewsTableCell.xib in Resources */,
 				37FAF11F15FFC1D600048F72 /* places.json in Resources */,
-				37ED1DBB160370E3009CA46D /* SCESearchDialogController.xib in Resources */,
+				37ED1DD81607BE4C009CA46D /* SCEFeedSearchDialogController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,7 +558,7 @@
 				3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */,
 				37FAF1231600D17200048F72 /* SCEAPIConnection.m in Sources */,
 				37FAF1261600D9DE00048F72 /* SCEAPIResponse.m in Sources */,
-				37ED1DBA160370E3009CA46D /* SCESearchDialogController.m in Sources */,
+				37ED1DD71607BE4C009CA46D /* SCEFeedSearchDialogController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

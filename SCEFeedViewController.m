@@ -7,7 +7,7 @@
 //
 
 #import "SCEFeedViewController.h"
-#import "SCESearchDialogController.h"
+#import "SCEFeedSearchDialogController.h"
 
 @implementation SCEFeedViewController
 
@@ -32,11 +32,10 @@
     CGRect frame = [[[self parentViewController] view] bounds];
     
     // first load the subviews
+    // IMPORTANT: These views need delegates: do it in subviews
     tableView = [[UITableView alloc] initWithFrame:frame
                                              style:UITableViewStylePlain];
     mapView = [[UIView alloc] init];
-    
-    // IMPORTANT: Derived classes should connect delegates in their loadView methods
     
     // get primary view is in sync with the viewMode variable
     [self setViewMode:[self viewMode]];
@@ -97,15 +96,14 @@
     UIBarButtonItem *btn = [[UIBarButtonItem alloc]
                                 initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                                     target:self
-                                                    action:@selector(searchFeed:)];
+                                                    action:@selector(displaySearchDialog:)];
     [[self navigationItem] setRightBarButtonItem:btn];
 }
 
-- (void)searchFeed:(id)sender
+- (void)displaySearchDialog:(id)sender
 {
-    SCESearchDialogController *searchDialog = [[SCESearchDialogController alloc] init];
-    [searchDialog setDelegate:self];
-    [self presentModalViewController:searchDialog animated:YES];
+    SCEFeedSearchDialogController *dialog = [[SCEFeedSearchDialogController alloc] init];
+    [self presentModalViewController:dialog animated:YES];
 }
 
 - (void)toggleViewMode:(id)sender
@@ -118,14 +116,6 @@
         [self setViewMode:SCEFeedViewModeMap];
         [[[self navigationItem] leftBarButtonItem] setTitle:@"List"];
     }
-}
-
-- (void)searchDialog:(SCESearchDialogController *)controller
-didSubmitSearchWithCategory:(NSInteger)categoryId
-        keywordQuery:(NSString *)queryString
-{
-    [self dismissModalViewControllerAnimated:YES];
-    // subclasses should handle the query
 }
 
 @end

@@ -7,18 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCESearchDialogDelegate.h"
 
 @class SCEFeedTableViewController;
 @class SCEFeedMapViewController;
 @class SCEContentStore;
 
-@interface SCEFeedViewController : UIViewController <SCESearchDialogDelegate>
+@interface SCEFeedViewController : UIViewController
 {
     UIView *contentView;
     UITableView *tableView;
-    // generic UIView until map mode development happens
-    UIView *mapView;
+    UIView *mapView;    // generic UIView until map mode development happens
 }
 
 enum {
@@ -29,7 +27,7 @@ typedef NSUInteger SCEFeedViewMode;
 
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
 
-- (void)searchFeed:(id)sender;
+- (void)displaySearchDialog:(id)sender;
 - (void)toggleViewMode:(id)sender;
 
 - (void)addViewToggleButton;

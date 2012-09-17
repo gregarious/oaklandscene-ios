@@ -14,7 +14,7 @@
 
 @implementation SCEPlaceStore
 
-@synthesize places;
+@synthesize places, lastSuccessfulFetch;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -31,21 +31,35 @@
         idPlaceMap = [[NSMutableDictionary alloc] init];
         queryResultMap = [[NSMutableDictionary alloc] init];
         places = [[NSMutableArray alloc] init];
+        _categories = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
-// override this to add places to the dict
 - (void)setPlaces:(NSArray *)ps
 {
     places = [[NSMutableArray alloc] initWithArray:ps];
     
-    // reset dictionary
+    // reset dictionary and set categories
     idPlaceMap = [[NSMutableDictionary alloc] init];
+    NSMutableSet* categoryIds = [[NSMutableSet alloc] init];
+    NSMutableArray* uniqueCategories = [[NSMutableArray alloc] init];
+    
     for (SCEPlace* place in places) {
         [idPlaceMap setObject:place
                        forKey:[place resourceId]];
+
+        // add any unseen categories to the list
+        for (SCECategory* cat in [place categories]) {
+            NSNumber *nId = [NSNumber numberWithInteger:[cat value]];
+            if (![categoryIds containsObject:nId])
+            {
+                [categoryIds addObject:nId];
+                [uniqueCategories addObject:cat];
+            }
+        }
     }
+    _categories = [NSArray arrayWithArray:uniqueCategories];
 }
 
 - (void)addPlace:(SCEPlace *)p
@@ -53,20 +67,19 @@
     [places addObject:p];
     [idPlaceMap setObject:p
                    forKey:[p resourceId]];
-}
 
-- (NSArray *)placesWithCategory:(NSInteger)categoryId
-{
-    NSMutableArray* filteredPlaces = [[NSMutableArray alloc] init];
-    for (SCEPlace* place in places) {
-        for (SCECategory* c in [place categories]) {
-            if ([c value] == categoryId) {
-                [filteredPlaces addObject:place];
-                break;
-            }
+    // look for new categories in the place provided
+    NSMutableArray* uniqueCategories = [NSMutableArray arrayWithArray:_categories];
+    NSMutableSet* categoryIds = [NSMutableSet setWithCapacity:[_categories count]];
+    for (SCECategory* cat in [p categories]) {
+        NSNumber *nId = [NSNumber numberWithInteger:[cat value]];
+        if (![categoryIds containsObject:nId])
+        {
+            [categoryIds addObject:nId];
+            [uniqueCategories addObject:cat];
         }
     }
-    return filteredPlaces;
+    _categories = [NSArray arrayWithArray:uniqueCategories];
 }
 
 - (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
@@ -93,6 +106,7 @@
                      [newPlaces addObject:p];
                  }
                  [self setPlaces:newPlaces];
+                 lastSuccessfulFetch = [NSDate date];
                  queryResultMap = [[NSMutableDictionary alloc] init];
 
                  if (block) {
@@ -150,7 +164,7 @@
     // !!!!! DEBUG: testing out mock API response !!!!!
     SCEAPIResponse* mockResponse = [[SCEAPIResponse alloc] init];
     [mockResponse setObjects:@[@"233", @"400", @"176"]];
-    completionBlock(nil, [NSError errorWithDomain:@"Moocow" code:23 userInfo:nil]);
+    completionBlock(mockResponse, nil);
     return;
     
     // finally, set up and initiate the API request

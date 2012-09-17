@@ -8,7 +8,7 @@
 
 @class SCEPlace;
 
-@interface SCEPlaceViewController : UIViewController
+@interface SCEPlaceViewController : UIViewController 
 {
     __weak IBOutlet UILabel *nameLabel;
 }

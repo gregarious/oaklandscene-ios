@@ -17,9 +17,8 @@
     NSMutableDictionary* queryResultMap;
 }
 @property (nonatomic, copy) NSMutableArray* places;
-
-// wait for cache support to implement this
-//@property (nonatomic, readonly) NSDate* lastSuccessfulFetch;
+@property (nonatomic, readonly) NSDate* lastSuccessfulFetch;
+@property (nonatomic, readonly) NSArray* categories;
 
 + (SCEPlaceStore *)sharedStore; // overrides base return type
 
@@ -29,7 +28,5 @@
 // could cause a delay if query needs to defer to server, hence return block
 - (void)findPlacesMatchingQuery:(NSString *)query
                        onReturn:(void (^)(NSArray* places, NSError* err))block;
-
-- (NSArray *)placesWithCategory:(NSInteger)categoryId;
 
 @end
