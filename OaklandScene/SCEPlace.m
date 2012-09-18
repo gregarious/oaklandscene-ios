@@ -39,9 +39,12 @@
         [self setCountry:[locationDict objectForKey:@"country"]];
         
         // lat/lng parsing
-        NSDecimalNumber *latDec = [locationDict objectForKey:@"latitude"];
-        NSDecimalNumber *lngDec = [locationDict objectForKey:@"longitude"];
-        [self setLocation:CLLocationCoordinate2DMake([latDec doubleValue], [lngDec doubleValue])];
+        id latDec = [locationDict objectForKey:@"latitude"];
+        id lngDec = [locationDict objectForKey:@"longitude"];
+
+        if (latDec != [NSNull null] || lngDec != [NSNull null]) {
+            [self setLocation:CLLocationCoordinate2DMake([latDec doubleValue], [lngDec doubleValue])];
+        }
     }
     
     // set up categories

@@ -84,7 +84,7 @@
 
 - (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    NSURL *url = [NSURL URLWithString:@"https://www.scenable.com/api/v1/place/?format=json&listed=true"];
+    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&limit=0"];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
 
@@ -146,13 +146,14 @@
         if(resp) {
             filteredPlaces = [[NSMutableArray alloc] init];
             // create a new array of places from the ids returned (in order returned)
-            for (NSString* rId in [resp objects]) {
+            for (NSDictionary* idObject in [resp objects]) {
+                NSString* rId = [idObject objectForKey:@"id"];
                 SCEPlace* place = [idPlaceMap objectForKey:rId];
                 if (place) {
                     [filteredPlaces addObject:place];
                 }
             }
-
+            
             // cache these results before returning
             [queryResultMap setObject:[filteredPlaces copy] forKey:query];
         }
@@ -160,15 +161,9 @@
             returnBlock(filteredPlaces, err);
         }
     };
-
-    // !!!!! DEBUG: testing out mock API response !!!!!
-    SCEAPIResponse* mockResponse = [[SCEAPIResponse alloc] init];
-    [mockResponse setObjects:@[@"233", @"400", @"176"]];
-    completionBlock(mockResponse, nil);
-    return;
     
     // finally, set up and initiate the API request
-    NSString* urlString = [NSString stringWithFormat:@"https://www.scenable.com/api/v1/place/search/?format=json&listed=true&q=%@", query];
+    NSString* urlString = [NSString stringWithFormat:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
