@@ -22,7 +22,6 @@
 
 + (SCEPlaceStore *)sharedStore; // overrides base return type
 
-- (void)addPlace:(SCEPlace *)p;
 - (void)fetchContentWithCompletion:(void (^)(NSArray *items, NSError *err))block;
 
 // could cause a delay if query needs to defer to server, hence return block

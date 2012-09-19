@@ -14,7 +14,7 @@
 
 @implementation SCEPlaceStore
 
-@synthesize places, lastSuccessfulFetch;
+@synthesize places, lastSuccessfulFetch, categories;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -31,7 +31,7 @@
         idPlaceMap = [[NSMutableDictionary alloc] init];
         queryResultMap = [[NSMutableDictionary alloc] init];
         places = [[NSMutableArray alloc] init];
-        _categories = [[NSMutableArray alloc] init];
+        categories = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -59,70 +59,41 @@
             }
         }
     }
-    _categories = [NSArray arrayWithArray:uniqueCategories];
-}
-
-- (void)addPlace:(SCEPlace *)p
-{
-    [places addObject:p];
-    [idPlaceMap setObject:p
-                   forKey:[p resourceId]];
-
-    // look for new categories in the place provided
-    NSMutableArray* uniqueCategories = [NSMutableArray arrayWithArray:_categories];
-    NSMutableSet* categoryIds = [NSMutableSet setWithCapacity:[_categories count]];
-    for (SCECategory* cat in [p categories]) {
-        NSNumber *nId = [NSNumber numberWithInteger:[cat value]];
-        if (![categoryIds containsObject:nId])
-        {
-            [categoryIds addObject:nId];
-            [uniqueCategories addObject:cat];
-        }
-    }
-    _categories = [NSArray arrayWithArray:uniqueCategories];
+    categories = [NSArray arrayWithArray:uniqueCategories];
 }
 
 - (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&limit=0"];
-    NSURLRequest *req = [NSURLRequest requestWithURL:url];
-    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
-
-    // connection will let this response object interpret the JSON
-    SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
-    [connection setJsonRootObject:rootJSONObj];
+    // Disabled API-based Place fetching. Just shipping with bundled content.
+    // See 61258b0aa70be0111a337b6e566fde96d3cda390 for old version
     
-    // on completed connection, set the internal place cache and call the given
-    // block with the next array of places (or on error, just pass it through)
-    [connection setCompletionBlock:
-        ^void(SCEAPIResponse *response, NSError *err) {
-             if (response) {
-                 NSMutableArray *newPlaces = [[NSMutableArray alloc]
-                                              initWithCapacity:[[response objects] count]];
-
-                 for (NSDictionary *d in [response objects]) {
-                     SCEPlace *p = [[SCEPlace alloc] init];
-                     [p readFromJSONDictionary:d];
-                     [newPlaces addObject:p];
-                 }
-                 [self setPlaces:newPlaces];
-                 lastSuccessfulFetch = [NSDate date];
-                 queryResultMap = [[NSMutableDictionary alloc] init];
-
-                 if (block) {
-                     block([self places], nil);
-                 }
-             }
-             else {
-                 if (block) {
-                     block(nil, err);
-                 }
-             }
-        }
-     ];
+    // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
+    // TODO: error handling for NSData and/or JSON read?
     
-    
-    [connection start];
+    NSString* filename = [[NSBundle mainBundle] pathForResource:@"places-09192012"
+                                                         ofType:@"json"];
+    NSData* fileData = [NSData dataWithContentsOfFile:filename];
+    NSMutableDictionary *d = [NSJSONSerialization JSONObjectWithData:fileData
+                                                             options:0
+                                                               error:nil];
+    SCEAPIResponse *response = [[SCEAPIResponse alloc] init];
+    [response readFromJSONDictionary:d];
+
+    // Run through the objects in the API response, interpretting them as Places
+    NSMutableArray *newPlaces = [[NSMutableArray alloc]
+                                  initWithCapacity:[[response objects] count]];
+    for (NSDictionary *d in [response objects]) {
+        SCEPlace *p = [[SCEPlace alloc] init];
+        [p readFromJSONDictionary:d];
+        [newPlaces addObject:p];
+    }
+    [self setPlaces:newPlaces];
+    lastSuccessfulFetch = [NSDate date];
+    queryResultMap = [[NSMutableDictionary alloc] init];
+
+    if (block) {
+        block([self places], nil);
+    }
 }
 
 - (void)findPlacesMatchingQuery:(NSString *)query
@@ -144,6 +115,7 @@
         NSMutableArray* filteredPlaces = nil;
         // if we get a valid response, take the ids returned and return a places list with only those ids
         if(resp) {
+            NSLog(@"Found %d results", [[resp objects] count]);
             filteredPlaces = [[NSMutableArray alloc] init];
             // create a new array of places from the ids returned (in order returned)
             for (NSDictionary* idObject in [resp objects]) {
@@ -159,6 +131,7 @@
         }
         if(returnBlock) {
             returnBlock(filteredPlaces, err);
+            NSLog(@"%@", err);
         }
     };
     

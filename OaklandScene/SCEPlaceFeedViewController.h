@@ -14,12 +14,18 @@
 @interface SCEPlaceFeedViewController : SCEFeedViewController
             <UITableViewDataSource, UITableViewDelegate, SCEFeedSearchDelegate>
 {
-    NSArray *feedItems; // the currently displayed feed items
+    NSMutableArray *displayedItems; // the currently displayed feed items
+    NSArray *feedPlaces; // all items in feed (could be hidden behind "Load more" prompts
 }
 
 @property (nonatomic, strong) SCEPlaceStore *contentStore;
 
 - (void)resetFeedContent;
+
+- (void)resetPaging;
+- (void)showNextPage;
+
 - (void)filterFeedContentByCategoryId:(NSInteger)categoryId;
+- (void)emptyFeedWithLoadingMessage:(BOOL)loadingMessage;
 
 @end
