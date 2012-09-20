@@ -22,7 +22,14 @@
 
 @property (nonatomic, strong) SCEFeedSource *feedSource;
 
-- (void)resetFeed;
-- (void)addNextPage;
+// sets up feedSource with the default settings
+- (void)resetFeedSource;
+
+// these methods add items to the displayedItems list, but DO NOT refresh the view
+- (void)emptyFeed;
+- (void)addNextPageToFeed;
+- (void)addStaticMessageToFeed:(NSString *)message;
+- (void)addLoadingMessageToFeed;
+
 
 @end

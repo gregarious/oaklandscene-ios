@@ -37,7 +37,7 @@
 
         // initialize the data store
         contentStore = [SCEPlaceStore sharedStore];
-        [self resetFeed];
+        [self resetFeedSource];
     }
     return self;
 }
@@ -61,7 +61,7 @@
     forCellReuseIdentifier:@"FeedStaticCell"];
 }
 
--(void)resetFeed
+-(void)resetFeedSource
 {
     SCEFeedSource* source = [[SCEFeedSource alloc] initWithStore:contentStore];
     [source setPageLength:10];
@@ -71,21 +71,30 @@
 - (void)setFeedSource:(SCEFeedSource *)fs
 {
     // set the loading message
-    SCEFeedItemContainer* loadingItem = [[SCEFeedItemContainer alloc] initWithContent:nil
-                                                                          type:SCEFeedItemTypeLoading];
-    displayedItems = [[NSMutableArray alloc] initWithObjects:loadingItem, nil];
+    [self emptyFeed];
+    [self addLoadingMessageToFeed];
     pagesDisplayed = 0;
     
     feedSource = fs;
     [feedSource setCompletionBlock:^void(NSError *err) {
+        [self emptyFeed];
         if(err) {
-            SCEFeedItemContainer* errItem = [[SCEFeedItemContainer alloc] initWithContent:[err localizedDescription]
-                                                                                  type:SCEFeedItemTypeStatic];
-            displayedItems = [[NSMutableArray alloc] initWithObjects:errItem, nil];
+            // on error, alert the user via an alert, and fill the table with a "no places" message
+            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+                                       message:[err localizedDescription]
+                                      delegate:nil
+                             cancelButtonTitle:@"Ok"
+                             otherButtonTitles:nil] show];
+            [self addStaticMessageToFeed:@"No places found"];
+            
         }
         else {
-            displayedItems = [NSMutableArray array];
-            [self addNextPage];
+            if (![feedSource hasPage:0]) {
+                [self addStaticMessageToFeed:@"No places found"];
+            }
+            else {
+                [self addNextPageToFeed];
+            }
         }
         [tableView reloadData];
 
@@ -100,7 +109,7 @@
     [feedSource sync];
 }
 
-- (void)addNextPage
+- (void)addNextPageToFeed
 {
     if ([feedSource hasPage:pagesDisplayed]) {     // hasPage is 0-index based, pagesDisplayed is a count
         // add the next pages to displayedItems
@@ -119,6 +128,24 @@
                                                                                type:SCEFeedItemTypeStatic]];            
         }
     }
+}
+
+- (void)addLoadingMessageToFeed
+{
+    [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:nil
+                                                                       type:SCEFeedItemTypeLoading]];
+}
+
+- (void)emptyFeed
+{
+    displayedItems = [NSMutableArray array];
+}
+
+- (void)addStaticMessageToFeed:(NSString *)message
+{
+    [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:message
+                                                                       type:SCEFeedItemTypeStatic]];
+    
 }
 
 - (void)displaySearchDialog:(id)sender
@@ -171,8 +198,13 @@
     }
     else if([item type] == SCEFeedItemTypeStatic) {
         [displayedItems removeLastObject];
-        [self addNextPage];
+        [self addNextPageToFeed];
         [tableView reloadData];
+        // scroll list so new items are on top
+        [tableView scrollToRowAtIndexPath:indexPath
+                         atScrollPosition:UITableViewScrollPositionTop
+                                 animated:YES];
+
     }
 }
 
