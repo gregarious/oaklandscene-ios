@@ -19,9 +19,12 @@
 
 @implementation SCEPlaceFeedViewController
 
+@synthesize feedSource;
+
 - (id)init
 {
     self = [super init];
+    
     if (self) {
         // set up the tab bar entry
         [self setTitle:@"Places"];
@@ -33,8 +36,10 @@
         [self addSearchButton];
 
         // initialize the data store
-        [self setContentStore:[SCEPlaceStore sharedStore]];
-        [self resetFeedContent];
+        contentStore = [SCEPlaceStore sharedStore];
+        [self resetFeed];
+        
+        pagesDisplayed = 0;
     }
     return self;
 }
@@ -58,69 +63,55 @@
     forCellReuseIdentifier:@"FeedStaticCell"];
 }
 
--(void)resetFeedContent
+-(void)resetFeed
 {
-    // if a successful fetch EVER happened, use the data
-    // TODO: make this time sensitive
-    if ([[self contentStore] lastSuccessfulFetch]) {
-        feedPlaces = [[self contentStore] places];
-        [self resetPaging];
-    }
-    else {
-        [[self contentStore] fetchContentWithCompletion:
-         ^void(NSArray *places, NSError* err) {
-             if (places) {
-                 feedPlaces = places;
-                 [self resetPaging];
-                 NSLog(@"Fetched %d places.", [places count]);
-             }
-             if (err) {
-                 NSLog(@"Error! %@", err);
-             }
-         }];
-    }
+    SCEFeedSource* source = [[SCEFeedSource alloc] initWithStore:contentStore];
+    [source setPageLength:10];
+    [self setFeedSource:source];
 }
 
-- (void)resetPaging
+- (void)setFeedSource:(SCEFeedSource *)fs
 {
-    displayedItems = [[NSMutableArray alloc] init];
-    [self showNextPage];
+    // set the loading message
+    SCEFeedItemContainer* loadingItem = [[SCEFeedItemContainer alloc] initWithContent:nil
+                                                                          type:SCEFeedItemTypeLoading];
+    displayedItems = [[NSMutableArray alloc] initWithObjects:loadingItem, nil];
+    pagesDisplayed = 0;
+    
+    feedSource = fs;
+    [feedSource setCompletionBlock:^void(NSError *err) {
+        if(err) {
+            // TODO: better error display
+            SCEFeedItemContainer* errItem = [[SCEFeedItemContainer alloc] initWithContent:@"Error"
+                                                                                  type:SCEFeedItemTypeLoading];
+            displayedItems = [[NSMutableArray alloc] initWithObjects:errItem, nil];
+        }
+        else {
+            displayedItems = [NSMutableArray array];
+            [self showNextPage];
+        }
+    }];
 }
+
 - (void)showNextPage
 {
-    NSInteger feedIndex = [displayedItems count];
-    // TODO: make page length a constant
-    for (NSInteger i = 0; i < 10; i++) {
-        if (feedIndex >= [feedPlaces count]) {
-            break;
+    if ([feedSource hasPage:pagesDisplayed+1]) {
+        // add the next pages to displayedItems
+        NSArray *nextPageItems = [feedSource getPage:pagesDisplayed];
+        for (SCEPlace *p in nextPageItems) {
+            [displayedItems addObject:[[SCEFeedItemContainer alloc]
+                                        initWithContent:p
+                                        type:SCEFeedItemTypeObject]];
         }
-        SCEFeedItemContainer* item =
-        [[SCEFeedItemContainer alloc] initWithContent:[feedPlaces objectAtIndex:feedIndex]
-                                                 type:SCEFeedItemTypeObject];
-        [displayedItems addObject:item];
-        feedIndex++;
-    }
-
-    if ([displayedItems count] < [feedPlaces count]) {
-        NSLog(@"Next page button shown.");
-        [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:@"Show More"
-                                                                           type:SCEFeedItemTypeButton]];
-    }
-}
-
-- (void)filterFeedContentByCategoryId:(NSInteger)categoryId
-{
-    NSMutableArray* filteredPlaces = [[NSMutableArray alloc] init];
-    for (SCEPlace* place in feedPlaces) {
-        for (SCECategory* c in [place categories]) {
-            if ([c value] == categoryId) {
-                [filteredPlaces addObject:place];
-                break;
-            }
+        
+        // increment the interal page count and display "Show More" item if relevant
+        pagesDisplayed++;
+        if ([feedSource hasPage:pagesDisplayed+1])
+        {
+            [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:@"Show More"
+                                                                               type:SCEFeedItemTypeButton]];            
         }
     }
-    feedPlaces = filteredPlaces;
-    [self resetPaging];
 }
 
 - (void)displaySearchDialog:(id)sender
@@ -131,18 +122,6 @@
     [dialog setDelegate:self];
 }
 
-- (void)emptyFeedWithLoadingMessage:(BOOL)loadingMessage
-{
-    feedPlaces = [[NSArray alloc] init];
-    if (loadingMessage) {
-        SCEFeedItemContainer* item = [[SCEFeedItemContainer alloc] initWithContent:nil
-                                                                              type:SCEFeedItemTypeLoading];
-        displayedItems = [[NSMutableArray alloc] initWithObjects:item, nil];
-    }
-    else {
-        displayedItems = [[NSMutableArray alloc] init];
-    }
-}
 
 //// UITableViewDataSource methods ////
 
@@ -188,9 +167,6 @@
         [self showNextPage];
         [tableView reloadData];
     }
-    
-    UIButton* btn = [[UIButton alloc] init];
-    [btn setValue:<#(id)#> forKey:<#(NSString *)#>]
 }
 
 //// SCEFeedSearchDelegate methods ////
@@ -198,53 +174,22 @@
     didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
         keywordQuery:(NSString *)queryString
 {
-    // clear the feedPlaces and set the displayed items to a loading indicator
-    [self emptyFeedWithLoadingMessage:YES];
-    [tableView reloadData];
-    
-    NSNumber *categoryId = nil;
+    // create a new source with the given options
+    SCEFeedSource *source = [[SCEFeedSource alloc] initWithStore:contentStore];
+
+    // parse the category out of the category row chosen
     // if category is 0, it means no filter
     if (categoryRow != 0) {
-        SCECategory *category = [[[self contentStore] categories] objectAtIndex:categoryRow-1];
-        categoryId = [NSNumber numberWithInteger:[category value]];
+        SCECategory *category = [[contentStore categories] objectAtIndex:categoryRow-1];
+        [source setFilterCategory:category];
     }
-    
-    SCEPlaceFeedViewController* this = self;
-    // define block to handle update of internal feed items after filter result is established
-    void(^updateFeedPlaces)(NSArray *places, NSError* err) = ^(NSArray *places, NSError* err) {
-        if (places) {
-            feedPlaces = places;
-        }
-        else {
-            // TODO: handle error conditions
-            feedPlaces = [[NSArray alloc] init];
-        }
-        
-        [self resetPaging];
-        
-        if (categoryId) {
-            [this filterFeedContentByCategoryId:[categoryId integerValue]];
-        }
-        
-        // TODO: turn off activity indicator
-        [tableView reloadData];
-    };
 
-    if (queryString && [queryString length] > 0) {
-        // if query was provided, need to let store handle query
-        [[self contentStore] findPlacesMatchingQuery:queryString
-                                            onReturn:updateFeedPlaces];
+    // if query is blank, don't do a keyword search
+    if ([queryString length]) {
+        [source setFilterKeyword:queryString];
     }
-    else {
-        // otherwise, reset back to stored places
-        NSArray *allPlaces = [[self contentStore] places];
-        if (allPlaces) {
-            updateFeedPlaces([[self contentStore] places], nil);
-        }
-        else {
-            updateFeedPlaces(nil, [NSError errorWithDomain:@"Places not set" code:0 userInfo:nil]);
-        }
-    }
+
+    [self setFeedSource:source];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -255,13 +200,13 @@
     if (row == 0) {
         return @"All Places";
     }
-    return [[[[self contentStore] categories] objectAtIndex:row-1] label];
+    return [[[contentStore categories] objectAtIndex:row-1] label];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView
     numberOfRowsInComponent:(NSInteger)component
 {
-    return [[[self contentStore] categories] count] + 1;
+    return [[contentStore categories] count] + 1;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

@@ -10,7 +10,7 @@
 		3747AC6015FA74840053BC32 /* SCESpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC5F15FA74840053BC32 /* SCESpecial.m */; };
 		3747AC6415FA76BB0053BC32 /* SCENewsStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6315FA76BB0053BC32 /* SCENewsStub.m */; };
 		3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */; };
-		3757040E160A54B0004A6D45 /* DelmeButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3757040D160A54B0004A6D45 /* DelmeButton.xib */; };
+		37570412160A7825004A6D45 /* SCEFeedSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37570411160A7825004A6D45 /* SCEFeedSource.m */; };
 		37642D7D15F6A0670024B6A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7C15F6A0670024B6A2 /* UIKit.framework */; };
 		37642D7F15F6A0670024B6A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7E15F6A0670024B6A2 /* Foundation.framework */; };
 		37642D8115F6A0670024B6A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D8015F6A0670024B6A2 /* CoreGraphics.framework */; };
@@ -73,7 +73,8 @@
 		3747AC6615FA886A0053BC32 /* SCEPlaceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceStore.h; sourceTree = "<group>"; };
 		3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceStore.m; sourceTree = "<group>"; };
 		3747AC7015FA92940053BC32 /* JSONSerializable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONSerializable.h; sourceTree = "<group>"; };
-		3757040D160A54B0004A6D45 /* DelmeButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DelmeButton.xib; sourceTree = "<group>"; };
+		37570410160A7825004A6D45 /* SCEFeedSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedSource.h; sourceTree = "<group>"; };
+		37570411160A7825004A6D45 /* SCEFeedSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedSource.m; sourceTree = "<group>"; };
 		37642D7815F6A0670024B6A2 /* OaklandScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OaklandScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37642D7C15F6A0670024B6A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		37642D7E15F6A0670024B6A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -215,7 +216,6 @@
 				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
 				37642E0615F7BBE10024B6A2 /* SCEPlaceFeedViewController.h */,
 				37642E0715F7BBE20024B6A2 /* SCEPlaceFeedViewController.m */,
-				3757040D160A54B0004A6D45 /* DelmeButton.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -246,6 +246,8 @@
 				3747AC7015FA92940053BC32 /* JSONSerializable.h */,
 				3765EDD0160A35C5004E9225 /* SCEFeedItemContainer.h */,
 				3765EDD1160A35C5004E9225 /* SCEFeedItemContainer.m */,
+				37570410160A7825004A6D45 /* SCEFeedSource.h */,
+				37570411160A7825004A6D45 /* SCEFeedSource.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -561,7 +563,6 @@
 				37ED1DD81607BE4C009CA46D /* SCEFeedSearchDialogController.xib in Resources */,
 				3765EDDB160A3A07004E9225 /* SCEFeedLoadingCell.xib in Resources */,
 				3765EDDD160A3A25004E9225 /* SCEFeedStaticCell.xib in Resources */,
-				3757040E160A54B0004A6D45 /* DelmeButton.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +604,7 @@
 				3765EDD2160A35C5004E9225 /* SCEFeedItemContainer.m in Sources */,
 				3765EDD6160A39C7004E9225 /* SCEFeedLoadingCell.m in Sources */,
 				3765EDD9160A39DF004E9225 /* SCEFeedStaticCell.m in Sources */,
+				37570412160A7825004A6D45 /* SCEFeedSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

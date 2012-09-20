@@ -12,6 +12,10 @@
 #import "SCEAPIConnection.h"
 #import "SCEAPIResponse.h"
 
+@interface SCEPlaceStore ()
++ (NSArray *)filter:(NSArray *)objects byCategory:(SCECategory *)category;
+@end
+
 @implementation SCEPlaceStore
 
 @synthesize places, lastSuccessfulFetch, categories;
@@ -34,6 +38,27 @@
         categories = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+// "private" method for filtering categories
++ (NSArray *)filter:(NSArray *)objects byCategory:(SCECategory *)category
+{
+    if (category) {
+        NSInteger filterValue = [category value];
+        NSMutableArray* filteredPlaces = [[NSMutableArray alloc] init];
+        for (SCEPlace* place in objects) {
+            for (SCECategory* c in [place categories]) {
+                if ([c value] == filterValue) {
+                    [filteredPlaces addObject:place];
+                    break;
+                }
+            }
+        }
+        return [NSArray arrayWithArray:filteredPlaces];
+    }
+    else {
+        return objects;
+    }
 }
 
 - (void)setPlaces:(NSArray *)ps
@@ -97,50 +122,54 @@
 }
 
 - (void)findPlacesMatchingQuery:(NSString *)query
+                       category:(SCECategory *)category
                        onReturn:(void (^)(NSArray *, NSError *))returnBlock
-{
+{    
     // look for a cached query so we can skip the API
     NSArray *matchingObjects = [queryResultMap objectForKey:query];
     if (matchingObjects) {
         if (returnBlock) {
+            matchingObjects = [SCEPlaceStore filter:matchingObjects byCategory:category];
             returnBlock(matchingObjects, nil);
         }
         return;
     }
-
+    
     // otherwise, we need to make an API request to get the search results
-
-    // first: define the block to translate API response to a list of matching places
-    void (^completionBlock)(SCEAPIResponse*, NSError *) = ^(SCEAPIResponse* resp, NSError *err) {
-        NSMutableArray* filteredPlaces = nil;
+    // set up and initiate the API request
+    NSString* urlString = [NSString stringWithFormat:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
+    
+    // after fetch, process the results before calling the onReturn block
+    [connection setCompletionBlock:^(SCEAPIResponse* resp, NSError *err) {
+        NSArray *finalPlaces = nil;
+        
         // if we get a valid response, take the ids returned and return a places list with only those ids
         if(resp) {
             NSLog(@"Found %d results", [[resp objects] count]);
-            filteredPlaces = [[NSMutableArray alloc] init];
+            NSMutableArray *matchingPlaces = [[NSMutableArray alloc] init];
             // create a new array of places from the ids returned (in order returned)
             for (NSDictionary* idObject in [resp objects]) {
                 NSString* rId = [idObject objectForKey:@"id"];
                 SCEPlace* place = [idPlaceMap objectForKey:rId];
                 if (place) {
-                    [filteredPlaces addObject:place];
+                    [matchingPlaces addObject:place];
                 }
             }
             
             // cache these results before returning
-            [queryResultMap setObject:[filteredPlaces copy] forKey:query];
+            [queryResultMap setObject:[matchingPlaces copy] forKey:query];
+            
+            // do the category filtering after the caching
+            finalPlaces = [SCEPlaceStore filter:matchingPlaces byCategory:category];
         }
         if(returnBlock) {
-            returnBlock(filteredPlaces, err);
+            returnBlock(finalPlaces, err);
             NSLog(@"%@", err);
         }
-    };
-    
-    // finally, set up and initiate the API request
-    NSString* urlString = [NSString stringWithFormat:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *req = [NSURLRequest requestWithURL:url];
-    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
-    [connection setCompletionBlock:completionBlock];
+    }];
     
     // connection will let this response object interpret the JSON
     SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];

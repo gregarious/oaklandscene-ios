@@ -10,6 +10,7 @@
 #import "JSONSerializable.h"
 
 @class SCEPlace;
+@class SCECategory;
 
 @interface SCEPlaceStore : NSObject
 {
@@ -26,6 +27,7 @@
 
 // could cause a delay if query needs to defer to server, hence return block
 - (void)findPlacesMatchingQuery:(NSString *)query
+                       category:(SCECategory *)category
                        onReturn:(void (^)(NSArray* places, NSError* err))block;
 
 @end
