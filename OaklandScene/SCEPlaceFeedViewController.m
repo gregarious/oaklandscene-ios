@@ -38,8 +38,6 @@
         // initialize the data store
         contentStore = [SCEPlaceStore sharedStore];
         [self resetFeed];
-        
-        pagesDisplayed = 0;
     }
     return self;
 }
@@ -81,21 +79,30 @@
     feedSource = fs;
     [feedSource setCompletionBlock:^void(NSError *err) {
         if(err) {
-            // TODO: better error display
-            SCEFeedItemContainer* errItem = [[SCEFeedItemContainer alloc] initWithContent:@"Error"
-                                                                                  type:SCEFeedItemTypeLoading];
+            SCEFeedItemContainer* errItem = [[SCEFeedItemContainer alloc] initWithContent:[err localizedDescription]
+                                                                                  type:SCEFeedItemTypeStatic];
             displayedItems = [[NSMutableArray alloc] initWithObjects:errItem, nil];
         }
         else {
             displayedItems = [NSMutableArray array];
-            [self showNextPage];
+            [self addNextPage];
+        }
+        [tableView reloadData];
+
+        // scroll back to top of screen
+        if ([displayedItems count] > 0) {
+            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
+                                                                 inSection:0]
+                             atScrollPosition:UITableViewScrollPositionTop
+                                     animated:NO];
         }
     }];
+    [feedSource sync];
 }
 
-- (void)showNextPage
+- (void)addNextPage
 {
-    if ([feedSource hasPage:pagesDisplayed+1]) {
+    if ([feedSource hasPage:pagesDisplayed]) {     // hasPage is 0-index based, pagesDisplayed is a count
         // add the next pages to displayedItems
         NSArray *nextPageItems = [feedSource getPage:pagesDisplayed];
         for (SCEPlace *p in nextPageItems) {
@@ -104,12 +111,12 @@
                                         type:SCEFeedItemTypeObject]];
         }
         
-        // increment the interal page count and display "Show More" item if relevant
+        // increment the internal page count and display "Show More" item if relevant
         pagesDisplayed++;
-        if ([feedSource hasPage:pagesDisplayed+1])
+        if ([feedSource hasPage:pagesDisplayed])
         {
             [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:@"Show More"
-                                                                               type:SCEFeedItemTypeButton]];            
+                                                                               type:SCEFeedItemTypeStatic]];            
         }
     }
 }
@@ -162,9 +169,9 @@
         [detailController setHidesBottomBarWhenPushed:YES];
         [[self navigationController] pushViewController:detailController animated:YES];
     }
-    else if([item type] == SCEFeedItemTypeButton) {
+    else if([item type] == SCEFeedItemTypeStatic) {
         [displayedItems removeLastObject];
-        [self showNextPage];
+        [self addNextPage];
         [tableView reloadData];
     }
 }
@@ -185,7 +192,7 @@
     }
 
     // if query is blank, don't do a keyword search
-    if ([queryString length]) {
+    if ([queryString length] > 0) {
         [source setFilterKeyword:queryString];
     }
 

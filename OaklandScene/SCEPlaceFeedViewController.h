@@ -23,6 +23,6 @@
 @property (nonatomic, strong) SCEFeedSource *feedSource;
 
 - (void)resetFeed;
-- (void)showNextPage;
+- (void)addNextPage;
 
 @end

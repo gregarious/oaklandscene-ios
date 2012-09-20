@@ -23,23 +23,44 @@
 {
     self = [super init];
     if (self) {
-        store = s;
         pageLength = 10;
+        syncInProgress = false;
+        [self setStore:s];
     }
     return self;
 }
 
+- (void)setStore:(SCEPlaceStore *)s
+{
+    store = s;
+    if (![store lastPlacesSet]) {
+        [store fetchContentWithCompletion:nil];
+    }
+}
+
 - (void)sync
 {
+    syncInProgress = true;
+    
     // clear items until sync is finished
     items = nil;
 
     // once the proper items have been retreived, store them and call the completion block
     void (^onSyncComplete)(NSArray *, NSError *) = ^void (NSArray *matches, NSError *err) {
+        NSLog(@"Sync complete:");
+        if (matches) {
+            NSLog(@"  Number of items: %d", [matches count]);
+        }
+        else {
+            NSLog(@"  %@", err);
+        }
+
         items = matches;
+        
         if ([self completionBlock]) {
             [self completionBlock](err);
         }
+        syncInProgress = false;
     };
     
     // if no filtering, don't bother with asking the store anything special

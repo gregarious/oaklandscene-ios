@@ -18,7 +18,7 @@
     NSMutableDictionary* queryResultMap;
 }
 @property (nonatomic, copy) NSMutableArray* places;
-@property (nonatomic, readonly) NSDate* lastSuccessfulFetch;
+@property (nonatomic, readonly) NSDate* lastPlacesSet;
 @property (nonatomic, readonly) NSArray* categories;
 
 + (SCEPlaceStore *)sharedStore; // overrides base return type

@@ -18,7 +18,7 @@
 
 @implementation SCEPlaceStore
 
-@synthesize places, lastSuccessfulFetch, categories;
+@synthesize places, lastPlacesSet, categories;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -64,6 +64,7 @@
 - (void)setPlaces:(NSArray *)ps
 {
     places = [[NSMutableArray alloc] initWithArray:ps];
+    lastPlacesSet = [NSDate date];
     
     // reset dictionary and set categories
     idPlaceMap = [[NSMutableDictionary alloc] init];
@@ -113,7 +114,6 @@
         [newPlaces addObject:p];
     }
     [self setPlaces:newPlaces];
-    lastSuccessfulFetch = [NSDate date];
     queryResultMap = [[NSMutableDictionary alloc] init];
 
     if (block) {
@@ -124,12 +124,23 @@
 - (void)findPlacesMatchingQuery:(NSString *)query
                        category:(SCECategory *)category
                        onReturn:(void (^)(NSArray *, NSError *))returnBlock
-{    
-    // look for a cached query so we can skip the API
-    NSArray *matchingObjects = [queryResultMap objectForKey:query];
+{
+    NSArray *matchingObjects = nil;
+
+    // if query is nil,
+    if (!query) {
+        matchingObjects = places;
+    }
+    else if([queryResultMap objectForKey:query]) {
+        matchingObjects = [SCEPlaceStore filter:[queryResultMap objectForKey:query]
+                                     byCategory:category];
+    }
+    
+    // if we have matching objects already, no API search query was necessary
     if (matchingObjects) {
+        matchingObjects = [SCEPlaceStore filter:matchingObjects
+                                     byCategory:category];
         if (returnBlock) {
-            matchingObjects = [SCEPlaceStore filter:matchingObjects byCategory:category];
             returnBlock(matchingObjects, nil);
         }
         return;
@@ -137,7 +148,7 @@
     
     // otherwise, we need to make an API request to get the search results
     // set up and initiate the API request
-    NSString* urlString = [NSString stringWithFormat:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
+    NSString* urlString = [NSString stringWithFormat:@"http://www.scenable.com/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
