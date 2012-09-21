@@ -121,6 +121,7 @@
 		3765EDD8160A39DF004E9225 /* SCEFeedStaticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedStaticCell.m; sourceTree = "<group>"; };
 		3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedLoadingCell.xib; sourceTree = "<group>"; };
 		3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedStaticCell.xib; sourceTree = "<group>"; };
+		377180D3160CDEDA0072FDBD /* SCEFeedSourceDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFeedSourceDelegate.h; sourceTree = "<group>"; };
 		37D995A115F940030045CAE5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		37E3EA2C15FA67BD00964876 /* SCEPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlace.h; sourceTree = "<group>"; };
 		37E3EA2D15FA67BD00964876 /* SCEPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlace.m; sourceTree = "<group>"; };
@@ -229,6 +230,10 @@
 				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
 				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
 				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
+				3765EDD0160A35C5004E9225 /* SCEFeedItemContainer.h */,
+				3765EDD1160A35C5004E9225 /* SCEFeedItemContainer.m */,
+				37ED1DCB16079928009CA46D /* SCEFeedSearchDelegate.h */,
+				377180D3160CDEDA0072FDBD /* SCEFeedSourceDelegate.h */,
 				374759E71602872D009CBA55 /* Models */,
 				374759E816028733009CBA55 /* Controllers */,
 				374759F6160288F4009CBA55 /* Views */,
@@ -241,11 +246,8 @@
 			children = (
 				37E3EA3715FA697900964876 /* SCECategory.h */,
 				37E3EA3815FA697900964876 /* SCECategory.m */,
-				37ED1DCB16079928009CA46D /* SCEFeedSearchDelegate.h */,
 				37E3EA3015FA67DC00964876 /* SCEGeocoded.h */,
 				3747AC7015FA92940053BC32 /* JSONSerializable.h */,
-				3765EDD0160A35C5004E9225 /* SCEFeedItemContainer.h */,
-				3765EDD1160A35C5004E9225 /* SCEFeedItemContainer.m */,
 				37570410160A7825004A6D45 /* SCEFeedSource.h */,
 				37570411160A7825004A6D45 /* SCEFeedSource.m */,
 			);

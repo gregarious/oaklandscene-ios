@@ -13,7 +13,8 @@
 enum {
     SCEFeedItemTypeLoading = 0,
     SCEFeedItemTypeObject = 1,
-    SCEFeedItemTypeStatic = 2
+    SCEFeedItemTypeStatic = 2,
+    SCEFeedItemTypeAction = 3
 };
 typedef NSUInteger SCEFeedItemType;
 

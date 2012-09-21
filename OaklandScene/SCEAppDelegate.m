@@ -16,6 +16,8 @@
 
 #import "SCETodayViewController.h"
 
+#import "SCEPlaceStore.h"
+
 @implementation SCEAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -23,6 +25,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    // Initialize the stores
+    [[SCEPlaceStore sharedStore] syncContentWithCompletion:nil];
     
     // Create the 5 VCs that will live under each tab
     SCETodayViewController* todayVC = [[SCETodayViewController alloc] init];

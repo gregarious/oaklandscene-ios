@@ -34,10 +34,9 @@
 //        [[self navigationItem] setTitle:@"Places Near You"];
         [self addViewToggleButton];
         [self addSearchButton];
-
-        // initialize the data store
+        
+        displayedItems = [NSMutableArray array];
         contentStore = [SCEPlaceStore sharedStore];
-        [self resetFeedSource];
     }
     return self;
 }
@@ -59,6 +58,16 @@
     
     [tableView registerNib:[UINib nibWithNibName:@"SCEFeedStaticCell" bundle:nil]
     forCellReuseIdentifier:@"FeedStaticCell"];
+    
+    // if the main store is loaded, reset the feed
+    if ([contentStore isLoaded]) {
+        [self resetFeedSource];
+    }
+    else {
+        [self addStaticMessageToFeed:@"Places could not be loaded"];
+        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
+    }
+    
 }
 
 -(void)resetFeedSource
@@ -76,36 +85,7 @@
     pagesDisplayed = 0;
     
     feedSource = fs;
-    [feedSource setCompletionBlock:^void(NSError *err) {
-        [self emptyFeed];
-        if(err) {
-            // on error, alert the user via an alert, and fill the table with a "no places" message
-            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                       message:[err localizedDescription]
-                                      delegate:nil
-                             cancelButtonTitle:@"Ok"
-                             otherButtonTitles:nil] show];
-            [self addStaticMessageToFeed:@"No places found"];
-            
-        }
-        else {
-            if (![feedSource hasPage:0]) {
-                [self addStaticMessageToFeed:@"No places found"];
-            }
-            else {
-                [self addNextPageToFeed];
-            }
-        }
-        [tableView reloadData];
-
-        // scroll back to top of screen
-        if ([displayedItems count] > 0) {
-            [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
-                                                                 inSection:0]
-                             atScrollPosition:UITableViewScrollPositionTop
-                                     animated:NO];
-        }
-    }];
+    [feedSource setDelegate:self];
     [feedSource sync];
 }
 
@@ -125,21 +105,22 @@
         if ([feedSource hasPage:pagesDisplayed])
         {
             [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:@"Show More"
-                                                                               type:SCEFeedItemTypeStatic]];            
+                                                                               type:SCEFeedItemTypeAction]];
         }
     }
-}
-
-- (void)addLoadingMessageToFeed
-{
-    [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:nil
-                                                                       type:SCEFeedItemTypeLoading]];
 }
 
 - (void)emptyFeed
 {
     displayedItems = [NSMutableArray array];
 }
+
+
+- (void)addLoadingMessageToFeed
+{
+    [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:nil
+                                                                       type:SCEFeedItemTypeLoading]];
+} 
 
 - (void)addStaticMessageToFeed:(NSString *)message
 {
@@ -156,6 +137,53 @@
     [dialog setDelegate:self];
 }
 
+
+//// SCEFeedSourceDelegate methods ////
+
+- (void)feedSourceContentReady:(id)incomingFS
+{
+    // if some old feed source floating around out there is calling back, ignore it
+    if (incomingFS != feedSource) {
+        return;
+    }
+ 
+    [self emptyFeed];
+    if (![feedSource hasPage:0]) {
+        [self addStaticMessageToFeed:@"No places found"];
+    }
+    else {
+        [self addNextPageToFeed];
+    }
+    
+    [tableView reloadData];
+    // scroll back to top of screen
+    if ([displayedItems count] > 0) {
+        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
+                                                             inSection:0]
+                         atScrollPosition:UITableViewScrollPositionTop
+                                 animated:NO];
+    }
+    
+}
+
+- (void)feedSource:(id)incomingFS syncError:(NSError *)err
+{
+    // if some old feed source floating around out there is calling back, ignore it
+    if (incomingFS != feedSource) {
+        return;
+    }
+    
+    // on error, alert the user via an alert, and fill the table with a "no places" message
+    [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+                                message:[err localizedDescription]
+                               delegate:nil
+                      cancelButtonTitle:@"Ok"
+                      otherButtonTitles:nil] show];
+    
+    [self emptyFeed];
+    [self addStaticMessageToFeed:@"No places found"];
+    [tableView reloadData];
+}
 
 //// UITableViewDataSource methods ////
 
@@ -177,7 +205,7 @@
         [[cell nameLabel] setText:[place name]];
         return cell;
     }
-    else {
+    else {  // handle both Static and Action cells
         SCEFeedStaticCell* cell = [tv dequeueReusableCellWithIdentifier:@"FeedStaticCell"];
         [[cell textLabel] setText:[item content]];
         return cell;
@@ -196,7 +224,7 @@
         [detailController setHidesBottomBarWhenPushed:YES];
         [[self navigationController] pushViewController:detailController animated:YES];
     }
-    else if([item type] == SCEFeedItemTypeStatic) {
+    else if([item type] == SCEFeedItemTypeAction) {
         [displayedItems removeLastObject];
         [self addNextPageToFeed];
         [tableView reloadData];

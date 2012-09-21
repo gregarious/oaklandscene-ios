@@ -18,7 +18,7 @@
 
 @implementation SCEPlaceStore
 
-@synthesize places, lastPlacesSet, categories;
+@synthesize places, lastSynced, categories;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -29,15 +29,9 @@
     return staticStore;
 }
 
-- (id)init{
-    self = [super init];
-    if (self) {
-        idPlaceMap = [[NSMutableDictionary alloc] init];
-        queryResultMap = [[NSMutableDictionary alloc] init];
-        places = [[NSMutableArray alloc] init];
-        categories = [[NSMutableArray alloc] init];
-    }
-    return self;
+- (BOOL)isLoaded
+{
+    return ([self lastSynced] != nil);
 }
 
 // "private" method for filtering categories
@@ -64,7 +58,7 @@
 - (void)setPlaces:(NSArray *)ps
 {
     places = [[NSMutableArray alloc] initWithArray:ps];
-    lastPlacesSet = [NSDate date];
+    lastSynced = [NSDate date];
     
     // reset dictionary and set categories
     idPlaceMap = [[NSMutableDictionary alloc] init];
@@ -88,7 +82,7 @@
     categories = [NSArray arrayWithArray:uniqueCategories];
 }
 
-- (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
+- (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
     // Disabled API-based Place fetching. Just shipping with bundled content.
     // See 61258b0aa70be0111a337b6e566fde96d3cda390 for old version
@@ -125,6 +119,16 @@
                        category:(SCECategory *)category
                        onReturn:(void (^)(NSArray *, NSError *))returnBlock
 {
+    // first ensure that the places content exists, otherwise this can't be done
+    if (!lastSynced) {
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        [userInfo setObject:@"Place store not initialized" forKey:@"localizedDescription"];
+        returnBlock(nil, [NSError errorWithDomain:@"Store not synced"
+                                             code:1
+                                         userInfo:nil]);
+        return;
+    }
+    
     NSArray *matchingObjects = nil;
 
     // if query is nil,

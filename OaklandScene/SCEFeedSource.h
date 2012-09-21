@@ -11,6 +11,7 @@
 // TODO: make this a more general store object
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
+#import "SCEFeedSourceDelegate.h"
 
 @interface SCEFeedSource : NSObject
 
@@ -23,10 +24,9 @@
 
 @property (nonatomic) NSInteger pageLength;
 
-@property (nonatomic, copy) void (^completionBlock)(NSError *);
+@property (nonatomic, weak) id <SCEFeedSourceDelegate> delegate;
 
 - (id)initWithStore:(SCEPlaceStore*)s;
-
 - (void)sync;
 
 // returns the 0-indexes page of results (depends on pageLength)

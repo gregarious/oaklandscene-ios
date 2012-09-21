@@ -30,14 +30,6 @@
     return self;
 }
 
-- (void)setStore:(SCEPlaceStore *)s
-{
-    store = s;
-    if (![store lastPlacesSet]) {
-        [store fetchContentWithCompletion:nil];
-    }
-}
-
 - (void)sync
 {
     syncInProgress = true;
@@ -57,8 +49,13 @@
 
         items = matches;
         
-        if ([self completionBlock]) {
-            [self completionBlock](err);
+        if ([self delegate]) {
+            if (matches) {
+                [[self delegate] feedSourceContentReady:self];
+            }
+            else {
+                [[self delegate] feedSource:self syncError:err];
+            }
         }
         syncInProgress = false;
     };
