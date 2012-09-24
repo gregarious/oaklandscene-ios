@@ -11,5 +11,7 @@
 @implementation SCEPlaceTableCell
 
 @synthesize nameLabel;
+@synthesize addressLabel;
+@synthesize thumbnail;
 
 @end

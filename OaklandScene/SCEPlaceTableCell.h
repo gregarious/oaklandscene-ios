@@ -11,5 +11,7 @@
 @interface SCEPlaceTableCell : SCEFeedTableCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 
 @end

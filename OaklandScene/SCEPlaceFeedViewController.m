@@ -203,6 +203,8 @@
         SCEPlace* place = [item content];
         SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
         [[cell nameLabel] setText:[place name]];
+        [[cell addressLabel] setText:[place streetAddress]];
+        // TODO: set thumbnail
         return cell;
     }
     else {  // handle both Static and Action cells
@@ -210,6 +212,11 @@
         [[cell textLabel] setText:[item content]];
         return cell;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 72.0;
 }
 
 //// UITableViewDelegate methods ////

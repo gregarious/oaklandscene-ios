@@ -679,7 +679,6 @@
 				37ED1DD81607BE4C009CA46D /* SCEFeedSearchDialogController.xib in Resources */,
 				3765EDDB160A3A07004E9225 /* SCEFeedLoadingCell.xib in Resources */,
 				3765EDDD160A3A25004E9225 /* SCEFeedStaticCell.xib in Resources */,
-				3757040E160A54B0004A6D45 /* DelmeButton.xib in Resources */,
 				4FDF6377160B54D100A947A9 /* call_btn.png in Resources */,
 				4FDF6378160B54D100A947A9 /* call_btn@2x.png in Resources */,
 				4FDF6379160B54D100A947A9 /* directions_btn.png in Resources */,
