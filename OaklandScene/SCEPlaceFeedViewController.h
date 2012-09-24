@@ -9,23 +9,31 @@
 @class SCEPlaceStore;
 
 #import "SCEFeedViewController.h"
+#import "SCEFeedSource.h"
 #import "SCEFeedSearchDelegate.h"
+#import "SCEFeedSourceDelegate.h"
 
+// TODO: look into combining the TableViewDataSourceDelegate and the
+//       FeedSourceDelegate together as some kind of DI object
 @interface SCEPlaceFeedViewController : SCEFeedViewController
-            <UITableViewDataSource, UITableViewDelegate, SCEFeedSearchDelegate>
+            <UITableViewDataSource, UITableViewDelegate,
+             SCEFeedSearchDelegate, SCEFeedSourceDelegate>
 {
     NSMutableArray *displayedItems; // the currently displayed feed items
-    NSArray *feedPlaces; // all items in feed (could be hidden behind "Load more" prompts
+    SCEPlaceStore *contentStore;
+    NSInteger pagesDisplayed;
 }
 
-@property (nonatomic, strong) SCEPlaceStore *contentStore;
+@property (nonatomic, strong) SCEFeedSource *feedSource;
 
-- (void)resetFeedContent;
+// sets up feedSource with the default settings
+- (void)resetFeedSource;
 
-- (void)resetPaging;
-- (void)showNextPage;
+// these methods add items to the displayedItems list, but DO NOT refresh the view
+- (void)emptyFeed;
+- (void)addNextPageToFeed;
+- (void)addStaticMessageToFeed:(NSString *)message;
+- (void)addLoadingMessageToFeed;
 
-- (void)filterFeedContentByCategoryId:(NSInteger)categoryId;
-- (void)emptyFeedWithLoadingMessage:(BOOL)loadingMessage;
 
 @end

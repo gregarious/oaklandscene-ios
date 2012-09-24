@@ -12,9 +12,13 @@
 #import "SCEAPIConnection.h"
 #import "SCEAPIResponse.h"
 
+@interface SCEPlaceStore ()
++ (NSArray *)filter:(NSArray *)objects byCategory:(SCECategory *)category;
+@end
+
 @implementation SCEPlaceStore
 
-@synthesize places, lastSuccessfulFetch, categories;
+@synthesize places, lastSynced, categories;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -25,20 +29,36 @@
     return staticStore;
 }
 
-- (id)init{
-    self = [super init];
-    if (self) {
-        idPlaceMap = [[NSMutableDictionary alloc] init];
-        queryResultMap = [[NSMutableDictionary alloc] init];
-        places = [[NSMutableArray alloc] init];
-        categories = [[NSMutableArray alloc] init];
+- (BOOL)isLoaded
+{
+    return ([self lastSynced] != nil);
+}
+
+// "private" method for filtering categories
++ (NSArray *)filter:(NSArray *)objects byCategory:(SCECategory *)category
+{
+    if (category) {
+        NSInteger filterValue = [category value];
+        NSMutableArray* filteredPlaces = [[NSMutableArray alloc] init];
+        for (SCEPlace* place in objects) {
+            for (SCECategory* c in [place categories]) {
+                if ([c value] == filterValue) {
+                    [filteredPlaces addObject:place];
+                    break;
+                }
+            }
+        }
+        return [NSArray arrayWithArray:filteredPlaces];
     }
-    return self;
+    else {
+        return objects;
+    }
 }
 
 - (void)setPlaces:(NSArray *)ps
 {
     places = [[NSMutableArray alloc] initWithArray:ps];
+    lastSynced = [NSDate date];
     
     // reset dictionary and set categories
     idPlaceMap = [[NSMutableDictionary alloc] init];
@@ -62,7 +82,7 @@
     categories = [NSArray arrayWithArray:uniqueCategories];
 }
 
-- (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
+- (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
     // Disabled API-based Place fetching. Just shipping with bundled content.
     // See 61258b0aa70be0111a337b6e566fde96d3cda390 for old version
@@ -88,7 +108,6 @@
         [newPlaces addObject:p];
     }
     [self setPlaces:newPlaces];
-    lastSuccessfulFetch = [NSDate date];
     queryResultMap = [[NSMutableDictionary alloc] init];
 
     if (block) {
@@ -97,50 +116,75 @@
 }
 
 - (void)findPlacesMatchingQuery:(NSString *)query
+                       category:(SCECategory *)category
                        onReturn:(void (^)(NSArray *, NSError *))returnBlock
 {
-    // look for a cached query so we can skip the API
-    NSArray *matchingObjects = [queryResultMap objectForKey:query];
+    // first ensure that the places content exists, otherwise this can't be done
+    if (!lastSynced) {
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        [userInfo setObject:@"Place store not initialized" forKey:@"localizedDescription"];
+        returnBlock(nil, [NSError errorWithDomain:@"Store not synced"
+                                             code:1
+                                         userInfo:nil]);
+        return;
+    }
+    
+    NSArray *matchingObjects = nil;
+
+    // if query is nil,
+    if (!query) {
+        matchingObjects = places;
+    }
+    else if([queryResultMap objectForKey:query]) {
+        matchingObjects = [SCEPlaceStore filter:[queryResultMap objectForKey:query]
+                                     byCategory:category];
+    }
+    
+    // if we have matching objects already, no API search query was necessary
     if (matchingObjects) {
+        matchingObjects = [SCEPlaceStore filter:matchingObjects
+                                     byCategory:category];
         if (returnBlock) {
             returnBlock(matchingObjects, nil);
         }
         return;
     }
-
+    
     // otherwise, we need to make an API request to get the search results
-
-    // first: define the block to translate API response to a list of matching places
-    void (^completionBlock)(SCEAPIResponse*, NSError *) = ^(SCEAPIResponse* resp, NSError *err) {
-        NSMutableArray* filteredPlaces = nil;
+    // set up and initiate the API request
+    NSString* urlString = [NSString stringWithFormat:@"http://www.scenable.com/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
+    
+    // after fetch, process the results before calling the onReturn block
+    [connection setCompletionBlock:^(SCEAPIResponse* resp, NSError *err) {
+        NSArray *finalPlaces = nil;
+        
         // if we get a valid response, take the ids returned and return a places list with only those ids
         if(resp) {
             NSLog(@"Found %d results", [[resp objects] count]);
-            filteredPlaces = [[NSMutableArray alloc] init];
+            NSMutableArray *matchingPlaces = [[NSMutableArray alloc] init];
             // create a new array of places from the ids returned (in order returned)
             for (NSDictionary* idObject in [resp objects]) {
                 NSString* rId = [idObject objectForKey:@"id"];
                 SCEPlace* place = [idPlaceMap objectForKey:rId];
                 if (place) {
-                    [filteredPlaces addObject:place];
+                    [matchingPlaces addObject:place];
                 }
             }
             
             // cache these results before returning
-            [queryResultMap setObject:[filteredPlaces copy] forKey:query];
+            [queryResultMap setObject:[matchingPlaces copy] forKey:query];
+            
+            // do the category filtering after the caching
+            finalPlaces = [SCEPlaceStore filter:matchingPlaces byCategory:category];
         }
         if(returnBlock) {
-            returnBlock(filteredPlaces, err);
+            returnBlock(finalPlaces, err);
             NSLog(@"%@", err);
         }
-    };
-    
-    // finally, set up and initiate the API request
-    NSString* urlString = [NSString stringWithFormat:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&q=%@&idonly=true&limit=0", query];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *req = [NSURLRequest requestWithURL:url];
-    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
-    [connection setCompletionBlock:completionBlock];
+    }];
     
     // connection will let this response object interpret the JSON
     SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
