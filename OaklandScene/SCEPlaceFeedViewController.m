@@ -216,7 +216,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 72.0;
+    SCEFeedItemContainer* item = [displayedItems objectAtIndex:[indexPath row]];
+    if ([item type] == SCEFeedItemTypeObject) {
+        return 72.0;
+    }
+    else {
+        return 44.0;
+    }
 }
 
 //// UITableViewDelegate methods ////

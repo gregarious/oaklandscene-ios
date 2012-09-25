@@ -7,11 +7,9 @@
 //
 
 @class SCEPlace;
+@class SCEPlaceDetailView;
 
 @interface SCEPlaceViewController : UIViewController 
-{
-    __weak IBOutlet UILabel *nameLabel;
-}
 
 @property (nonatomic, strong) SCEPlace *place;
 

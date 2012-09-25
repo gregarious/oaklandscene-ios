@@ -30,11 +30,14 @@
 		37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */; };
 		37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */; };
 		37642DFB15F7B9DA0024B6A2 /* SCEPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */; };
-		37642DFD15F7B9EE0024B6A2 /* SCEPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */; };
 		37642E0815F7BBE20024B6A2 /* SCEPlaceFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0715F7BBE20024B6A2 /* SCEPlaceFeedViewController.m */; };
 		37642E0B15F7BCC00024B6A2 /* SCEEventFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0A15F7BCC00024B6A2 /* SCEEventFeedViewController.m */; };
 		37642E0E15F7BCD70024B6A2 /* SCESpecialFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E0D15F7BCD60024B6A2 /* SCESpecialFeedViewController.m */; };
 		37642E1115F7BCEB0024B6A2 /* SCENewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */; };
+		3764E7C01610E42B00F5977F /* SCEPlaceDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3764E7BF1610E42B00F5977F /* SCEPlaceDetailView.m */; };
+		3764E7D51610EAA200F5977F /* SCEHoursView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3764E7D41610EAA200F5977F /* SCEHoursView.m */; };
+		3764E7D81610EAC400F5977F /* SCEAboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3764E7D71610EAC400F5977F /* SCEAboutView.m */; };
+		3764E7EB1610F95000F5977F /* SCEPlaceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3764E7EA1610F94F00F5977F /* SCEPlaceHeaderView.m */; };
 		3765EDD2160A35C5004E9225 /* SCEFeedItemContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3765EDD1160A35C5004E9225 /* SCEFeedItemContainer.m */; };
 		3765EDD6160A39C7004E9225 /* SCEFeedLoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3765EDD5160A39C7004E9225 /* SCEFeedLoadingCell.m */; };
 		3765EDD9160A39DF004E9225 /* SCEFeedStaticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3765EDD8160A39DF004E9225 /* SCEFeedStaticCell.m */; };
@@ -134,7 +137,6 @@
 		37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceTableCell.m; sourceTree = "<group>"; };
 		37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceViewController.h; sourceTree = "<group>"; };
 		37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceViewController.m; sourceTree = "<group>"; };
-		37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceViewController.xib; sourceTree = "<group>"; };
 		37642E0615F7BBE10024B6A2 /* SCEPlaceFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceFeedViewController.h; sourceTree = "<group>"; };
 		37642E0715F7BBE20024B6A2 /* SCEPlaceFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceFeedViewController.m; sourceTree = "<group>"; };
 		37642E0915F7BCC00024B6A2 /* SCEEventFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEventFeedViewController.h; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 		37642E0D15F7BCD60024B6A2 /* SCESpecialFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecialFeedViewController.m; sourceTree = "<group>"; };
 		37642E0F15F7BCEA0024B6A2 /* SCENewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsFeedViewController.h; sourceTree = "<group>"; };
 		37642E1015F7BCEA0024B6A2 /* SCENewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENewsFeedViewController.m; sourceTree = "<group>"; };
+		3764E7BE1610E42B00F5977F /* SCEPlaceDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceDetailView.h; sourceTree = "<group>"; };
+		3764E7BF1610E42B00F5977F /* SCEPlaceDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceDetailView.m; sourceTree = "<group>"; };
+		3764E7D31610EAA200F5977F /* SCEHoursView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEHoursView.h; sourceTree = "<group>"; };
+		3764E7D41610EAA200F5977F /* SCEHoursView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEHoursView.m; sourceTree = "<group>"; };
+		3764E7D61610EAC400F5977F /* SCEAboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEAboutView.h; sourceTree = "<group>"; };
+		3764E7D71610EAC400F5977F /* SCEAboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEAboutView.m; sourceTree = "<group>"; };
+		3764E7E91610F94F00F5977F /* SCEPlaceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceHeaderView.h; sourceTree = "<group>"; };
+		3764E7EA1610F94F00F5977F /* SCEPlaceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceHeaderView.m; sourceTree = "<group>"; };
 		3765EDD0160A35C5004E9225 /* SCEFeedItemContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedItemContainer.h; sourceTree = "<group>"; };
 		3765EDD1160A35C5004E9225 /* SCEFeedItemContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedItemContainer.m; sourceTree = "<group>"; };
 		3765EDD4160A39C7004E9225 /* SCEFeedLoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedLoadingCell.h; sourceTree = "<group>"; };
@@ -266,7 +276,14 @@
 				37642DF315F7B8DC0024B6A2 /* SCEPlaceTableCell.h */,
 				37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */,
 				37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */,
-				37642DFC15F7B9EE0024B6A2 /* SCEPlaceViewController.xib */,
+				3764E7BE1610E42B00F5977F /* SCEPlaceDetailView.h */,
+				3764E7BF1610E42B00F5977F /* SCEPlaceDetailView.m */,
+				3764E7D31610EAA200F5977F /* SCEHoursView.h */,
+				3764E7D41610EAA200F5977F /* SCEHoursView.m */,
+				3764E7D61610EAC400F5977F /* SCEAboutView.h */,
+				3764E7D71610EAC400F5977F /* SCEAboutView.m */,
+				3764E7E91610F94F00F5977F /* SCEPlaceHeaderView.h */,
+				3764E7EA1610F94F00F5977F /* SCEPlaceHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -668,7 +685,6 @@
 				37642DA115F6A0670024B6A2 /* SCETodayViewController.xib in Resources */,
 				37642DE315F7B69D0024B6A2 /* SCEFeedMapViewController.xib in Resources */,
 				37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */,
-				37642DFD15F7B9EE0024B6A2 /* SCEPlaceViewController.xib in Resources */,
 				37FCE8F215F8D9C600666F1D /* SCEEventViewController.xib in Resources */,
 				37FCE8F715F8D9E300666F1D /* SCESpecialViewController.xib in Resources */,
 				37FCE8FC15F8D9FE00666F1D /* SCENewsViewController.xib in Resources */,
@@ -751,6 +767,10 @@
 				3765EDD6160A39C7004E9225 /* SCEFeedLoadingCell.m in Sources */,
 				3765EDD9160A39DF004E9225 /* SCEFeedStaticCell.m in Sources */,
 				37570412160A7825004A6D45 /* SCEFeedSource.m in Sources */,
+				3764E7C01610E42B00F5977F /* SCEPlaceDetailView.m in Sources */,
+				3764E7D51610EAA200F5977F /* SCEHoursView.m in Sources */,
+				3764E7D81610EAC400F5977F /* SCEAboutView.m in Sources */,
+				3764E7EB1610F95000F5977F /* SCEPlaceHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
