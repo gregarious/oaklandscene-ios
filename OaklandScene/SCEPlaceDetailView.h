@@ -11,7 +11,7 @@
 @class UIImage;
 @class SCEHoursView;
 @class SCEAboutView;
-@class SCEPlaceHeaderView;
+@class SCEPlaceDetailHeadView;
 @class MKMapView;
 
 @interface SCEPlaceDetailView : UIView
@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic) MKMapView *mapView;
-@property (nonatomic) SCEPlaceHeaderView *headerView;
+@property (nonatomic) SCEPlaceDetailHeadView *headerView;
 @property (nonatomic) SCEHoursView *hoursView;
 @property (nonatomic) SCEAboutView *aboutView;
 

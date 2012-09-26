@@ -9,15 +9,9 @@
 #import <MapKit/MapKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "SCEPlaceDetailView.h"
-#import "SCEPlaceHeaderView.h"
+#import "SCEPlaceDetailHeadView.h"
 #import "SCEAboutView.h"
 #import "SCEHoursView.h"
-
-@interface SCEPlaceDetailView ()
-
-- (void)updateDynamicSubviewFrames;
-
-@end
 
 @implementation SCEPlaceDetailView
 
@@ -31,6 +25,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        // set up the background images
         CGSize sz;
         UIImageView *windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_bkgd.png"]];
         sz = [[windowBackground image] size];
@@ -40,81 +35,82 @@
         sz = [[contentBackground image] size];
         [contentBackground setFrame:CGRectMake(12, 160, sz.width, sz.height)];
 
-        // initialize all the static subviews
-        NSInteger fy = 0;  // running counter of frame position y
-        NSInteger fw = 296;         // current width of frame
-
-        // init map view
-        mapView = [[MKMapView alloc] initWithFrame:CGRectMake(12, fy, fw, 80)];
-        fy += 80;
-        
-        // init header view
-        headerView = [[SCEPlaceHeaderView alloc] initWithFrame:CGRectMake(4, fy, fw, 80)];
-        fy += 80;
-        
         // add the subviews
         [self addSubview:windowBackground];
         [self addSubview:contentBackground];
-        [self addSubview:mapView];
-        [self addSubview:headerView];
     }
     return self;
 }
 
-- (void)updateDynamicSubviewFrames
+- (void)layoutSubviews
 {
-    NSInteger fx = 24, fy = 168, fw = 248;
-    CGSize sz;
+    CGRect frame = [self frame];
+    CGRect bounds = [self bounds];
+    NSLog(@"prelayout frame: %f, %f, %f, %f", frame.origin.x, frame.origin.y,
+          frame.size.width, frame.size.height);
+    NSLog(@"prelayout bounds: %f, %f, %f, %f", bounds.origin.x, bounds.origin.y,
+          bounds.size.width, bounds.size.height);
+    
+    CGFloat rasterY = 0.0;
+    // map view
+    if ([self mapView]) {
+        [[self mapView] setFrame:CGRectMake(12.0, rasterY, 296.0, 80.0)];
+        rasterY += [[self mapView] frame].size.height;
+    }
+    
+    // header view (not optional)
+    [[self headerView] setFrame:CGRectMake(8, rasterY, 304, 80)];
+    // add height of header and a margin below
+    rasterY += [[self headerView] frame].size.height + 8;
+    
+    // hours
     if ([self hoursView]) {
-        sz = [[self hoursView] bounds].size;
-        [[self hoursView] setFrame:CGRectMake(fx, fy, fw, sz.height)];
-        fy += sz.height + 20;
+        CGFloat height = [[self hoursView] bounds].size.height;
+        [[self hoursView] setFrame:CGRectMake(24, rasterY, 272, height)];
+        // add height of subview and a margin below
+        rasterY += [[self hoursView] frame].size.height + 20;
     }
     
-    sz = CGSizeMake(0.0, 0.0);
-    if ([self leftActionButton] || [self rightActionButton]) {
-        if ([self leftActionButton]) {
-            sz = [[self leftActionButton] bounds].size;
-            [[self leftActionButton] setFrame:CGRectMake(fx, fy, 132, sz.height)];
-        }
-        if ([self rightActionButton]) {
-            sz = [[self rightActionButton] bounds].size;
-            [[self rightActionButton] setFrame:CGRectMake(fx + 140, fy, 132, sz.height)];
-        }
-        fy += sz.height + 12;
-    }
-    
-    sz = CGSizeMake(0.0, 0.0);
-    if ([self leftConnectButton] || [self middleConnectButton] || [self rightActionButton]) {
-        if ([self leftConnectButton]) {
-            sz = [[self leftConnectButton] bounds].size;
-            [[self leftConnectButton] setFrame:CGRectMake(fx, fy, 88, sz.height)];
-        }
-        if ([self middleConnectButton]) {
-            sz = [[self middleConnectButton] bounds].size;
-            [[self middleConnectButton] setFrame:CGRectMake(fx + 92, fy, 88, sz.height)];
-        }
-        if ([self rightConnectButton]) {
-            sz = [[self rightConnectButton] bounds].size;
-            [[self rightConnectButton] setFrame:CGRectMake(fx + 184, fy, 88, sz.height)];
-        }
-        fy += sz.height + 20;
-    }
+    // buttons
+    BOOL actionButtonExists = [self leftActionButton] || [self rightActionButton];
+    BOOL connectButtonExists = [self leftConnectButton] || [self middleConnectButton] || [self rightConnectButton];
+    if (actionButtonExists || connectButtonExists) {
+        
+        if (actionButtonExists) {
+            CGFloat btnHeight = 35;
+            [[self leftActionButton] setFrame:CGRectMake(24, rasterY, 132, btnHeight)];
+            [[self rightActionButton] setFrame:CGRectMake(164, rasterY, 132, btnHeight)];
+            rasterY += btnHeight;
 
-    sz = CGSizeMake(0.0, 0.0);
-    if ([self aboutView]) {
-        sz = [[self aboutView] bounds].size;
-        [[self aboutView] setFrame:CGRectMake(fx, fy, fw, sz.height)];
-        fy += sz.height;
+            // add padding between button rows
+            if (connectButtonExists) {
+                rasterY += 12;
+            }
+        }
+        
+        if (connectButtonExists) {
+            CGFloat btnHeight = 44;
+            [[self leftConnectButton] setFrame:CGRectMake(24, rasterY, 88, btnHeight)];
+            [[self middleConnectButton] setFrame:CGRectMake(116, rasterY, 88, btnHeight)];
+            [[self rightConnectButton] setFrame:CGRectMake(208, rasterY, 88, btnHeight)];
+            rasterY += btnHeight;
+        }
+        // margin below buttons
+        rasterY += 20;
     }
     
-    // set the true bounds of the view
-    CGRect bounds = CGRectMake(0.0, 0.0, 320.0, fy+12.0);
-//    CGRect bounds = [self frame];
-//    bounds.size.width = 44;
-    // TODO: figure out why this isn't a setBounds call? Look more into internal inflating of bounds. 
-    [self setFrame:bounds];
+    // about
+    if ([self aboutView]) {
+        CGFloat height = [[self aboutView] bounds].size.height;
+        [[self aboutView] setFrame:CGRectMake(24, rasterY, 272, height)];
+        // add height of subview and a margin below
+        rasterY += [[self hoursView] frame].size.height + 20;
+    }
+    
+    // TODO: why not update internal bounds? setting them messes with the
+    // frame dimensions and vice versa. Why do they have to affect each other?
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -124,12 +120,28 @@
 }
 */
 
+- (void)setMapView:(MKMapView *)view
+{
+    [[self mapView] removeFromSuperview];
+    mapView = view;
+    [self addSubview:view];
+    [self setNeedsLayout];
+}
+
+- (void)setHeaderView:(SCEPlaceDetailHeadView *)view
+{
+    [[self headerView] removeFromSuperview];
+    headerView = view;
+    [self addSubview:view];
+    [self setNeedsLayout];
+}
+
 - (void)setHoursView:(SCEHoursView *)view
 {
     [[self hoursView] removeFromSuperview];
     hoursView = view;
     [self addSubview:hoursView];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 - (void)setAboutView:(SCEAboutView *)view
@@ -137,7 +149,7 @@
     [[self aboutView] removeFromSuperview];
     aboutView = view;
     [self addSubview:aboutView];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 - (void)setLeftActionButton:(UIButton *)btn
@@ -145,7 +157,7 @@
     [[self leftActionButton] removeFromSuperview];
     leftActionButton = btn;
     [self addSubview:leftActionButton];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 - (void)setRightActionButton:(UIButton *)btn
@@ -153,7 +165,7 @@
     [[self rightActionButton] removeFromSuperview];
     rightActionButton = btn;
     [self addSubview:rightActionButton];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 - (void)setLeftConnectButton:(UIButton *)btn
@@ -161,7 +173,7 @@
     [[self leftConnectButton] removeFromSuperview];
     leftConnectButton = btn;
     [self addSubview:leftConnectButton];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 - (void)setMiddleConnectButton:(UIButton *)btn
@@ -169,7 +181,7 @@
     [[self middleConnectButton] removeFromSuperview];
     middleConnectButton = btn;
     [self addSubview:middleConnectButton];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 - (void)setRightConnectButton:(UIButton *)btn
@@ -177,7 +189,7 @@
     [[self rightConnectButton] removeFromSuperview];
     rightConnectButton = btn;
     [self addSubview:rightConnectButton];
-    [self updateDynamicSubviewFrames];
+    [self setNeedsLayout];
 }
 
 @end

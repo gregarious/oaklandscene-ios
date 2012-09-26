@@ -10,6 +10,7 @@
 #import "SCEPlaceViewController.h"
 #import "SCEHoursView.h"
 #import "SCEAboutView.h"
+#import "SCEPlaceDetailHeadView.h"
 #import "SCEPlaceDetailView.h"
 #import "SCEPlace.h"
 
@@ -49,36 +50,46 @@
                                 initWithFrame:frame];
 
     // set up the detailView
-    SCEPlaceDetailView *detailView = [[SCEPlaceDetailView alloc] init];
-
-    [[detailView mapView] setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300)];
-    [[detailView mapView] addAnnotation:[SCESimpleAnnotation
+    SCEPlaceDetailView *detailView = [[SCEPlaceDetailView alloc] initWithFrame:frame];
+    
+    MKMapView *mapView = [[MKMapView alloc] init];
+    [mapView setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300)];
+    [mapView addAnnotation:[SCESimpleAnnotation
                                          annotationWithCoordinate:[[self place] location]]];
+    [detailView setMapView:mapView];
+    
+    SCEPlaceDetailHeadView* headerView = [[SCEPlaceDetailHeadView alloc] init];
+    [detailView setHeaderView:headerView];
+
+    SCEHoursView* hoursView = [[SCEHoursView alloc] init];
+    [hoursView setBounds:CGRectMake(0.0, 0.0, 272, 56)];
+    [detailView setHoursView:hoursView];
     
     SCEAboutView* aboutView = [[SCEAboutView alloc] init];
+    [aboutView setBounds:CGRectMake(0.0, 0.0, 272, 200)];
     [detailView setAboutView:aboutView];
 
-    UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"directions_btn"
+    UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
                                                       owner:self
                                                     options:nil] objectAtIndex:0];
     [detailView setLeftActionButton:dirBtn];
     
-    UIButton *callBtn = [[[NSBundle mainBundle] loadNibNamed:@"call_btn"
+    UIButton *callBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCECallButton"
                                                       owner:self
                                                     options:nil] objectAtIndex:0];
     [detailView setRightActionButton:callBtn];
 
-    UIButton *facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"facebook_btn"
+    UIButton *facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectFacebookButton"
                                                            owner:self
                                                          options:nil] objectAtIndex:0];
     [detailView setLeftConnectButton:facebookBtn];
     
-    UIButton *twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"twitter_btn"
+    UIButton *twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectTwitterButton"
                                                            owner:self
                                                          options:nil] objectAtIndex:0];
     [detailView setMiddleConnectButton:twitterBtn];
 
-    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"website_btn"
+    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
                                                           owner:self
                                                         options:nil] objectAtIndex:0];
     [detailView setRightConnectButton:websiteBtn];
