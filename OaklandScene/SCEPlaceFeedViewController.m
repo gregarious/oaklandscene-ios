@@ -67,7 +67,6 @@
         [self addStaticMessageToFeed:@"Places could not be loaded"];
         [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
     }
-    
 }
 
 -(void)resetFeedSource
@@ -216,7 +215,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 72.0;
+    SCEFeedItemContainer* item = [displayedItems objectAtIndex:[indexPath row]];
+    if ([item type] == SCEFeedItemTypeObject) {
+        return 72.0;
+    }
+    else {
+        return 44.0;
+    }
 }
 
 //// UITableViewDelegate methods ////
@@ -239,7 +244,6 @@
         [tableView scrollToRowAtIndexPath:indexPath
                          atScrollPosition:UITableViewScrollPositionTop
                                  animated:YES];
-
     }
 }
 
