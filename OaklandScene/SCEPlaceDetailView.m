@@ -12,7 +12,6 @@
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEAboutView.h"
 #import "SCEHoursView.h"
-#import "SCEUtils.h"
 
 @implementation SCEPlaceDetailView
 
@@ -121,10 +120,14 @@
 }
 */
 
+// Various set property calls -- overridden to handle the subview adding/removing
+// Note that setNeedsLayout is NOT called as a result of this call
+
 - (void)setMapView:(MKMapView *)view
 {
     [[self mapView] removeFromSuperview];
     mapView = view;
+
     [self addSubview:view];
 }
 

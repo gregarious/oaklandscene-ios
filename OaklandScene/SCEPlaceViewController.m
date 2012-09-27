@@ -13,7 +13,6 @@
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEPlaceDetailView.h"
 #import "SCEPlace.h"
-#import "SCEUtils.h"
 
 // quick n dirty annotation for debug purposes
 @interface SCESimpleAnnotation : NSObject<MKAnnotation>
@@ -59,7 +58,21 @@
                                          annotationWithCoordinate:[[self place] location]]];
     [detailView setMapView:mapView];
     
-    SCEPlaceDetailHeadView* headerView = [[SCEPlaceDetailHeadView alloc] init];
+    // need to figure out ahead of time if name will fit on one line
+    NSInteger nibViewIndex;
+    CGSize sz = [[[self place] name] sizeWithFont:[UIFont boldSystemFontOfSize:16]];
+    NSLog(@"%f", sz.width);
+    if (sz.width <= 225) {
+        nibViewIndex = 0;
+    }
+    else {
+        nibViewIndex = 1;
+    }
+    SCEPlaceDetailHeadView* headerView = [[[NSBundle mainBundle] loadNibNamed:@"SCEPlaceDetailHeadView"
+                                                                        owner:self
+                                                                      options:nil] objectAtIndex:nibViewIndex];
+    [[headerView nameLabel] setText:[[self place] name]];
+    [[headerView addressLabel] setText:[[self place] streetAddress]];
     [detailView setHeaderView:headerView];
 
     NSArray *hours = [[self place] hours];
@@ -104,7 +117,6 @@
     [detailView layoutSubviews];
     [detailView sizeToFit];
     
-    // TODO: not going to work cause detailView size isn't known until layoutSubviews is called
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];
 }

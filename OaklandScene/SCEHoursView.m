@@ -8,7 +8,6 @@
 
 #import "SCEHoursView.h"
 #import "SCEPlace.h"
-#import "SCEUtils.h"
 #import <CoreGraphics/CoreGraphics.h>
 
 @implementation SCEHoursView
