@@ -88,7 +88,6 @@
 		4FDF6385160B54FB00A947A9 /* SCEConnectWebsiteButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF637D160B54FB00A947A9 /* SCEConnectWebsiteButton.xib */; };
 		4FDF6386160B54FB00A947A9 /* SCEConnectTwitterButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF637E160B54FB00A947A9 /* SCEConnectTwitterButton.xib */; };
 		4FDF6388160B54FB00A947A9 /* SCEPlaceDetailHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF6380160B54FB00A947A9 /* SCEPlaceDetailHeadView.xib */; };
-		4FDF6389160B54FB00A947A9 /* SCEPlaceDetailHeadAltView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF6381160B54FB00A947A9 /* SCEPlaceDetailHeadAltView.xib */; };
 		4FDF638A160B54FB00A947A9 /* SCEConnectFacebookButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF6382160B54FB00A947A9 /* SCEConnectFacebookButton.xib */; };
 		4FDF638B160B54FB00A947A9 /* SCEDirectionsButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF6383160B54FB00A947A9 /* SCEDirectionsButton.xib */; };
 		4FDF638C160B54FB00A947A9 /* SCECallButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDF6384160B54FB00A947A9 /* SCECallButton.xib */; };
@@ -225,7 +224,6 @@
 		4FDF637D160B54FB00A947A9 /* SCEConnectWebsiteButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEConnectWebsiteButton.xib; sourceTree = "<group>"; };
 		4FDF637E160B54FB00A947A9 /* SCEConnectTwitterButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEConnectTwitterButton.xib; sourceTree = "<group>"; };
 		4FDF6380160B54FB00A947A9 /* SCEPlaceDetailHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceDetailHeadView.xib; sourceTree = "<group>"; };
-		4FDF6381160B54FB00A947A9 /* SCEPlaceDetailHeadAltView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceDetailHeadAltView.xib; sourceTree = "<group>"; };
 		4FDF6382160B54FB00A947A9 /* SCEConnectFacebookButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEConnectFacebookButton.xib; sourceTree = "<group>"; };
 		4FDF6383160B54FB00A947A9 /* SCEDirectionsButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEDirectionsButton.xib; sourceTree = "<group>"; };
 		4FDF6384160B54FB00A947A9 /* SCECallButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCECallButton.xib; sourceTree = "<group>"; };
@@ -626,7 +624,6 @@
 				4FDF637D160B54FB00A947A9 /* SCEConnectWebsiteButton.xib */,
 				4FDF637E160B54FB00A947A9 /* SCEConnectTwitterButton.xib */,
 				4FDF6382160B54FB00A947A9 /* SCEConnectFacebookButton.xib */,
-				4FDF6381160B54FB00A947A9 /* SCEPlaceDetailHeadAltView.xib */,
 				4FDF6383160B54FB00A947A9 /* SCEDirectionsButton.xib */,
 				4FDF6384160B54FB00A947A9 /* SCECallButton.xib */,
 			);
@@ -710,7 +707,6 @@
 				4FDF6385160B54FB00A947A9 /* SCEConnectWebsiteButton.xib in Resources */,
 				4FDF6386160B54FB00A947A9 /* SCEConnectTwitterButton.xib in Resources */,
 				4FDF6388160B54FB00A947A9 /* SCEPlaceDetailHeadView.xib in Resources */,
-				4FDF6389160B54FB00A947A9 /* SCEPlaceDetailHeadAltView.xib in Resources */,
 				4FDF638A160B54FB00A947A9 /* SCEConnectFacebookButton.xib in Resources */,
 				4FDF638B160B54FB00A947A9 /* SCEDirectionsButton.xib in Resources */,
 				4FDF638C160B54FB00A947A9 /* SCECallButton.xib in Resources */,
