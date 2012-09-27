@@ -52,16 +52,15 @@
     // set up the detailView
     SCEPlaceDetailView *detailView = [[SCEPlaceDetailView alloc] initWithFrame:frame];
     
+    // map view
     MKMapView *mapView = [[MKMapView alloc] init];
-    [mapView setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300)];
-    [mapView addAnnotation:[SCESimpleAnnotation
-                                         annotationWithCoordinate:[[self place] location]]];
     [detailView setMapView:mapView];
+    // can't set the region till the subview is framed: do it at the bottom of this method
     
+    // header view
     // need to figure out ahead of time if name will fit on one line
     NSInteger nibViewIndex;
     CGSize sz = [[[self place] name] sizeWithFont:[UIFont boldSystemFontOfSize:16]];
-    NSLog(@"%f", sz.width);
     if (sz.width <= 225) {
         nibViewIndex = 0;
     }
@@ -116,6 +115,11 @@
     // need to know the size of the detailView, so force layout and get size
     [detailView layoutSubviews];
     [detailView sizeToFit];
+    
+    // since map is now framed, we can call setRegion
+    [mapView setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300) animated:false];
+    [mapView addAnnotation:[SCESimpleAnnotation
+                            annotationWithCoordinate:[[self place] location]]];
     
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];
