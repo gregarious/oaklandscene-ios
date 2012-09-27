@@ -10,7 +10,6 @@
 @class SCEPlaceDetailView;
 
 @interface SCEPlaceViewController : UIViewController 
-
 @property (nonatomic, strong) SCEPlace *place;
 
 - (id)initWithPlace:(SCEPlace *)p;

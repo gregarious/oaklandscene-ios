@@ -10,27 +10,44 @@
 
 @implementation SCEAboutView
 
-@synthesize textLabel;
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        CGSize sz;
-        
         // "About" label
-        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel = [[UILabel alloc] init];
         [titleLabel setBackgroundColor:[UIColor clearColor]];
+        [titleLabel setFont:[UIFont boldSystemFontOfSize:13]];
         [titleLabel setText:@"About"];
-        sz = [[titleLabel text] sizeWithFont:[titleLabel font]];
-        [titleLabel setFrame:CGRectMake(0, 0, sz.width, sz.height)];
-        
+
         [self addSubview:titleLabel];
-        
-        // TODO: this is a dummy height for testing purposes
-        [self setBounds:CGRectMake(0, 0, 272, 150)];
+        [titleLabel sizeToFit];
     }
     return self;
+}
+
+- (void)setAboutText:(NSString *)text
+{
+    [textLabel removeFromSuperview];
+    
+    // set up new textLabel
+    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 24, 272, 0)];
+    [textLabel setFont:[UIFont systemFontOfSize:11]];
+    [textLabel setText:text];
+    [textLabel setBackgroundColor:[UIColor clearColor]];
+    
+    [textLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [textLabel setNumberOfLines:0];
+
+    [self addSubview:textLabel];
+    [textLabel sizeToFit];
+}
+
+- (CGSize)sizeThatFits:(CGSize)size
+{
+    CGFloat titleBottomYPos = [titleLabel frame].size.height;
+    CGFloat textBottomYPos = [textLabel frame].size.height;
+    return CGSizeMake(size.width, MAX(titleBottomYPos, textBottomYPos));
 }
 
 /*

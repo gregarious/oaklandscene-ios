@@ -16,7 +16,7 @@
 
 @interface SCEPlaceDetailView : UIView
 {
-    CGSize viewSize;
+    CGFloat lastSubviewBottomYPos;
 }
 
 @property (nonatomic) MKMapView *mapView;

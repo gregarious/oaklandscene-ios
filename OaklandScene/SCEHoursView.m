@@ -8,6 +8,7 @@
 
 #import "SCEHoursView.h"
 #import "SCEPlace.h"
+#import "SCEUtils.h"
 #import <CoreGraphics/CoreGraphics.h>
 
 @implementation SCEHoursView
@@ -18,25 +19,22 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        CGSize sz;
+        lastLabelBottomYPos = 0;
         
         // "Hours" label
-        NSString* titleText = @"Hours";
-        UIFont *titleFont = [UIFont boldSystemFontOfSize:13];
-        sz = [titleText sizeWithFont:titleFont];
-        
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sz.width, sz.height)];
+        titleLabel = [[UILabel alloc] init];
         [titleLabel setBackgroundColor:[UIColor clearColor]];
-        [titleLabel setFont:titleFont];
-        [titleLabel setText:titleText];
+        [titleLabel setFont:[UIFont boldSystemFontOfSize:13]];
+        [titleLabel setText:@"Hours"];
+        
+        [self addSubview:titleLabel];
+        [titleLabel sizeToFit];
 
         // clock image
         UIImage *img = [UIImage imageNamed:@"clock.png"];
-        UIImageView *clockImage = [[UIImageView alloc] initWithImage:img];
-        sz = [img size];
-        [clockImage setFrame:CGRectMake(0, 20, sz.width, sz.height)];
+        clockImage = [[UIImageView alloc] initWithImage:img];
+        [clockImage setFrame:CGRectMake(0, 20, img.size.width, img.size.height)];
         
-        [self addSubview:titleLabel];
         [self addSubview:clockImage];
     }
     return self;
@@ -48,11 +46,10 @@
     for (UILabel *label in hoursLabels) {
         [label removeFromSuperview];
     }
-    
+
+    CGFloat rasterY = 20;
+   
     // set up new labels
-    UIFont *font = [UIFont systemFontOfSize:11];
-
-
     NSMutableArray* newLabels = [NSMutableArray arrayWithCapacity:[hours count]];
     for (SCEPlaceHours *h in hours) {
         // Remove all leading zeros in hours (e.g. 07:00)
@@ -61,29 +58,28 @@
         [regex replaceMatchesInString:hoursText options:0 range:NSMakeRange(0, [hoursText length]) withTemplate:@"$1:"];
         
         // build the label
-        NSString *text = [NSString stringWithFormat:@"%@: %@", [h days], hoursText];
-        CGSize sz = [text sizeWithFont:font];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sz.width, sz.height)];
-        [label setFont:font];
-        [label setText:text];
+        UILabel *label = [[UILabel alloc] init];
+        [label setFont:[UIFont systemFontOfSize:11]];
+        [label setText:[NSString stringWithFormat:@"%@: %@", [h days], hoursText]];
         [label setBackgroundColor:[UIColor clearColor]];
+
+        // set the ypos of this label in the frame
+        [label setFrame:CGRectMake(48, rasterY, 224, 0)];
+        [label sizeToFit];
+        rasterY += label.frame.size.height;
 
         // add the label to our internal list and as a subview
         [newLabels addObject:label];
         [self addSubview:label];
     }
-    
     hoursLabels = [NSArray arrayWithArray:newLabels];
+    lastLabelBottomYPos = rasterY;
+}
 
-    // layout the new subviews
-    CGFloat rasterY = 20;
-    for (UILabel *label in hoursLabels) {
-        CGSize sz = [label frame].size;
-        [label setFrame:CGRectMake(48, rasterY, sz.width, sz.height)];
-        rasterY += sz.height;
-    }
-    CGPoint origin = [self frame].origin;
-    [self setFrame:CGRectMake(origin.x, origin.y, 272, MAX(60, rasterY))];
+- (CGSize)sizeThatFits:(CGSize)size
+{
+    CGFloat clockBottomYPos = [clockImage frame].origin.y + [clockImage frame].size.height;
+    return CGSizeMake(272, MAX(clockBottomYPos, lastLabelBottomYPos));
 }
 
 /*

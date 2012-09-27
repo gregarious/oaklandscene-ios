@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		371965D51614B4AE0069A41E /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 371965D31614B4AD0069A41E /* clock.png */; };
 		371965D61614B4AE0069A41E /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 371965D41614B4AE0069A41E /* clock@2x.png */; };
+		371965DA1614FC170069A41E /* SCEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 371965D91614FC170069A41E /* SCEUtils.m */; };
 		3747AC6015FA74840053BC32 /* SCESpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC5F15FA74840053BC32 /* SCESpecial.m */; };
 		3747AC6415FA76BB0053BC32 /* SCENewsStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6315FA76BB0053BC32 /* SCENewsStub.m */; };
 		3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */; };
@@ -102,6 +103,8 @@
 /* Begin PBXFileReference section */
 		371965D31614B4AD0069A41E /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		371965D41614B4AE0069A41E /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
+		371965D81614FC170069A41E /* SCEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEUtils.h; sourceTree = "<group>"; };
+		371965D91614FC170069A41E /* SCEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEUtils.m; sourceTree = "<group>"; };
 		3747AC5E15FA74840053BC32 /* SCESpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecial.h; sourceTree = "<group>"; };
 		3747AC5F15FA74840053BC32 /* SCESpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecial.m; sourceTree = "<group>"; };
 		3747AC6215FA76BB0053BC32 /* SCENewsStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsStub.h; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 				3765EDD1160A35C5004E9225 /* SCEFeedItemContainer.m */,
 				37ED1DCB16079928009CA46D /* SCEFeedSearchDelegate.h */,
 				377180D3160CDEDA0072FDBD /* SCEFeedSourceDelegate.h */,
+				371965D81614FC170069A41E /* SCEUtils.h */,
+				371965D91614FC170069A41E /* SCEUtils.m */,
 				374759E71602872D009CBA55 /* Models */,
 				374759E816028733009CBA55 /* Controllers */,
 				374759F6160288F4009CBA55 /* Views */,
@@ -775,6 +780,7 @@
 				3764E7D51610EAA200F5977F /* SCEHoursView.m in Sources */,
 				3764E7D81610EAC400F5977F /* SCEAboutView.m in Sources */,
 				3764E7EB1610F95000F5977F /* SCEPlaceDetailHeadView.m in Sources */,
+				371965DA1614FC170069A41E /* SCEUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

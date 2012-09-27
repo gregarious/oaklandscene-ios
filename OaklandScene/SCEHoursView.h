@@ -11,6 +11,10 @@
 @interface SCEHoursView : UIView
 {
     NSArray *hoursLabels;
+    CGFloat lastLabelBottomYPos;
+
+    UILabel *titleLabel;
+    UIImageView *clockImage;
 }
 
 @property (nonatomic, strong) NSArray *hoursArray;

@@ -67,7 +67,6 @@
         [self addStaticMessageToFeed:@"Places could not be loaded"];
         [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
     }
-    
 }
 
 -(void)resetFeedSource
@@ -245,7 +244,6 @@
         [tableView scrollToRowAtIndexPath:indexPath
                          atScrollPosition:UITableViewScrollPositionTop
                                  animated:YES];
-
     }
 }
 

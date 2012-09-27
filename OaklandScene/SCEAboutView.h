@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface SCEAboutView : UIView
+{
+    UILabel *titleLabel;
+    UILabel *textLabel;
+}
 
-@property (nonatomic) UILabel *textLabel;
+- (void)setAboutText:(NSString *)text;
 
 @end

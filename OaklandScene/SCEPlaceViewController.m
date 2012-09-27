@@ -13,6 +13,7 @@
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEPlaceDetailView.h"
 #import "SCEPlace.h"
+#import "SCEUtils.h"
 
 // quick n dirty annotation for debug purposes
 @interface SCESimpleAnnotation : NSObject<MKAnnotation>
@@ -69,7 +70,7 @@
     }
     
     SCEAboutView* aboutView = [[SCEAboutView alloc] init];
-    [aboutView setBounds:CGRectMake(0.0, 0.0, 272, 200)];
+    [aboutView setAboutText:[[self place] description]];
     [detailView setAboutView:aboutView];
 
     UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
@@ -98,6 +99,12 @@
     [detailView setRightConnectButton:websiteBtn];
 
     [scrollView addSubview:detailView];
+
+    // need to know the size of the detailView, so force layout and get size
+    [detailView layoutSubviews];
+    [detailView sizeToFit];
+    
+    // TODO: not going to work cause detailView size isn't known until layoutSubviews is called
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];
 }
