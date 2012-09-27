@@ -62,6 +62,13 @@
     [detailView setHeaderView:headerView];
 
     SCEHoursView* hoursView = [[SCEHoursView alloc] init];
+
+    // debug fixed hours
+    [hoursView setHoursArray:[NSArray arrayWithObjects:
+                              [[SCEPlaceHours alloc] initWithDays:@"Mon-Fri" hours:@"9am - 5pm"],
+                              [[SCEPlaceHours alloc] initWithDays:@"Sat" hours:@"10am - 4pm"],
+                              [[SCEPlaceHours alloc] initWithDays:@"Sun" hours:@"Closed"],
+                              nil]];
     [hoursView setBounds:CGRectMake(0.0, 0.0, 272, 56)];
     [detailView setHoursView:hoursView];
     

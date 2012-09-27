@@ -9,6 +9,21 @@
 #import "SCEPlace.h"
 #import "SCECategory.h"
 
+@implementation SCEPlaceHours
+
+@synthesize days, hours;
+- (id)initWithDays:(NSString *)d hours:(NSString *)h
+{
+    self = [self init];
+    if (self) {
+        [self setDays:d];
+        [self setHours:h];
+    }
+    return self;
+}
+
+@end
+
 @implementation SCEPlace
 
 @synthesize resourceId;

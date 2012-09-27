@@ -59,7 +59,7 @@
     }
     
     // header view (not optional)
-    [[self headerView] setFrame:CGRectMake(8, rasterY, 304, 80)];
+    [[self headerView] setFrame:CGRectMake(4, rasterY, 312, 80)];
     // add height of header and a margin below
     rasterY += [[self headerView] frame].size.height + 8;
     

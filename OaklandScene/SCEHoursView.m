@@ -7,9 +7,12 @@
 //
 
 #import "SCEHoursView.h"
+#import "SCEPlace.h"
 #import <CoreGraphics/CoreGraphics.h>
 
 @implementation SCEHoursView
+
+@synthesize hoursArray;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,24 +21,67 @@
         CGSize sz;
         
         // "Hours" label
-        UILabel *titleLabel = [[UILabel alloc] init];
+        NSString* titleText = @"Hours";
+        UIFont *titleFont = [UIFont boldSystemFontOfSize:13];
+        sz = [titleText sizeWithFont:titleFont];
+        
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sz.width, sz.height)];
         [titleLabel setBackgroundColor:[UIColor clearColor]];
-        [titleLabel setText:@"Hours"];
-        sz = [[titleLabel text] sizeWithFont:[titleLabel font]];
-        [titleLabel setFrame:CGRectMake(0, 0, sz.width, sz.height)];
+        [titleLabel setFont:titleFont];
+        [titleLabel setText:titleText];
 
         // clock image
-        UIImageView *clockImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"clock.png"]];
-        sz = [[clockImage image] size];
-        [clockImage setFrame:CGRectMake(0, 16, sz.width, sz.height)];
+        UIImage *img = [UIImage imageNamed:@"clock.png"];
+        UIImageView *clockImage = [[UIImageView alloc] initWithImage:img];
+        sz = [img size];
+        [clockImage setFrame:CGRectMake(0, 20, sz.width, sz.height)];
         
         [self addSubview:titleLabel];
         [self addSubview:clockImage];
-        
-        [self setBounds:CGRectMake(0.0, 0.0, 272, 56)];
     }
     return self;
 }
+
+- (void)setHoursArray:(NSArray *)hours
+{
+    hoursArray = hours;
+    for (UILabel *label in hoursLabels) {
+        [label removeFromSuperview];
+    }
+    
+    // set up new labels
+    UIFont *font = [UIFont systemFontOfSize:11];
+
+
+    NSMutableArray* newLabels = [NSMutableArray arrayWithCapacity:[hours count]];
+    for (SCEPlaceHours *h in hours) {
+        NSString *text = [NSString stringWithFormat:@"%@: %@", [h days], [h hours]];
+        CGSize sz = [text sizeWithFont:font];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sz.width, sz.height)];
+        
+        [label setFont:font];
+        [label setText:text];
+        [label setBackgroundColor:[UIColor clearColor]];
+
+        [newLabels addObject:label];
+        [self addSubview:label];
+    }
+    
+    hoursLabels = [NSArray arrayWithArray:newLabels];
+    [self setNeedsLayout];
+ }
+
+- (void)layoutSubviews
+{
+    CGFloat rasterY = 20;
+    for (UILabel *label in hoursLabels) {
+        CGSize sz = [label frame].size;
+        [label setFrame:CGRectMake(48, rasterY, sz.width, sz.height)];
+        rasterY += sz.height;
+    }
+}
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

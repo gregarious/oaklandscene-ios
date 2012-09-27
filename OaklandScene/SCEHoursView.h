@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface SCEHoursView : UIView
+{
+    NSArray *hoursLabels;
+}
+
+@property (nonatomic, strong) NSArray *hoursArray;
 
 @end

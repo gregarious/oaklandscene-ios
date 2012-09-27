@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		371965D51614B4AE0069A41E /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 371965D31614B4AD0069A41E /* clock.png */; };
+		371965D61614B4AE0069A41E /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 371965D41614B4AE0069A41E /* clock@2x.png */; };
 		3747AC6015FA74840053BC32 /* SCESpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC5F15FA74840053BC32 /* SCESpecial.m */; };
 		3747AC6415FA76BB0053BC32 /* SCENewsStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6315FA76BB0053BC32 /* SCENewsStub.m */; };
 		3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */; };
@@ -98,6 +100,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		371965D31614B4AD0069A41E /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
+		371965D41614B4AE0069A41E /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
 		3747AC5E15FA74840053BC32 /* SCESpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecial.h; sourceTree = "<group>"; };
 		3747AC5F15FA74840053BC32 /* SCESpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecial.m; sourceTree = "<group>"; };
 		3747AC6215FA76BB0053BC32 /* SCENewsStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsStub.h; sourceTree = "<group>"; };
@@ -586,6 +590,8 @@
 		4FDF6372160B54D100A947A9 /* partials */ = {
 			isa = PBXGroup;
 			children = (
+				371965D31614B4AD0069A41E /* clock.png */,
+				371965D41614B4AE0069A41E /* clock@2x.png */,
 				4F0141491610D7A20096672A /* test_thumb.png */,
 				4F01414A1610D7A20096672A /* test_thumb@2x.png */,
 				4FDF6373160B54D100A947A9 /* call_btn.png */,
@@ -721,6 +727,8 @@
 				4F01414C1610D7A20096672A /* test_thumb@2x.png in Resources */,
 				4F01414F1610D8210096672A /* feed_bkgd.png in Resources */,
 				4F0141501610D8210096672A /* feed_bkgd@2x.png in Resources */,
+				371965D51614B4AE0069A41E /* clock.png in Resources */,
+				371965D61614B4AE0069A41E /* clock@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

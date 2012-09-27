@@ -13,6 +13,16 @@
 @class SCEEvent;
 @class SCESpecial;
 
+// Simple struct-like construct of a single days/hours entry
+@interface SCEPlaceHours : NSObject
+
+@property (nonatomic) NSString* days;
+@property (nonatomic) NSString* hours;
+
+- (id) initWithDays:(NSString *)d hours:(NSString *)h;
+@end
+
+// Main Place class
 @interface SCEPlace : NSObject <SCEGeocoded, JSONSerializable>
 
 // id of place object on server
