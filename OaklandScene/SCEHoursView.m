@@ -55,33 +55,36 @@
 
     NSMutableArray* newLabels = [NSMutableArray arrayWithCapacity:[hours count]];
     for (SCEPlaceHours *h in hours) {
-        NSString *text = [NSString stringWithFormat:@"%@: %@", [h days], [h hours]];
+        // Remove all leading zeros in hours (e.g. 07:00)
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"0(\\d)\\:" options:0 error:nil];
+        NSMutableString* hoursText = [NSMutableString stringWithString:[h hours]];
+        [regex replaceMatchesInString:hoursText options:0 range:NSMakeRange(0, [hoursText length]) withTemplate:@"$1:"];
+        
+        // build the label
+        NSString *text = [NSString stringWithFormat:@"%@: %@", [h days], hoursText];
         CGSize sz = [text sizeWithFont:font];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sz.width, sz.height)];
-        
         [label setFont:font];
         [label setText:text];
         [label setBackgroundColor:[UIColor clearColor]];
 
+        // add the label to our internal list and as a subview
         [newLabels addObject:label];
         [self addSubview:label];
     }
     
     hoursLabels = [NSArray arrayWithArray:newLabels];
-    [self setNeedsLayout];
- }
 
-- (void)layoutSubviews
-{
+    // layout the new subviews
     CGFloat rasterY = 20;
     for (UILabel *label in hoursLabels) {
         CGSize sz = [label frame].size;
         [label setFrame:CGRectMake(48, rasterY, sz.width, sz.height)];
         rasterY += sz.height;
     }
+    CGPoint origin = [self frame].origin;
+    [self setFrame:CGRectMake(origin.x, origin.y, 272, MAX(60, rasterY))];
 }
-
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

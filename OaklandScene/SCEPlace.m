@@ -22,6 +22,12 @@
     return self;
 }
 
+- (void)readFromJSONDictionary:(NSDictionary *)d
+{
+    [self setDays:[d objectForKey:@"days"]];
+    [self setHours:[d objectForKey:@"hours"]];
+}
+
 @end
 
 @implementation SCEPlace
@@ -60,6 +66,17 @@
         if (latDec != [NSNull null] || lngDec != [NSNull null]) {
             [self setLocation:CLLocationCoordinate2DMake([latDec doubleValue], [lngDec doubleValue])];
         }
+    }
+    
+    NSArray *hoursArray = [d objectForKey:@"hours"];
+    if (hoursArray) {
+        NSMutableArray *hoursObjArray = [NSMutableArray arrayWithCapacity:[hoursArray count]];
+        for (NSDictionary *entry in hoursArray) {
+            SCEPlaceHours* h = [[SCEPlaceHours alloc] init];
+            [h readFromJSONDictionary:entry];
+            [hoursObjArray addObject:h];
+        }
+        [self setHours:hoursObjArray];
     }
     
     // set up categories
