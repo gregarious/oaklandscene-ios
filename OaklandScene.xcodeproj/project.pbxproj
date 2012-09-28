@@ -46,6 +46,7 @@
 		3765EDD9160A39DF004E9225 /* SCEFeedStaticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3765EDD8160A39DF004E9225 /* SCEFeedStaticCell.m */; };
 		3765EDDB160A3A07004E9225 /* SCEFeedLoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */; };
 		3765EDDD160A3A25004E9225 /* SCEFeedStaticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */; };
+		37CD7F1F1615EBC5004F840F /* README in Resources */ = {isa = PBXBuildFile; fileRef = 37CD7F1E1615EBC5004F840F /* README */; };
 		37D995A215F940040045CAE5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D995A115F940030045CAE5 /* MapKit.framework */; };
 		37E3EA2E15FA67BD00964876 /* SCEPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E3EA2D15FA67BD00964876 /* SCEPlace.m */; };
 		37E3EA3615FA683800964876 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E3EA3515FA683800964876 /* CoreLocation.framework */; };
@@ -168,6 +169,7 @@
 		3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedLoadingCell.xib; sourceTree = "<group>"; };
 		3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedStaticCell.xib; sourceTree = "<group>"; };
 		377180D3160CDEDA0072FDBD /* SCEFeedSourceDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFeedSourceDelegate.h; sourceTree = "<group>"; };
+		37CD7F1E1615EBC5004F840F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = SOURCE_ROOT; };
 		37D995A115F940030045CAE5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		37E3EA2C15FA67BD00964876 /* SCEPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlace.h; sourceTree = "<group>"; };
 		37E3EA2D15FA67BD00964876 /* SCEPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlace.m; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 		37642D8315F6A0670024B6A2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				37CD7F1E1615EBC5004F840F /* README */,
 				37F22538160A276700140ED5 /* Data */,
 				37642DD315F6BBAB0024B6A2 /* Images */,
 				37642D8415F6A0670024B6A2 /* OaklandScene-Info.plist */,
@@ -735,6 +738,7 @@
 				4F0141501610D8210096672A /* feed_bkgd@2x.png in Resources */,
 				371965D51614B4AE0069A41E /* clock.png in Resources */,
 				371965D61614B4AE0069A41E /* clock@2x.png in Resources */,
+				37CD7F1F1615EBC5004F840F /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
