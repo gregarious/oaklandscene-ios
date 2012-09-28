@@ -36,10 +36,25 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="IBUIImageView" id="226399750">
+						<reference key="NSNextResponder" ref="266360862"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrameSize">{320, 72}</string>
+						<reference key="NSSuperview" ref="266360862"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="761701125"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">cell_bkgd.png</string>
+						</object>
+					</object>
 					<object class="IBUIImageView" id="761701125">
 						<reference key="NSNextResponder" ref="266360862"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{65, 72}</string>
+						<string key="NSFrameSize">{72, 72}</string>
 						<reference key="NSSuperview" ref="266360862"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="438283000"/>
@@ -54,7 +69,7 @@
 					<object class="IBUILabel" id="438283000">
 						<reference key="NSNextResponder" ref="266360862"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{73, 3}, {239, 27}}</string>
+						<string key="NSFrame">{{80, 4}, {239, 27}}</string>
 						<reference key="NSSuperview" ref="266360862"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1003110741"/>
@@ -86,9 +101,10 @@
 					<object class="IBUILabel" id="1003110741">
 						<reference key="NSNextResponder" ref="266360862"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{73, 21}, {239, 26}}</string>
+						<string key="NSFrame">{{80, 22}, {220, 26}}</string>
 						<reference key="NSSuperview" ref="266360862"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="366789120"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -113,16 +129,13 @@
 					<object class="IBUIView" id="366789120">
 						<reference key="NSNextResponder" ref="266360862"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{73, 47}, {231, 16}}</string>
+						<string key="NSFrame">{{80, 48}, {231, 16}}</string>
 						<reference key="NSSuperview" ref="266360862"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-							<object class="NSColorSpace" key="NSCustomColorSpace" id="698902245">
-								<int key="NSID">2</int>
-							</object>
+							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -130,12 +143,14 @@
 				<string key="NSFrameSize">{320, 72}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="761701125"/>
+				<reference key="NSNextKeyView" ref="226399750"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
-					<reference key="NSCustomColorSpace" ref="698902245"/>
+					<object class="NSColorSpace" key="NSCustomColorSpace">
+						<int key="NSID">2</int>
+					</object>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -200,8 +215,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="1003110741"/>
 							<reference ref="438283000"/>
-							<reference ref="761701125"/>
 							<reference ref="366789120"/>
+							<reference ref="226399750"/>
+							<reference ref="761701125"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -225,6 +241,11 @@
 						<reference key="object" ref="366789120"/>
 						<reference key="parent" ref="266360862"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">18</int>
+						<reference key="object" ref="226399750"/>
+						<reference key="parent" ref="266360862"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -233,6 +254,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="16.CustomClassName">SCECategoryList</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.CustomClassName">SCEPlaceTableCell</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -243,7 +265,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">17</int>
+			<int key="maxID">18</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -305,10 +327,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">test_thumb.png</string>
-			<string key="NS.object.0">{72, 72}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="cell_bkgd.png">{320, 72}</string>
+			<string key="test_thumb.png">{72, 72}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>
