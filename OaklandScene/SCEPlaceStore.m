@@ -92,6 +92,7 @@
     
     NSString* filename = [[NSBundle mainBundle] pathForResource:@"places-09192012"
                                                          ofType:@"json"];
+
     NSData* fileData = [NSData dataWithContentsOfFile:filename];
     NSMutableDictionary *d = [NSJSONSerialization JSONObjectWithData:fileData
                                                              options:0

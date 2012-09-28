@@ -204,7 +204,14 @@
         SCEPlaceTableCell *cell = [tv dequeueReusableCellWithIdentifier:@"PlaceTableCell"];
         [[cell nameLabel] setText:[place name]];
         [[cell addressLabel] setText:[place streetAddress]];
-        // TODO: set thumbnail
+
+        if ([place urlImage]) {
+            [[cell thumbnail] setImage:[[place urlImage] image]];
+        }
+        else {
+            [[cell thumbnail] setImage:nil];    // TODO: stock image?
+        }
+
         NSMutableArray *categoryLabels = [NSMutableArray array];
         for (SCECategory *category in [place categories]) {
             [categoryLabels addObject:[category label]];
