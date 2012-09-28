@@ -8,10 +8,13 @@
 
 #import "SCEFeedTableCell.h"
 
+@class SCECategoryList;
+
 @interface SCEPlaceTableCell : SCEFeedTableCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
+@property (weak, nonatomic) IBOutlet SCECategoryList *categoryList;
 
 @end

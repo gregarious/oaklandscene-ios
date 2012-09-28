@@ -110,46 +110,12 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUIView" id="509430950">
+					<object class="IBUIView" id="366789120">
 						<reference key="NSNextResponder" ref="266360862"/>
 						<int key="NSvFlags">292</int>
-						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUILabel" id="1036549956">
-								<reference key="NSNextResponder" ref="509430950"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{56, 16}</string>
-								<reference key="NSSuperview" ref="509430950"/>
-								<reference key="NSWindow"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
-								</object>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">7</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">&lt;category&gt;</string>
-								<nil key="IBUITextColor"/>
-								<nil key="IBUIHighlightedColor"/>
-								<int key="IBUIBaselineAdjustment">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">1</int>
-									<double key="pointSize">11</double>
-								</object>
-								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Helvetica</string>
-									<double key="NSSize">11</double>
-									<int key="NSfFlags">16</int>
-								</object>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-							</object>
-						</array>
-						<string key="NSFrame">{{73, 48}, {239, 16}}</string>
+						<string key="NSFrame">{{73, 47}, {231, 16}}</string>
 						<reference key="NSSuperview" ref="266360862"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1036549956"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -200,6 +166,14 @@
 					</object>
 					<int key="connectionID">12</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">categoryList</string>
+						<reference key="source" ref="266360862"/>
+						<reference key="destination" ref="366789120"/>
+					</object>
+					<int key="connectionID">17</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -227,7 +201,7 @@
 							<reference ref="1003110741"/>
 							<reference ref="438283000"/>
 							<reference ref="761701125"/>
-							<reference ref="509430950"/>
+							<reference ref="366789120"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -247,17 +221,9 @@
 						<reference key="parent" ref="266360862"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">13</int>
-						<reference key="object" ref="509430950"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="1036549956"/>
-						</array>
+						<int key="objectID">16</int>
+						<reference key="object" ref="366789120"/>
 						<reference key="parent" ref="266360862"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">14</int>
-						<reference key="object" ref="1036549956"/>
-						<reference key="parent" ref="509430950"/>
 					</object>
 				</array>
 			</object>
@@ -265,8 +231,8 @@
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="16.CustomClassName">SCECategoryList</string>
+				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.CustomClassName">SCEPlaceTableCell</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -277,10 +243,18 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">17</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">SCECategoryList</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SCECategoryList.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SCEFeedTableCell</string>
 					<string key="superclassName">UITableViewCell</string>
@@ -294,6 +268,7 @@
 					<string key="superclassName">SCEFeedTableCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addressLabel">UILabel</string>
+						<string key="categoryList">SCECategoryList</string>
 						<string key="nameLabel">UILabel</string>
 						<string key="thumbnail">UIImageView</string>
 					</dictionary>
@@ -301,6 +276,10 @@
 						<object class="IBToOneOutletInfo" key="addressLabel">
 							<string key="name">addressLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="categoryList">
+							<string key="name">categoryList</string>
+							<string key="candidateClassName">SCECategoryList</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="nameLabel">
 							<string key="name">nameLabel</string>

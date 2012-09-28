@@ -13,6 +13,8 @@
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEPlaceDetailView.h"
 #import "SCEPlace.h"
+#import "SCECategory.h"
+#import "SCECategoryList.h"
 
 // quick n dirty annotation for debug purposes
 @interface SCESimpleAnnotation : NSObject<MKAnnotation>
@@ -72,19 +74,27 @@
                                                                       options:nil] objectAtIndex:nibViewIndex];
     [[headerView nameLabel] setText:[[self place] name]];
     [[headerView addressLabel] setText:[[self place] streetAddress]];
+    NSMutableArray *categoryLabels = [NSMutableArray array];
+    for (SCECategory *category in [[self place] categories]) {
+        [categoryLabels addObject:[category label]];
+    }
+    [[headerView categoryList] setCategoryLabelTexts:categoryLabels];
     [detailView setHeaderView:headerView];
 
+    // hours subview
     NSArray *hours = [[self place] hours];
     if (hours && [hours count] > 0 ) {
         SCEHoursView* hoursView = [[SCEHoursView alloc] init];
         [hoursView setHoursArray:[[self place] hours]];
         [detailView setHoursView:hoursView];
     }
-    
+     
+    // about subview
     SCEAboutView* aboutView = [[SCEAboutView alloc] init];
     [aboutView setAboutText:[[self place] description]];
     [detailView setAboutView:aboutView];
 
+    // action buttons
     UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
                                                       owner:self
                                                     options:nil] objectAtIndex:0];

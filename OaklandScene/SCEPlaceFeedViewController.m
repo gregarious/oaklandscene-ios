@@ -11,6 +11,7 @@
 #import "SCEPlace.h"
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
+#import "SCECategoryList.h"
 #import "SCEFeedSearchDialogController.h"
 #import "SCEFeedItemContainer.h"
 
@@ -204,6 +205,12 @@
         [[cell nameLabel] setText:[place name]];
         [[cell addressLabel] setText:[place streetAddress]];
         // TODO: set thumbnail
+        NSMutableArray *categoryLabels = [NSMutableArray array];
+        for (SCECategory *category in [place categories]) {
+            [categoryLabels addObject:[category label]];
+        }
+        [[cell categoryList] setCategoryLabelTexts:categoryLabels];
+
         return cell;
     }
     else {  // handle both Static and Action cells
