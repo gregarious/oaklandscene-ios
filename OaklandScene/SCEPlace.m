@@ -9,6 +9,27 @@
 #import "SCEPlace.h"
 #import "SCECategory.h"
 
+@implementation SCEPlaceHours
+
+@synthesize days, hours;
+- (id)initWithDays:(NSString *)d hours:(NSString *)h
+{
+    self = [self init];
+    if (self) {
+        [self setDays:d];
+        [self setHours:h];
+    }
+    return self;
+}
+
+- (void)readFromJSONDictionary:(NSDictionary *)d
+{
+    [self setDays:[d objectForKey:@"days"]];
+    [self setHours:[d objectForKey:@"hours"]];
+}
+
+@end
+
 @implementation SCEPlace
 
 @synthesize resourceId;
@@ -45,6 +66,17 @@
         if (latDec != [NSNull null] || lngDec != [NSNull null]) {
             [self setLocation:CLLocationCoordinate2DMake([latDec doubleValue], [lngDec doubleValue])];
         }
+    }
+    
+    NSArray *hoursArray = [d objectForKey:@"hours"];
+    if (hoursArray) {
+        NSMutableArray *hoursObjArray = [NSMutableArray arrayWithCapacity:[hoursArray count]];
+        for (NSDictionary *entry in hoursArray) {
+            SCEPlaceHours* h = [[SCEPlaceHours alloc] init];
+            [h readFromJSONDictionary:entry];
+            [hoursObjArray addObject:h];
+        }
+        [self setHours:hoursObjArray];
     }
     
     // set up categories

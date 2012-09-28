@@ -13,6 +13,16 @@
 @class SCEEvent;
 @class SCESpecial;
 
+// Simple struct-like construct of a single days/hours entry
+@interface SCEPlaceHours : NSObject <JSONSerializable>
+
+@property (nonatomic) NSString* days;
+@property (nonatomic) NSString* hours;
+
+- (id) initWithDays:(NSString *)d hours:(NSString *)h;
+@end
+
+// Main Place class
 @interface SCEPlace : NSObject <SCEGeocoded, JSONSerializable>
 
 // id of place object on server
@@ -33,6 +43,9 @@
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *facebookId;
 @property (nonatomic, copy) NSString *twitterUsername;
+
+// array of SCEPlaceHours
+@property (nonatomic, strong) NSArray *hours;
 
 // key to full image in image store
 @property (nonatomic, copy) NSString *imageKey;

@@ -1,1 +1,3 @@
-Currently just holding development notes:
+Pre-deploy checklist:
+
+- Ensure memory warnings handled properly. Make sure view properties are weak that should be weak and that subviews are created/destroyed in viewLoad and viewUnload.

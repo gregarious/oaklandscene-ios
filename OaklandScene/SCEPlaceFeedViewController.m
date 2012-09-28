@@ -11,6 +11,7 @@
 #import "SCEPlace.h"
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
+#import "SCECategoryList.h"
 #import "SCEFeedSearchDialogController.h"
 #import "SCEFeedItemContainer.h"
 
@@ -67,7 +68,6 @@
         [self addStaticMessageToFeed:@"Places could not be loaded"];
         [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
     }
-    
 }
 
 -(void)resetFeedSource
@@ -205,6 +205,12 @@
         [[cell nameLabel] setText:[place name]];
         [[cell addressLabel] setText:[place streetAddress]];
         // TODO: set thumbnail
+        NSMutableArray *categoryLabels = [NSMutableArray array];
+        for (SCECategory *category in [place categories]) {
+            [categoryLabels addObject:[category label]];
+        }
+        [[cell categoryList] setCategoryLabelTexts:categoryLabels];
+
         return cell;
     }
     else {  // handle both Static and Action cells
@@ -216,7 +222,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 72.0;
+    SCEFeedItemContainer* item = [displayedItems objectAtIndex:[indexPath row]];
+    if ([item type] == SCEFeedItemTypeObject) {
+        return 72.0;
+    }
+    else {
+        return 44.0;
+    }
 }
 
 //// UITableViewDelegate methods ////
@@ -239,7 +251,6 @@
         [tableView scrollToRowAtIndexPath:indexPath
                          atScrollPosition:UITableViewScrollPositionTop
                                  animated:YES];
-
     }
 }
 
