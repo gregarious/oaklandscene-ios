@@ -132,9 +132,9 @@
 - (void)displaySearchDialog:(id)sender
 {
     [super displaySearchDialog:sender];
-    SCEFeedSearchDialogController* dialog =
-        (SCEFeedSearchDialogController *)[self presentedViewController];
-    [dialog setDelegate:self];
+//    SCEFeedSearchDialogController* dialog =
+//        (SCEFeedSearchDialogController *)[self presentedViewController];
+//    [dialog setDelegate:self];
 }
 
 

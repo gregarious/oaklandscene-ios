@@ -12,11 +12,22 @@
 @class SCEFeedMapViewController;
 @class SCEContentStore;
 
-@interface SCEFeedViewController : UIViewController
+@interface SCEFeedViewController : UIViewController <UISearchBarDelegate>
 {
+    // subviews
+    UISearchBar *searchBar;
+    UIToolbar *resultsInfoBar;
+    
+    // parent container for feed content subviews
     UIView *contentView;
+    UIView *contentSubview; // convenient alias to hold current subview of contentView
+    
+    // these two feed content subviews displayed mutually-exclusively
     UITableView *tableView;
-    UIView *mapView;    // generic UIView until map mode development happens
+    UIView *mapView;    // TODO: will probably subview once map mode development happens
+
+    // semi-transparent tappable layer to disable user input when search bar is first responder
+    UIControl *contentMaskView;
 }
 
 enum {
@@ -27,8 +38,13 @@ typedef NSUInteger SCEFeedViewMode;
 
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
 
-- (void)displaySearchDialog:(id)sender;
+// responders to search related events
+- (void)enableSearchBar:(id)sender;
+
 - (void)toggleViewMode:(id)sender;
+
+// TODO: to be removed
+- (void)displaySearchDialog:(id)sender;
 
 - (void)addViewToggleButton;
 - (void)addSearchButton;
