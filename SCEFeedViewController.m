@@ -249,7 +249,6 @@
                          atScrollPosition:UITableViewScrollPositionTop
                                  animated:NO];
     }
-    
 }
 
 - (void)feedSource:(id)incomingFS syncError:(NSError *)err

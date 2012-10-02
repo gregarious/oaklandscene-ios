@@ -7,17 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import "SCEFeedItemContainer.h"
+
+@class UITableViewCell, SCEFeedView, SCECategory;
 
 @protocol SCEFeedViewDelegate <NSObject>
 
-- (UITableViewCell *)tableView:(UITableView *)view
-                   cellForItem:(SCEFeedItemContainer *)itemContainer;
+/*** Table-related methods ***/
+- (CGFloat)feedView:(SCEFeedView *)feedView
+    tableCellHeightForItem:(NSInteger)itemIndex;
 
-- (CGFloat)tableView:(UITableView *)view
-       heightForItem:(SCEFeedItemContainer *)itemContainer;
+- (void)feedView:(SCEFeedView *)feedView
+    didSelectTableCellForItem:(NSInteger)itemIndex;
+
+/*** Search-related methods ***/
+- (void)feedView:(SCEFeedView *)feedView
+    didSubmitSearchQuery:(NSString *)queryString;
 
 
-- (void)tableView:(UITableView *)tv didSelectItem:(SCEFeedItemContainer *)itemContainer;
+/*** Category filter-related methods ***/
+- (void)feedView:(SCEFeedView *)feedView
+    didChooseCategoryIndex:(NSInteger)categoryIndex;
+
 @end

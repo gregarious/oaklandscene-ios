@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @class SCEFeedSource;
+@class SCEFeedView;
 
 @protocol SCEFeedSourceDelegate <NSObject>
 

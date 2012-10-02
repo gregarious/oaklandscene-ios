@@ -8,31 +8,43 @@
 
 #import <Foundation/Foundation.h>
 
-// TODO: make this a more general store object
-#import "SCEPlaceStore.h"
-#import "SCECategory.h"
-#import "SCEFeedSourceDelegate.h"
+#import "SCEFeedViewDelegate.h"
+#import "SCEFeedViewDataSource.h"
+#import "SCEFeedCellHandler.h"
 
-@interface SCEFeedSource : NSObject
+@class SCECategory, SCEPlaceStore, SCEFeedStaticCell, SCEFeedLoadingCell;
 
-@property (nonatomic) SCEPlaceStore* store;
+/* SCEFeedSource:
+ 
+ Serves as both the SCEFeedDelegate and SCEFeedDataSource for the
+ SCEFeedViewController. Handles store management, acting on FeedView
+ events, filtering results, pagination, and more.
+*/
+@interface SCEFeedSource : NSObject <SCEFeedViewDelegate, SCEFeedViewDataSource>
+{
+    NSRange shownItemRange;
+    SCEFeedStaticCell *showMoreCell;
+    SCEFeedLoadingCell *loadingCell;
+
+    id statusCell;
+    
+    BOOL syncInProgress;
+}
+
+@property (nonatomic) SCEPlaceStore* store; // TODO: make a generic store
+
 @property (nonatomic, readonly) NSArray* items;
-@property (nonatomic, readonly) BOOL syncInProgress;
 
 @property (nonatomic) SCECategory* filterCategory;
 @property (nonatomic) NSString* filterKeyword;
 
 @property (nonatomic) NSInteger pageLength;
-@property (readonly) NSArray* categories;
 
-@property (nonatomic, weak) id <SCEFeedSourceDelegate> delegate;
+@property (nonatomic) id <SCEFeedCellHandler> cellHandler;
 
 - (id)initWithStore:(SCEPlaceStore*)s;
-- (void)sync;
 
-// returns the 0-indexes page of results (depends on pageLength)
-- (NSArray*)getPage:(NSInteger)pageNum;
-
-- (BOOL)hasPage:(NSInteger)pageNum;
+- (void)syncWithSuccessBlock:(void (^)())successBlock
+                failureBlock:(void (^)(NSError *err))failureBlock;
 
 @end
