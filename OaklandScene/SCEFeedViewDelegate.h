@@ -16,12 +16,15 @@
 - (CGFloat)feedView:(SCEFeedView *)feedView
     tableCellHeightForItem:(NSInteger)itemIndex;
 
-- (void)feedView:(SCEFeedView *)feedView
+// return a new VC if the selection should load a new view
+- (UIViewController *)feedView:(SCEFeedView *)feedView
     didSelectTableCellForItem:(NSInteger)itemIndex;
 
 /*** Search-related methods ***/
 - (void)feedView:(SCEFeedView *)feedView
     didSubmitSearchQuery:(NSString *)queryString;
+
+- (void)didCancelSearchForFeedView:(SCEFeedView *)feedView;
 
 
 /*** Category filter-related methods ***/

@@ -11,13 +11,9 @@
 #import "SCEFeedViewDelegate.h"
 #import "SCEFeedViewController.h"
 
-// TODO: look into combining the TableViewDataSourceDelegate and the
-//       FeedSourceDelegate together as some kind of DI object
-@interface SCEPlaceFeedViewController : SCEFeedViewController <SCEFeedViewDelegate>
+@interface SCEPlaceFeedViewController : SCEFeedViewController
 {
     SCEPlaceStore *contentStore;
 }
-
-@property (nonatomic, strong) SCEFeedSource *feedSource;
 
 @end

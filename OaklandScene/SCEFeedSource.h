@@ -10,7 +10,7 @@
 
 #import "SCEFeedViewDelegate.h"
 #import "SCEFeedViewDataSource.h"
-#import "SCEFeedCellHandler.h"
+#import "SCEFeedItemSource.h"
 
 @class SCECategory, SCEPlaceStore, SCEFeedStaticCell, SCEFeedLoadingCell;
 
@@ -40,11 +40,10 @@
 
 @property (nonatomic) NSInteger pageLength;
 
-@property (nonatomic) id <SCEFeedCellHandler> cellHandler;
+@property (nonatomic) id <SCEFeedItemSource> itemSource;
 
 - (id)initWithStore:(SCEPlaceStore*)s;
 
-- (void)syncWithSuccessBlock:(void (^)())successBlock
-                failureBlock:(void (^)(NSError *err))failureBlock;
+- (void)syncWithCompletion:(void (^)(NSError *err))block;
 
 @end

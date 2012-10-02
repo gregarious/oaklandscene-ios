@@ -9,9 +9,7 @@
 #import <MapKit/MapKit.h>
 #import "SCEFeedViewController.h"
 #import "SCECategoryPickerDialogController.h"
-#import "SCEFeedSource.h"
-#import "SCEFeedItemContainer.h"
-#import "SCEUtils.h"
+#import "SCEFeedView.h"
 
 @interface SCEFeedViewController ()
 
@@ -28,8 +26,6 @@
 {
     self = [super init];
     if (self) {
-        displayedItems = [NSMutableArray array];
-
         // default to table mode
         [self setViewMode:SCEFeedViewModeTable];
     }
@@ -40,16 +36,17 @@
 -(void)loadView
 {
     [super loadView];
-        
+    
+    feedViewAlias = (SCEFeedView *)[self view];
+    
     // TODO: is this the best way to get the frame? Could be a cause for the
     // problems in setting contentFrame's height below, but this is the only
     // configuration I could get working
     CGRect frame = [[[self parentViewController] view] bounds];
-    [SCEUtils logRect:[[self view] frame] withLabel:@"feed view frame"];
     
     // set up resultsInfoBar
-    // TODO: set to be in sync with item store
-    UIBarButtonItem *categoryButton = [[UIBarButtonItem alloc] initWithTitle:@"All Places"
+    NSString *defaultLabel = [[self dataSource] feedView:feedViewAlias labelForCategory:0];
+    UIBarButtonItem *categoryButton = [[UIBarButtonItem alloc] initWithTitle:defaultLabel
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:self
                                                                       action:@selector(displayFilterDialog:)];
@@ -77,9 +74,6 @@
     contentView = [[UIView alloc] initWithFrame:contentFrame];
     [[self view] addSubview:contentView];
 
-    [SCEUtils logRect:[contentView frame] withLabel:@"content view frame"];
-    [SCEUtils logRect:[contentView bounds] withLabel:@"content view bounds"];
-    
     // now load the tble & map subviews
     tableView = [[UITableView alloc] initWithFrame:[contentView bounds]
                                              style:UITableViewStylePlain];
@@ -97,13 +91,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // REFACTOR: more weird
-    [[self feedSource] setDelegate:self];
-    
-    // ensure feed in synced up
-    [[self feedSource] sync];
-    
 }
 
 - (void)viewDidUnload
@@ -114,6 +101,7 @@
     contentView = nil;
     tableView = nil;
     mapView = nil;
+    feedViewAlias = nil;
     
     // search bar and mask are set to be nil when off screen
 }
@@ -182,96 +170,6 @@
     }
 }
 
-/*** Feed management ****/
-
-- (void)addNextPageToFeed
-{
-    if ([[self feedSource] hasPage:pagesDisplayed]) {     // hasPage is 0-index based, pagesDisplayed is a count
-        // add the next pages to displayedItems
-        NSArray *nextPageItems = [[self feedSource] getPage:pagesDisplayed];
-        for (SCEPlace *p in nextPageItems) {
-            [displayedItems addObject:[[SCEFeedItemContainer alloc]
-                                       initWithContent:p
-                                       type:SCEFeedItemTypeObject]];
-        }
-        
-        // increment the internal page count and display "Show More" item if relevant
-        pagesDisplayed++;
-        if ([[self feedSource] hasPage:pagesDisplayed])
-        {
-            [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:@"Show More"
-                                                                               type:SCEFeedItemTypeAction]];
-        }
-    }
-}
-
-- (void)emptyFeed
-{
-    displayedItems = [NSMutableArray array];
-    pagesDisplayed = 0;
-}
-
-
-- (void)addLoadingMessageToFeed
-{
-    [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:nil
-                                                                       type:SCEFeedItemTypeLoading]];
-}
-
-- (void)addStaticMessageToFeed:(NSString *)message
-{
-    [displayedItems addObject:[[SCEFeedItemContainer alloc] initWithContent:message
-                                                                       type:SCEFeedItemTypeStatic]];
-    
-}
-
-/**** SCEFeedSourceDelegate methods ****/
-- (void)feedSourceContentReady:(id)incomingFS
-{
-    // if some old feed source floating around out there is calling back, ignore it
-    if (incomingFS != [self feedSource]) {
-        return;
-    }
-    
-    [self emptyFeed];
-    if (![[self feedSource] hasPage:0]) {
-        [self addStaticMessageToFeed:@"No places found"];
-    }
-    else {
-        [self addNextPageToFeed];
-    }
-    
-    [tableView reloadData];
-    // scroll back to top of screen
-    if ([displayedItems count] > 0) {
-        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
-                                                             inSection:0]
-                         atScrollPosition:UITableViewScrollPositionTop
-                                 animated:NO];
-    }
-}
-
-- (void)feedSource:(id)incomingFS syncError:(NSError *)err
-{
-    NSLog(@"In feedSource:syncError:");
-    
-    // if some old feed source floating around out there is calling back, ignore it
-    if (incomingFS != [self feedSource]) {
-        return;
-    }
-    
-    // on error, alert the user via an alert, and fill the table with a "no places" message
-    [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                message:[err localizedDescription]
-                               delegate:nil
-                      cancelButtonTitle:@"Ok"
-                      otherButtonTitles:nil] show];
-    
-    [self emptyFeed];
-    [self addStaticMessageToFeed:@"No places found"];
-    [tableView reloadData];
-}
-
 /**** UISearchBarDelegate & related methods ****/
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -294,13 +192,8 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sb
 {
     [self disableSearchFocus];
-    
-    NSString *queryString = [sb text];
-    // if query is blank, don't do a keyword search
-    if ([queryString length] > 0) {
-        [[self feedSource] setFilterKeyword:queryString];
-        [[self feedSource] sync];
-    }
+    [[self delegate] feedView:feedViewAlias
+         didSubmitSearchQuery:[sb text]];
 }
 
 // removes the search view from the title bar.
@@ -313,9 +206,7 @@
     [[self navigationItem] setTitleView:nil];
     [self addSearchButton];
     
-    // remove search query from feed source
-    [[self feedSource] setFilterKeyword:nil];
-    [[self feedSource] sync];
+    [[self delegate] didCancelSearchForFeedView:feedViewAlias];
 }
 
 // enables the search bar
@@ -355,16 +246,8 @@
 - (void)searchDialog:(SCECategoryPickerDialogController *)dialog
 didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
 {
-    // parse the category out of the category row chosen
-    // if category is 0, it means no filter
-    SCECategory *category = nil;
-    if (categoryRow != 0) {
-        category = [[[self feedSource] categories] objectAtIndex:categoryRow-1];
-    }
-    
-    [[self feedSource] setFilterCategory:category];
-    [[self feedSource] sync];
-    
+    [[self delegate] feedView:feedViewAlias
+       didChooseCategoryIndex:categoryRow];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -372,16 +255,14 @@ didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component
 {
-    if (row == 0) {
-        return @"All Places";
-    }
-    return [[[[self feedSource] categories] objectAtIndex:row-1] label];
+    return [[self dataSource] feedView:feedViewAlias
+                      labelForCategory:row];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component
 {
-    return [[[self feedSource] categories] count] + 1;
+    return [[self dataSource] numberOfCategoriesInFeedView:feedViewAlias];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -393,26 +274,30 @@ numberOfRowsInComponent:(NSInteger)component
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return [displayedItems count];
+    return [[self dataSource] numberOfItemsInFeedView:feedViewAlias];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEFeedItemContainer* item = [displayedItems objectAtIndex:[indexPath row]];
-    return [[self delegate] tableView:tableView cellForItem:item];
+    return [[self dataSource] feedView:feedViewAlias
+                      tableCellForItem:[indexPath row]];
 }
 
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEFeedItemContainer* item = [displayedItems objectAtIndex:[indexPath row]];
-    return [[self delegate] tableView:tv heightForItem:item];
+    return [[self delegate] feedView:feedViewAlias
+              tableCellHeightForItem:[indexPath row]];
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SCEFeedItemContainer* item = [displayedItems objectAtIndex:[indexPath row]];
-    [[self delegate] tableView:tableView didSelectItem:item];
+    UIViewController *detailController = [[self delegate] feedView:feedViewAlias
+                                         didSelectTableCellForItem:[indexPath row]];
+    if (detailController) {
+        [detailController setHidesBottomBarWhenPushed:YES];
+        [[self navigationController] pushViewController:detailController animated:YES];
+    }
 }
 
 

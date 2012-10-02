@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol SCEFeedCellHandler <NSObject>
+@class SCEFeedView;
+
+@protocol SCEFeedItemSource <NSObject>
 
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView
              tableCellForItem:(id)item;
@@ -16,7 +18,8 @@
 - (CGFloat)feedView:(SCEFeedView *)feedView
 tableCellHeightForItem:(id)item;
 
-- (void)feedView:(SCEFeedView *)feedView
+// returns a new VC if the selection should load a new view
+- (UIViewController *)feedView:(SCEFeedView *)feedView
    didSelectItem:(id)item;
 
 @end

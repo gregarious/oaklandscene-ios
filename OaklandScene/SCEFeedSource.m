@@ -8,10 +8,10 @@
 
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
-#import "SCEFeedCellHandler.h"
+#import "SCEFeeditemSource.h"
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
-#import "SCEFeedCellHandler.h"
+#import "SCEFeeditemSource.h"
 #import "SCEFeedStaticCell.h"
 
 @interface SCEFeedSource ()
@@ -31,6 +31,7 @@ typedef NSUInteger SCEFeedCellType;
 
 @synthesize store, items, pageLength;
 @synthesize filterCategory, filterKeyword;
+@synthesize itemSource;
 
 - (id)init
 {
@@ -91,7 +92,15 @@ typedef NSUInteger SCEFeedCellType;
             SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
                                                                     owner:self
                                                                   options:nil][0];
-            [[cell textLabel] setText:[err localizedDescription]];
+
+            // on error, alert the user via an alert, and fill the table with a "no places" message
+            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+                                        message:[err localizedDescription]
+                                       delegate:nil
+                              cancelButtonTitle:@"Ok"
+                              otherButtonTitles:nil] show];
+            [[cell textLabel] setText:@"No results found"];
+            statusCell = cell;
         }
         
         block(err);
@@ -164,12 +173,26 @@ typedef NSUInteger SCEFeedCellType;
     [[feedView tableView] reloadData];
 }
 
-- (void)feedView:(SCEFeedView *)feedView didSelectTableCellForItem:(NSInteger)itemIndex
+- (void)didCancelSearchForFeedView:(SCEFeedView *)feedView
+{
+    [self setFilterKeyword:nil];
+    
+    // sync feed and refresh the table upon completion
+    // TODO: consider ongoing syncs
+    [self syncWithCompletion:^(NSError *err) {
+        [[feedView tableView] reloadData];
+    }];
+    
+    // refresh the table now to show loading message
+    [[feedView tableView] reloadData];
+}
+
+- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectTableCellForItem:(NSInteger)itemIndex
 {
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
         id item = [[self items] objectAtIndex:itemIndex];
-        [[self cellHandler] feedView:feedView didSelectItem:item];
+        return [[self itemSource] feedView:feedView didSelectItem:item];
     }
     else if (cellType == SCEFeedCellTypeMore) {
         shownItemRange.length += [self pageLength];
@@ -178,7 +201,13 @@ typedef NSUInteger SCEFeedCellType;
             shownItemRange.length = [[self items] count];
         }
         [[feedView tableView] reloadData];
+        // scroll down so new item is at top of list
+        [[feedView tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex
+                                                                        inSection:0]
+                                    atScrollPosition:UITableViewScrollPositionTop
+                                            animated:YES];
     }
+    return nil;
 }
 
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(NSInteger)itemIndex
@@ -186,7 +215,7 @@ typedef NSUInteger SCEFeedCellType;
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
         id item = [[self items] objectAtIndex:itemIndex];
-        return [[self cellHandler] feedView:feedView
+        return [[self itemSource] feedView:feedView
                      tableCellHeightForItem:item];
     }
     else {
@@ -206,7 +235,7 @@ typedef NSUInteger SCEFeedCellType;
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
         id item = [items objectAtIndex:itemIndex];
-        return [[self cellHandler] feedView:feedView
+        return [[self itemSource] feedView:feedView
                            tableCellForItem:item];
     }
     else if (cellType == SCEFeedCellTypeStatus) {

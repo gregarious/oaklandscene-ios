@@ -8,18 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "SCECategoryPickerDelegate.h"
-#import "SCEFeedSourceDelegate.h"
+#import "SCEFeedViewDataSource.h"
 #import "SCEFeedViewDelegate.h"
 
-@class SCEFeedTableViewController;
-@class SCEFeedMapViewController;
-@class SCEContentStore;
-@class SCEFeedSource;
-@class SCECategoryPickerDialogController;
+@class SCEFeedView;
 
 @interface SCEFeedViewController : UIViewController <UISearchBarDelegate,
-                UITableViewDataSource, UITableViewDelegate,
-                SCEFeedSourceDelegate, SCECategoryPickerDelegate>
+                                                        UITableViewDataSource,
+                                                        UITableViewDelegate,
+                                                        SCECategoryPickerDelegate>
 {
     // subviews
     UISearchBar *searchBar;
@@ -36,8 +33,7 @@
     // semi-transparent tappable layer to disable user input when search bar is first responder
     UIControl *contentMaskView;
     
-    NSMutableArray *displayedItems; // the currently displayed feed items
-    NSInteger pagesDisplayed;
+    SCEFeedView *feedViewAlias; // TODO: remove once actual SCEFeedView created
 }
 
 enum {
@@ -47,24 +43,17 @@ enum {
 typedef NSUInteger SCEFeedViewMode;
 
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
-@property (nonatomic, strong) SCEFeedSource *feedSource;
+@property (nonatomic, strong) id <SCEFeedViewDataSource> dataSource;
 @property (nonatomic, strong) id <SCEFeedViewDelegate> delegate;
 
-// responders to search related events
-- (void)enableSearchBar:(id)sender;
-
 - (void)toggleViewMode:(id)sender;
-
-- (void)displayFilterDialog:(id)sender;
 
 - (void)addViewToggleButton;
 - (void)addSearchButton;
 
-// these methods add items to the displayedItems list, but DO NOT refresh the view
-- (void)emptyFeed;
-- (void)addNextPageToFeed;
-- (void)addStaticMessageToFeed:(NSString *)message;
-- (void)addLoadingMessageToFeed;
+// responders to search related events
+- (void)enableSearchBar:(id)sender;
+- (void)displayFilterDialog:(id)sender;
 
 
 @end
