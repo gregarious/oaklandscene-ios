@@ -23,6 +23,7 @@
 @property (nonatomic) NSString* filterKeyword;
 
 @property (nonatomic) NSInteger pageLength;
+@property (readonly) NSArray* categories;
 
 @property (nonatomic, weak) id <SCEFeedSourceDelegate> delegate;
 

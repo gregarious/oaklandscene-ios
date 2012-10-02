@@ -11,7 +11,7 @@
 
 @implementation SCEFeedSource
 
-@synthesize store, items, syncInProgress;
+@synthesize store, items, syncInProgress, categories;
 @synthesize filterCategory, filterKeyword, pageLength;
 
 - (id)init
@@ -28,6 +28,11 @@
         [self setStore:s];
     }
     return self;
+}
+
+- (NSArray *)categories
+{
+    return [[self store] categories];
 }
 
 - (void)sync
