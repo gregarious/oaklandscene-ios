@@ -171,7 +171,6 @@
 		3765EDD8160A39DF004E9225 /* SCEFeedStaticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedStaticCell.m; sourceTree = "<group>"; };
 		3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedLoadingCell.xib; sourceTree = "<group>"; };
 		3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedStaticCell.xib; sourceTree = "<group>"; };
-		377180D3160CDEDA0072FDBD /* SCEFeedSourceDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFeedSourceDelegate.h; sourceTree = "<group>"; };
 		37CD7F1E1615EBC5004F840F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = SOURCE_ROOT; };
 		37D995A115F940030045CAE5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		37E3EA2C15FA67BD00964876 /* SCEPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlace.h; sourceTree = "<group>"; };
@@ -332,24 +331,20 @@
 		374759E616028728009CBA55 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				37FAF1241600D9DE00048F72 /* SCEAPIResponse.h */,
-				37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */,
 				37642D8B15F6A0670024B6A2 /* SCEAppDelegate.h */,
 				37642D8C15F6A0670024B6A2 /* SCEAppDelegate.m */,
+				37FAF1241600D9DE00048F72 /* SCEAPIResponse.h */,
+				37FAF1251600D9DE00048F72 /* SCEAPIResponse.m */,
 				37FAF1211600D17000048F72 /* SCEAPIConnection.h */,
 				37FAF1221600D17100048F72 /* SCEAPIConnection.m */,
-				37ED1DCB16079928009CA46D /* SCECategoryPickerDelegate.h */,
-				377180D3160CDEDA0072FDBD /* SCEFeedSourceDelegate.h */,
+				3703A4C11616354D00B95980 /* SCEURLImage.h */,
+				3703A4C21616354D00B95980 /* SCEURLImage.m */,
 				371965D81614FC170069A41E /* SCEUtils.h */,
 				371965D91614FC170069A41E /* SCEUtils.m */,
+				37C99A2E161C98B40090A76B /* Protocols */,
 				374759E71602872D009CBA55 /* Models */,
 				374759E816028733009CBA55 /* Controllers */,
 				374759F6160288F4009CBA55 /* Views */,
-				3703A4C11616354D00B95980 /* SCEURLImage.h */,
-				3703A4C21616354D00B95980 /* SCEURLImage.m */,
-				37EB7A08161A864F00E56154 /* SCEFeedViewDelegate.h */,
-				37EB7A12161B60DE00E56154 /* SCEFeedViewDataSource.h */,
-				37EB7A16161B740D00E56154 /* SCEFeedItemSource.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -608,6 +603,17 @@
 				37642D9A15F6A0670024B6A2 /* second@2x.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		37C99A2E161C98B40090A76B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				37EB7A08161A864F00E56154 /* SCEFeedViewDelegate.h */,
+				37EB7A12161B60DE00E56154 /* SCEFeedViewDataSource.h */,
+				37EB7A16161B740D00E56154 /* SCEFeedItemSource.h */,
+				37ED1DCB16079928009CA46D /* SCECategoryPickerDelegate.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		37F22538160A276700140ED5 /* Data */ = {
