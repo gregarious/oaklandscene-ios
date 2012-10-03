@@ -1,14 +1,14 @@
 //
-//  SCEEventDetailView.m
+//  SCESpecialDetailView.m
 //  OaklandScene
 //
 //  Created by Greg Nicholas on 10/3/12.
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCEEventDetailView.h"
+#import "SCESpecialDetailView.h"
 
-@implementation SCEEventDetailView
+@implementation SCESpecialDetailView
 
 @synthesize testLabel;
 
@@ -21,7 +21,7 @@
     return self;
 }
 
-- (void)setTestLabel:(UILabel *)label;
+- (void)setTestLabel:(UILabel *)label
 {
     [testLabel removeFromSuperview];
     testLabel = label;

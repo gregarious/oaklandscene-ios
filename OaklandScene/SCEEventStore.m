@@ -84,7 +84,7 @@
 
 - (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    // Disabled API-based Event fetching. Just shipping with bundled content.
+    // TODO: Reenable API-based fetching.
     
     // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
     // TODO: error handling for NSData and/or JSON read?

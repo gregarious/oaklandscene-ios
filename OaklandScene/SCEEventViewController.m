@@ -41,6 +41,8 @@
     UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0,0,320,44)];
     [l setText:[[self event] name]];
     [detailView setTestLabel:l];
+    
+    // TODO: Adapt everything below from SCEPlaceViewController
 //    
 //    // map view
 //    MKMapView *mapView = [[MKMapView alloc] init];
@@ -130,7 +132,6 @@
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];
 }
-
 
 - (void)viewDidLoad
 {
