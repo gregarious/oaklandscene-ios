@@ -42,7 +42,9 @@
     // Set up the tab bar controller with the 5 sub VCs
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     [tabBarController setViewControllers:@[todayVC, placeVC, eventVC, specialVC, newsVC]];
-        
+
+//    [tabBarController setSelectedIndex:1];  // set to places for development
+    
     // set the window root controller
     self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];

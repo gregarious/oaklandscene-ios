@@ -8,6 +8,7 @@
 
 #import "SCEEventFeedViewController.h"
 #import "SCEEventViewController.h"
+#import "SCEFeedView.h"
 
 @implementation SCEEventFeedViewController
 
@@ -23,6 +24,8 @@
 //        [[self navigationItem] setTitle:@"Upcoming Events"];
         [self addViewToggleButton];
         [self addSearchButton];
+        
+        // TODO: set up feed source
     }
 
     return self;
@@ -32,36 +35,9 @@
 {
     [super viewDidLoad];
     
-    // self will handle all UITableView delegation
-    [tableView setDelegate:self];
-    [tableView setDataSource:self];
-    
-    // register the NIB for cell reuse
-    UINib *nib = [UINib nibWithNibName:@"SCEEventTableCell" bundle:nil];
-    [tableView registerNib:nib forCellReuseIdentifier:@"EventTableCell"];
-}
-
-//// UITableViewDataSource methods ////
-
-- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
-{
-    return 10;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tv
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"EventTableCell"];
-    return cell;
-}
-
-//// UITableViewDelegate methods ////
-
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SCEEventViewController *detailController = [[SCEEventViewController alloc] init];
-    [detailController setHidesBottomBarWhenPushed:YES];
-    [[self navigationController] pushViewController:detailController animated:YES];
+    // register the NIBs for cell reuse
+    [tableView registerNib:[UINib nibWithNibName:@"SCEEventTableCell" bundle:nil]
+           forCellReuseIdentifier:@"SCEEventTableCell"];
 }
 
 @end

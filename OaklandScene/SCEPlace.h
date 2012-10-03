@@ -8,10 +8,12 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "SCEGeocoded.h"
+#import "SCEURLImage.h"
 #import "JSONSerializable.h"
 
 @class SCEEvent;
 @class SCESpecial;
+@class SCEURLImage;
 
 // Simple struct-like construct of a single days/hours entry
 @interface SCEPlaceHours : NSObject <JSONSerializable>
@@ -47,8 +49,8 @@
 // array of SCEPlaceHours
 @property (nonatomic, strong) NSArray *hours;
 
-// key to full image in image store
-@property (nonatomic, copy) NSString *imageKey;
+// url-backed image
+@property (nonatomic, strong) SCEURLImage *urlImage;
 
 // array of SCECategory objects
 @property (nonatomic, strong) NSArray *categories;
@@ -56,5 +58,7 @@
 // related objects
 @property (nonatomic, strong) NSArray *events;
 @property (nonatomic, strong) NSArray *specials;
+
+
 
 @end

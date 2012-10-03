@@ -1,5 +1,5 @@
 //
-//  SCESearchFeedDialogController.h
+//  SCECategoryPickerDialogController.h
 //  OaklandScene
 //
 //  Created by Greg Nicholas on 9/17/12.
@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SCEFeedSearchDelegate.h"
+#import "SCECategoryPickerDelegate.h"
 
-@interface SCEFeedSearchDialogController : UIViewController <UITextFieldDelegate>
+@interface SCECategoryPickerDialogController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) id <SCEFeedSearchDelegate> delegate;
+@property (weak, nonatomic) id <SCECategoryPickerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 @property (weak, nonatomic) IBOutlet UITextField *keywordText;

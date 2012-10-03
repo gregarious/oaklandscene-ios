@@ -8,6 +8,7 @@
 
 #import "SCEPlace.h"
 #import "SCECategory.h"
+#import "SCEURLImage.h"
 
 @implementation SCEPlaceHours
 
@@ -35,7 +36,7 @@
 @synthesize resourceId;
 @synthesize name, description, phone, url, facebookId, twitterUsername;
 @synthesize streetAddress, postalCode, location;
-@synthesize imageKey;
+@synthesize urlImage;
 @synthesize categories;
 @synthesize events, specials;
 
@@ -89,6 +90,17 @@
                                                                   value:[value integerValue]]];
     }
     [self setCategories:workingCategories];
+    
+    // finally the image
+    id relativePath = [d objectForKey:@"image"];
+    if (relativePath && relativePath != [NSNull null]) {
+        NSURL *imageUrl = [NSURL URLWithString:relativePath
+                                 relativeToURL:[NSURL URLWithString:@"http://www.scenable.com"]];
+
+        [self setUrlImage:[[SCEURLImage alloc] initWithUrl:imageUrl]];
+        [[self urlImage] fetch];
+    }
+
 }
 
 @end

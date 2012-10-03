@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCEFeedSearchDialogController.h"
+#import "SCECategoryPickerDialogController.h"
 
-@implementation SCEFeedSearchDialogController
+@implementation SCECategoryPickerDialogController
+
 @synthesize categoryPicker;
 @synthesize keywordText;
 
@@ -21,7 +22,7 @@
     return self;
 }
 
-- (void)setDelegate:(id<SCEFeedSearchDelegate>)d
+- (void)setDelegate:(id<SCECategoryPickerDelegate>)d
 {
     _delegate = d;
     [[self categoryPicker] setDelegate:_delegate];
@@ -66,8 +67,7 @@
 - (IBAction)searchButton:(id)sender {
     // pass the inputs on the form to the delegate
     [[self delegate] searchDialog:self
-      didSubmitSearchWithCategoryRow:[[self categoryPicker] selectedRowInComponent:0]
-                     keywordQuery:[[self keywordText] text]];
+        didSubmitSearchWithCategoryRow:[[self categoryPicker] selectedRowInComponent:0]];
 }
 
 - (IBAction)backgroundTapped:(id)sender {

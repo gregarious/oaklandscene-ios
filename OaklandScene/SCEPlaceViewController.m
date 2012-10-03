@@ -57,6 +57,8 @@
     // map view
     MKMapView *mapView = [[MKMapView alloc] init];
     [detailView setMapView:mapView];
+    [mapView addAnnotation:[SCESimpleAnnotation
+                            annotationWithCoordinate:[[self place] location]]];
     // can't set the region till the subview is framed: do it at the bottom of this method
     
     // header view
@@ -74,6 +76,14 @@
                                                                       options:nil] objectAtIndex:nibViewIndex];
     [[headerView nameLabel] setText:[[self place] name]];
     [[headerView addressLabel] setText:[[self place] streetAddress]];
+    if ([[self place] urlImage]) {
+        [[headerView thumbnailImage] setImage:[[[self place] urlImage] image]];
+    }
+    else {
+        // TODO: replace with stock image
+        [[headerView thumbnailImage] setImage:nil];
+    }
+    
     NSMutableArray *categoryLabels = [NSMutableArray array];
     for (SCECategory *category in [[self place] categories]) {
         [categoryLabels addObject:[category label]];
@@ -128,8 +138,6 @@
     
     // since map is now framed, we can call setRegion
     [mapView setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300) animated:false];
-    [mapView addAnnotation:[SCESimpleAnnotation
-                            annotationWithCoordinate:[[self place] location]]];
     
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];

@@ -7,16 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCECategoryPickerDelegate.h"
+#import "SCEFeedViewDataSource.h"
+#import "SCEFeedViewDelegate.h"
 
-@class SCEFeedTableViewController;
-@class SCEFeedMapViewController;
-@class SCEContentStore;
+@class SCEFeedView, SCEResultsInfoBar;
 
-@interface SCEFeedViewController : UIViewController
+@interface SCEFeedViewController : UIViewController <UISearchBarDelegate,
+                                                        UITableViewDataSource,
+                                                        UITableViewDelegate,
+                                                        SCECategoryPickerDelegate>
 {
+    // subviews
+    UISearchBar *searchBar;
+    SCEResultsInfoBar *resultsInfoBar;
+    
+    // parent container for feed content subviews
     UIView *contentView;
+    UIView *contentSubview; // convenient alias to hold current subview of contentView
+    
+    // these two feed content subviews displayed mutually-exclusively
     UITableView *tableView;
-    UIView *mapView;    // generic UIView until map mode development happens
+    UIView *mapView;    // TODO: will probably subview once map mode development happens
+
+    // semi-transparent tappable layer to disable user input when search bar is first responder
+    UIControl *contentMaskView;
 }
 
 enum {
@@ -26,11 +41,20 @@ enum {
 typedef NSUInteger SCEFeedViewMode;
 
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
+@property (nonatomic, strong) id <SCEFeedViewDataSource> dataSource;
+@property (nonatomic, strong) id <SCEFeedViewDelegate> delegate;
 
-- (void)displaySearchDialog:(id)sender;
+// see note in SCEFeedView.h
+@property (nonatomic, readonly) SCEFeedView *feedViewContainer;
+
 - (void)toggleViewMode:(id)sender;
 
 - (void)addViewToggleButton;
 - (void)addSearchButton;
+
+// responders to search related events
+- (void)enableSearchBar:(id)sender;
+- (void)displayFilterDialog:(id)sender;
+
 
 @end
