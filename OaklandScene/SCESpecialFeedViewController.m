@@ -8,6 +8,7 @@
 
 #import "SCESpecialFeedViewController.h"
 #import "SCESpecialViewController.h"
+#import "SCEFeedView.h"
 
 @implementation SCESpecialFeedViewController
 
@@ -23,6 +24,8 @@
 //        [[self navigationItem] setTitle:@"Available Specials"];
         [self addViewToggleButton];
         [self addSearchButton];
+        
+        // TODO: set up feed source
     }
     
     return self;
@@ -31,37 +34,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // self will handle all UITableView delegation
-    [tableView setDelegate:self];
-    [tableView setDataSource:self];
-
-    // register the NIB for cell reuse
-    UINib *nib = [UINib nibWithNibName:@"SCESpecialTableCell" bundle:nil];
-    [tableView registerNib:nib forCellReuseIdentifier:@"SpecialTableCell"];
-}
-
-//// UITableViewDataSource methods ////
-
-- (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
-{
-    return 10;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tv
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:@"SpecialTableCell"];
-    return cell;
-}
-
-//// UITableViewDelegate methods ////
-
-- (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SCESpecialViewController *detailController = [[SCESpecialViewController alloc] init];
-    [detailController setHidesBottomBarWhenPushed:YES];
-    [[self navigationController] pushViewController:detailController animated:YES];
+    
+    // register the NIBs for cell reuse
+    [tableView registerNib:[UINib nibWithNibName:@"SCESpecialTableCell" bundle:nil]
+           forCellReuseIdentifier:@"SCESpecialTableCell"];
 }
 
 @end

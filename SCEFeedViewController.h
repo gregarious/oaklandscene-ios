@@ -32,8 +32,6 @@
 
     // semi-transparent tappable layer to disable user input when search bar is first responder
     UIControl *contentMaskView;
-    
-    SCEFeedView *feedViewAlias; // TODO: remove once actual SCEFeedView created
 }
 
 enum {
@@ -45,6 +43,9 @@ typedef NSUInteger SCEFeedViewMode;
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
 @property (nonatomic, strong) id <SCEFeedViewDataSource> dataSource;
 @property (nonatomic, strong) id <SCEFeedViewDelegate> delegate;
+
+// see note in SCEFeedView.h
+@property (nonatomic, readonly) SCEFeedView *feedViewContainer;
 
 - (void)toggleViewMode:(id)sender;
 

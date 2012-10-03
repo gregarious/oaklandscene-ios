@@ -175,16 +175,19 @@ typedef NSUInteger SCEFeedCellType;
 
 - (void)didCancelSearchForFeedView:(SCEFeedView *)feedView
 {
-    [self setFilterKeyword:nil];
+    // don't do anything if user never submitted a search in the first place
+    if (filterKeyword != nil) {
+        [self setFilterKeyword:nil];
+        
+        // sync feed and refresh the table upon completion
+        // TODO: consider ongoing syncs
+        [self syncWithCompletion:^(NSError *err) {
+            [[feedView tableView] reloadData];
+        }];
     
-    // sync feed and refresh the table upon completion
-    // TODO: consider ongoing syncs
-    [self syncWithCompletion:^(NSError *err) {
+        // refresh the table now to show loading message
         [[feedView tableView] reloadData];
-    }];
-    
-    // refresh the table now to show loading message
-    [[feedView tableView] reloadData];
+    }
 }
 
 - (UIViewController *)feedView:(SCEFeedView *)feedView didSelectTableCellForItem:(NSInteger)itemIndex

@@ -13,6 +13,7 @@
 #import "SCECategory.h"
 #import "SCECategoryList.h"
 #import "SCEFeedSource.h"
+#import "SCEFeedView.h"
 
 #import "SCEPlaceItemSource.h"
 
@@ -38,6 +39,10 @@
         
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
+        
+        [feedSource syncWithCompletion:^(NSError *err) {
+            [tableView reloadData];
+        }];
     }
     return self;
 }
@@ -45,10 +50,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+
     // register the NIBs for cell reuse
     [tableView registerNib:[UINib nibWithNibName:@"SCEPlaceTableCell" bundle:nil]
-        forCellReuseIdentifier:@"PlaceTableCell"];
+        forCellReuseIdentifier:@"SCEPlaceTableCell"];
 
     // TODO: need to figure out how to handle this
     // if the main store is loaded, reset the feed

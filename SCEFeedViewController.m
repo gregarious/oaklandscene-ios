@@ -20,7 +20,7 @@
 
 @implementation SCEFeedViewController
 
-@synthesize viewMode;
+@synthesize viewMode, feedViewContainer;
 
 - (id)init
 {
@@ -37,15 +37,13 @@
 {
     [super loadView];
     
-    feedViewAlias = (SCEFeedView *)[self view];
-    
     // TODO: is this the best way to get the frame? Could be a cause for the
     // problems in setting contentFrame's height below, but this is the only
     // configuration I could get working
     CGRect frame = [[[self parentViewController] view] bounds];
     
     // set up resultsInfoBar
-    NSString *defaultLabel = [[self dataSource] feedView:feedViewAlias labelForCategory:0];
+    NSString *defaultLabel = [[self dataSource] feedView:feedViewContainer labelForCategory:0];
     UIBarButtonItem *categoryButton = [[UIBarButtonItem alloc] initWithTitle:defaultLabel
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:self
@@ -86,6 +84,13 @@
     // ensure primary view is in sync with the viewMode variable
     [self setViewMode:[self viewMode]];
     
+    // set up the container FeedView for delegate method passing
+    feedViewContainer = [[SCEFeedView alloc] initWithFrame:frame];
+    [feedViewContainer setSearchBar:searchBar];
+    [feedViewContainer setResultsInfoBar:resultsInfoBar];
+    [feedViewContainer setContentView:contentView];
+    [feedViewContainer setTableView:tableView];
+    [feedViewContainer setMapView:mapView];    
 }
 
 - (void)viewDidLoad
@@ -101,7 +106,7 @@
     contentView = nil;
     tableView = nil;
     mapView = nil;
-    feedViewAlias = nil;
+    feedViewContainer = nil;
     
     // search bar and mask are set to be nil when off screen
 }
@@ -192,7 +197,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sb
 {
     [self disableSearchFocus];
-    [[self delegate] feedView:feedViewAlias
+    [[self delegate] feedView:feedViewContainer
          didSubmitSearchQuery:[sb text]];
 }
 
@@ -206,7 +211,7 @@
     [[self navigationItem] setTitleView:nil];
     [self addSearchButton];
     
-    [[self delegate] didCancelSearchForFeedView:feedViewAlias];
+    [[self delegate] didCancelSearchForFeedView:feedViewContainer];
 }
 
 // enables the search bar
@@ -231,6 +236,7 @@
 - (void)contentMaskTapped:(id)sender
 {
     [self disableSearchFocus];
+    [searchBar setText:@""];
 }
 
 // internal method to handle the cleanup involved with giving up search focus
@@ -246,7 +252,7 @@
 - (void)searchDialog:(SCECategoryPickerDialogController *)dialog
 didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
 {
-    [[self delegate] feedView:feedViewAlias
+    [[self delegate] feedView:feedViewContainer
        didChooseCategoryIndex:categoryRow];
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -255,14 +261,14 @@ didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component
 {
-    return [[self dataSource] feedView:feedViewAlias
+    return [[self dataSource] feedView:feedViewContainer
                       labelForCategory:row];
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component
 {
-    return [[self dataSource] numberOfCategoriesInFeedView:feedViewAlias];
+    return [[self dataSource] numberOfCategoriesInFeedView:feedViewContainer];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -274,25 +280,25 @@ numberOfRowsInComponent:(NSInteger)component
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return [[self dataSource] numberOfItemsInFeedView:feedViewAlias];
+    return [[self dataSource] numberOfItemsInFeedView:feedViewContainer];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[self dataSource] feedView:feedViewAlias
+    return [[self dataSource] feedView:feedViewContainer
                       tableCellForItem:[indexPath row]];
 }
 
 - (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[self delegate] feedView:feedViewAlias
+    return [[self delegate] feedView:feedViewContainer
               tableCellHeightForItem:[indexPath row]];
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *detailController = [[self delegate] feedView:feedViewAlias
+    UIViewController *detailController = [[self delegate] feedView:feedViewContainer
                                          didSelectTableCellForItem:[indexPath row]];
     if (detailController) {
         [detailController setHidesBottomBarWhenPushed:YES];

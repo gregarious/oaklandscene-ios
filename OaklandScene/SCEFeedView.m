@@ -6,17 +6,18 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+#import <MapKit/MapKit.h>
 #import "SCEFeedView.h"
 
 @implementation SCEFeedView
 
-// TODO: move lots of stuff from FeedViewController into here
+@synthesize searchBar, resultsInfoBar, tableView, mapView, contentView;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        // set up subviews
     }
     return self;
 }
