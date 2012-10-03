@@ -17,10 +17,13 @@
          delegate methods). Needed to move on so am leaving it like
          this for now.
  */
+
+@class SCEResultsInfoBar;
+
 @interface SCEFeedView : UIView
 
 @property (nonatomic, weak) UISearchBar *searchBar;
-@property (nonatomic, weak) UIToolbar *resultsInfoBar;
+@property (nonatomic, weak) SCEResultsInfoBar *resultsInfoBar;
 
 // parent container for feed content subviews
 @property (nonatomic, weak) UIView *contentView;

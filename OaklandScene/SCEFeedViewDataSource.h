@@ -24,4 +24,10 @@
 
 - (NSInteger)numberOfCategoriesInFeedView:(SCEFeedView *)feedView;
 
+// returns null if not category is active
+// TODO: reaaaaaally hacky here. fix with category logic overhaul
+//       this method will call the first category an index 0, but
+//       labelForCategory above refers to it by index 1
+- (NSNumber *)activeCategoryIndexInFeedView:(SCEFeedView *)feedView;
+
 @end

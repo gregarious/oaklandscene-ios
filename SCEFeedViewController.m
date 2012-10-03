@@ -10,11 +10,13 @@
 #import "SCEFeedViewController.h"
 #import "SCECategoryPickerDialogController.h"
 #import "SCEFeedView.h"
+#import "SCEResultsInfoBar.h"
 
 @interface SCEFeedViewController ()
 
 - (void)disableSearchFocus;
 - (void)contentMaskTapped:(id)sender;
+- (NSInteger)getActiveCategoryIndex;
 
 @end
 
@@ -43,21 +45,15 @@
     CGRect frame = [[[self parentViewController] view] bounds];
     
     // set up resultsInfoBar
-    NSString *defaultLabel = [[self dataSource] feedView:feedViewContainer labelForCategory:0];
-    UIBarButtonItem *categoryButton = [[UIBarButtonItem alloc] initWithTitle:defaultLabel
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:self
-                                                                      action:@selector(displayFilterDialog:)];
+    resultsInfoBar = [[SCEResultsInfoBar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
+    [[resultsInfoBar infoLabel] setText:@"closest to you"];
+    [[resultsInfoBar categoryButton] setTarget:self];
+    [[resultsInfoBar categoryButton] setAction:@selector(displayFilterDialog:)];
     
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 20)];
-    [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [statusLabel setTextColor:[UIColor whiteColor]];
-    [statusLabel setBackgroundColor:[UIColor clearColor]];
-    [statusLabel setText:@"nearby"];
-    UIBarButtonItem *statusLabelButton = [[UIBarButtonItem alloc] initWithCustomView:statusLabel];
+    NSString *catLabel = [[self dataSource] feedView:feedViewContainer
+                                    labelForCategory:[self getActiveCategoryIndex]];
+    [[resultsInfoBar categoryButton] setTitle:catLabel];
     
-    resultsInfoBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
-    [resultsInfoBar setItems:@[categoryButton, statusLabelButton]];
     [[self view] addSubview:resultsInfoBar];
     
     // calcluate the amount of frame left
@@ -116,6 +112,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+// returns the category index (one that should be fed into SCEFeedDataSource's
+//  feedSource:labelForCategory: method)
+// TODO: craaaaazy convoluted system here. revisit.
+- (NSInteger)getActiveCategoryIndex
+{
+    NSNumber *catIndex = [[self dataSource] activeCategoryIndexInFeedView:feedViewContainer];
+    if (catIndex == nil) {
+        // if source says no index is active, return the label for category at index 0
+        return 0;
+    }
+    else {
+        // if source does return an index, need to bump it up by one when asking for label
+        return [catIndex integerValue] + 1;
+    }
+}
+
 - (void)setViewMode:(SCEFeedViewMode)mode
 {
     viewMode = mode;
@@ -159,8 +171,12 @@
 - (void)displayFilterDialog:(id)sender
 {
     SCECategoryPickerDialogController *dialog = [[SCECategoryPickerDialogController alloc] init];
+    
     [self presentModalViewController:dialog animated:YES];
     [dialog setDelegate:self];
+    
+    [[dialog categoryPicker] selectRow:[self getActiveCategoryIndex]
+                           inComponent:0 animated:NO];
 }
 
 - (void)toggleViewMode:(id)sender
@@ -255,6 +271,10 @@ didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
     [[self delegate] feedView:feedViewContainer
        didChooseCategoryIndex:categoryRow];
     [self dismissModalViewControllerAnimated:YES];
+
+    NSString *catLabel = [[self dataSource] feedView:feedViewContainer
+                                    labelForCategory:categoryRow];
+    [[resultsInfoBar categoryButton] setTitle:catLabel];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView

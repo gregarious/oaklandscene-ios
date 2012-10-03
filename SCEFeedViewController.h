@@ -11,7 +11,7 @@
 #import "SCEFeedViewDataSource.h"
 #import "SCEFeedViewDelegate.h"
 
-@class SCEFeedView;
+@class SCEFeedView, SCEResultsInfoBar;
 
 @interface SCEFeedViewController : UIViewController <UISearchBarDelegate,
                                                         UITableViewDataSource,
@@ -20,7 +20,7 @@
 {
     // subviews
     UISearchBar *searchBar;
-    UIToolbar *resultsInfoBar;
+    SCEResultsInfoBar *resultsInfoBar;
     
     // parent container for feed content subviews
     UIView *contentView;

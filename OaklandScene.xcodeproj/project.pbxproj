@@ -54,6 +54,7 @@
 		37E3EA3C15FA71CA00964876 /* SCEEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E3EA3B15FA71C900964876 /* SCEEvent.m */; };
 		37EB7A15161B62B600E56154 /* SCEFeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37EB7A14161B62B600E56154 /* SCEFeedView.m */; };
 		37EB7A19161B8D5C00E56154 /* SCEPlaceItemSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37EB7A18161B8D5C00E56154 /* SCEPlaceItemSource.m */; };
+		37EB7A1C161BC37200E56154 /* SCEResultsInfoBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 37EB7A1B161BC37100E56154 /* SCEResultsInfoBar.m */; };
 		37ED1DD71607BE4C009CA46D /* SCECategoryPickerDialogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ED1DD51607BE4B009CA46D /* SCECategoryPickerDialogController.m */; };
 		37ED1DD81607BE4C009CA46D /* SCECategoryPickerDialogController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37ED1DD61607BE4B009CA46D /* SCECategoryPickerDialogController.xib */; };
 		37F1005116153208001AD8FE /* SCECategoryList.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F1005016153208001AD8FE /* SCECategoryList.m */; };
@@ -188,6 +189,8 @@
 		37EB7A16161B740D00E56154 /* SCEFeedItemSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEFeedItemSource.h; sourceTree = "<group>"; };
 		37EB7A17161B8D5C00E56154 /* SCEPlaceItemSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceItemSource.h; sourceTree = "<group>"; };
 		37EB7A18161B8D5C00E56154 /* SCEPlaceItemSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceItemSource.m; sourceTree = "<group>"; };
+		37EB7A1A161BC37000E56154 /* SCEResultsInfoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEResultsInfoBar.h; sourceTree = "<group>"; };
+		37EB7A1B161BC37100E56154 /* SCEResultsInfoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEResultsInfoBar.m; sourceTree = "<group>"; };
 		37ED1DCB16079928009CA46D /* SCECategoryPickerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCECategoryPickerDelegate.h; sourceTree = "<group>"; };
 		37ED1DD41607BE4B009CA46D /* SCECategoryPickerDialogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCECategoryPickerDialogController.h; sourceTree = "<group>"; };
 		37ED1DD51607BE4B009CA46D /* SCECategoryPickerDialogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCECategoryPickerDialogController.m; sourceTree = "<group>"; };
@@ -531,6 +534,8 @@
 				37F1005016153208001AD8FE /* SCECategoryList.m */,
 				37EB7A13161B62B600E56154 /* SCEFeedView.h */,
 				37EB7A14161B62B600E56154 /* SCEFeedView.m */,
+				37EB7A1A161BC37000E56154 /* SCEResultsInfoBar.h */,
+				37EB7A1B161BC37100E56154 /* SCEResultsInfoBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -849,6 +854,7 @@
 				3703A4C31616354D00B95980 /* SCEURLImage.m in Sources */,
 				37EB7A15161B62B600E56154 /* SCEFeedView.m in Sources */,
 				37EB7A19161B8D5C00E56154 /* SCEPlaceItemSource.m in Sources */,
+				37EB7A1C161BC37200E56154 /* SCEResultsInfoBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

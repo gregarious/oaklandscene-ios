@@ -8,6 +8,7 @@
 
 #import <MapKit/MapKit.h>
 #import "SCEFeedView.h"
+#import "SCEResultsInfoBar.h"
 
 @implementation SCEFeedView
 

@@ -8,6 +8,7 @@
 
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEResultsInfoBar.h"
 #import "SCEFeeditemSource.h"
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
@@ -24,6 +25,7 @@ enum {
 typedef NSUInteger SCEFeedCellType;
 
 - (SCEFeedCellType)cellTypeForIndex:(NSInteger)index;
+- (void)resetTable:(UITableView *)tableView;
 
 @end
 
@@ -144,19 +146,45 @@ typedef NSUInteger SCEFeedCellType;
     }
 }
 
+- (void)resetTable:(UITableView *)tableView
+{
+    [tableView reloadData];
+    if (shownItemRange.length > 0) {
+        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
+                                                                        inSection:0]
+                                    atScrollPosition:UITableViewScrollPositionTop
+                                            animated:NO];
+    }
+}
+
 /*** SCEFeedDelegate methods ***/
 - (void)feedView:(SCEFeedView *)feedView didChooseCategoryIndex:(NSInteger)categoryIndex
 {
-    [self setFilterCategory:[[[self store] categories] objectAtIndex:categoryIndex]];
+    SCECategory* newCategory;
+    if (categoryIndex == 0) {
+        // 0 is code for no category
+        newCategory = nil;
+    }
+    else {
+        // if > 0, ask the store. decrement first since store categories are 0-indexed
+        newCategory = [[[self store] categories] objectAtIndex:categoryIndex-1];
+    }
     
-    // sync feed and refresh the table upon completion
-    // TODO: consider ongoing syncs
-    [self syncWithCompletion:^(NSError *err) {
-        [[feedView tableView] reloadData];
-    }];
+    // only make changes if category is actually different
+    if ([newCategory value] != [[self filterCategory] value]) {
+        [self setFilterCategory:newCategory];
+        
+        // sync feed and refresh the table upon completion
+        // TODO: consider ongoing syncs
+        [self syncWithCompletion:^(NSError *err) {
+            [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+        }];
 
-    // refresh the table now to show loading message
-    [[feedView tableView] reloadData];
+        // refresh the table now to show loading message
+        [[feedView tableView] reloadData];
+        
+        // TODO: better to update category button title here maybe?
+    }
 }
 
 - (void)feedView:(SCEFeedView *)feedView didSubmitSearchQuery:(NSString *)queryString
@@ -166,11 +194,14 @@ typedef NSUInteger SCEFeedCellType;
     // sync feed and refresh the table upon completion
     // TODO: consider ongoing syncs
     [self syncWithCompletion:^(NSError *err) {
-        [[feedView tableView] reloadData];
+        [self resetTable:[feedView tableView]]; // handles reload and scroll to top
     }];
     
     // refresh the table now to show loading message
     [[feedView tableView] reloadData];
+    
+    // update the info bar text
+    [[[feedView resultsInfoBar] infoLabel] setText:@"matching custom search"];
 }
 
 - (void)didCancelSearchForFeedView:(SCEFeedView *)feedView
@@ -182,11 +213,14 @@ typedef NSUInteger SCEFeedCellType;
         // sync feed and refresh the table upon completion
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
-            [[feedView tableView] reloadData];
+            [self resetTable:[feedView tableView]]; // handles reload and scroll to top
         }];
     
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
+        
+        // update the info bar text
+        [[[feedView resultsInfoBar] infoLabel] setText:@"closest to you"];
     }
 }
 
@@ -228,11 +262,6 @@ typedef NSUInteger SCEFeedCellType;
 }
 
 /*** SCEFeedDataSource methods ***/
-- (NSString *)feedView:(SCEFeedView *)feedView labelForCategory:(NSInteger)categoryIndex
-{
-    return [[[[self store] categories] objectAtIndex:categoryIndex] label];
-}
-
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView tableCellForItem:(NSInteger)itemIndex
 {
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
@@ -259,9 +288,36 @@ typedef NSUInteger SCEFeedCellType;
     }
 }
 
+- (NSString *)feedView:(SCEFeedView *)feedView labelForCategory:(NSInteger)categoryIndex
+{
+    if (categoryIndex == 0) {
+        // 0 is code for no category, or default category. defer to itemSource.
+        return [[self itemSource] defaultCategoryLabelForFeedView:feedView];
+    }
+    else {
+        // if the category index is > 0, can get it direct from the store
+        return [[[[self store] categories] objectAtIndex:categoryIndex-1] label];
+    }
+}
+
 - (NSInteger)numberOfCategoriesInFeedView:(SCEFeedView *)feedView
 {
-    return [[[self store] categories] count];
+    return [[[self store] categories] count] + 1;
+}
+
+- (NSNumber *)activeCategoryIndexInFeedView:(SCEFeedView *)feedView
+{
+    if (filterCategory) {
+        NSArray* categories = [[self store] categories];
+        for (int i = 0; i < [categories count]; i++) {
+            SCECategory* cat = [categories objectAtIndex:i];
+            if ([cat value] == [filterCategory value]) {
+                return [NSNumber numberWithInt:i];
+            }
+        }
+    }
+    // if no category, or couldn't be found in store (which should never happen!), return nil
+    return nil;
 }
 
 @end

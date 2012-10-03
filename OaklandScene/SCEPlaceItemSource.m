@@ -55,4 +55,8 @@
     return 72;
 }
 
+- (NSString *)defaultCategoryLabelForFeedView:(SCEFeedView *)feedView
+{
+    return @"All Places";
+}
 @end

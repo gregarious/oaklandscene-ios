@@ -22,4 +22,6 @@ tableCellHeightForItem:(id)item;
 - (UIViewController *)feedView:(SCEFeedView *)feedView
    didSelectItem:(id)item;
 
+- (NSString *)defaultCategoryLabelForFeedView:(SCEFeedView *)feedView;
+
 @end
