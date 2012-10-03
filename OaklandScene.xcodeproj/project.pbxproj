@@ -779,7 +779,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SCE;
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Scenable;
 			};
 			buildConfigurationList = 37642D7215F6A0670024B6A2 /* Build configuration list for PBXProject "OaklandScene" */;
