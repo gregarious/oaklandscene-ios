@@ -8,28 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONSerializable.h"
+#import "SCEItemStore.h"
 
 @class SCEPlace;
 @class SCECategory;
 
-@interface SCEPlaceStore : NSObject
+@interface SCEPlaceStore : NSObject <SCEItemStore>
 {
     NSMutableDictionary* idPlaceMap;
     NSMutableDictionary* queryResultMap;
 }
-@property (nonatomic, copy) NSMutableArray* places;
+
+@property (nonatomic, copy) NSMutableArray* items;
 @property (nonatomic, readonly) NSDate* lastSynced;
 @property (nonatomic, readonly) NSArray* categories;
-
-+ (SCEPlaceStore *)sharedStore; // overrides base return type
-
-- (void)syncContentWithCompletion:(void (^)(NSArray *items, NSError *err))block;
-
-// could cause a delay if query needs to defer to server, hence return block
-- (void)findPlacesMatchingQuery:(NSString *)query
-                       category:(SCECategory *)category
-                       onReturn:(void (^)(NSArray* places, NSError* err))block;
-
-- (BOOL)isLoaded;
 
 @end

@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SCEItemStore.h"
 
-@interface SCEEventStore : NSObject
+@class SCEEvent;
+@class SCECategory;
+
+@interface SCEEventStore : NSObject <SCEItemStore>
+{
+    NSMutableDictionary* idEventMap;
+    NSMutableDictionary* queryResultMap;
+}
+
+@property (nonatomic, copy) NSMutableArray* items;
+@property (nonatomic, readonly) NSDate* lastSynced;
+@property (nonatomic, readonly) NSArray* categories;
 
 @end

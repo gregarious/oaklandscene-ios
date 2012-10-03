@@ -1,16 +1,16 @@
 //
-//  SCEEventTableCell.m
+//  SCEEventDetailView.m
 //  OaklandScene
 //
-//  Created by Greg Nicholas on 9/6/12.
+//  Created by Greg Nicholas on 10/3/12.
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import "SCEEventTableCell.h"
+#import "SCEEventDetailView.h"
 
-@implementation SCEEventTableCell
+@implementation SCEEventDetailView
 
-@synthesize nameLabel;
+@synthesize testLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,6 +19,12 @@
         // Initialization code
     }
     return self;
+}
+
+- (void)setTestLabel:(UILabel *)label;
+{
+    testLabel = label;
+    [self addSubview:label];
 }
 
 /*

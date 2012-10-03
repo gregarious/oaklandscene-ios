@@ -8,6 +8,10 @@
 
 #import "SCEFeedViewController.h"
 
+@class SCEEventStore;
+
 @interface SCEEventFeedViewController : SCEFeedViewController
-                                        <UITableViewDataSource, UITableViewDelegate>
+{
+    SCEEventStore *contentStore;
+}
 @end

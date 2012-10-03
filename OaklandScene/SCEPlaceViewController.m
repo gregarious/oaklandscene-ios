@@ -13,6 +13,7 @@
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEPlaceDetailView.h"
 #import "SCEPlace.h"
+#import "SCEURLImage.h"
 #import "SCECategory.h"
 #import "SCECategoryList.h"
 

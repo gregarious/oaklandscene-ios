@@ -8,7 +8,10 @@
 
 #import "SCEEventFeedViewController.h"
 #import "SCEEventViewController.h"
+#import "SCEEventStore.h"
+#import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEEventItemSource.h"
 
 @implementation SCEEventFeedViewController
 
@@ -25,7 +28,17 @@
         [self addViewToggleButton];
         [self addSearchButton];
         
-        // TODO: set up feed source
+        contentStore = [SCEEventStore sharedStore];
+        SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
+        
+        [feedSource setItemSource:[[SCEEventItemSource alloc] init]];
+        
+        [self setDelegate:feedSource];
+        [self setDataSource:feedSource];
+        
+        [feedSource syncWithCompletion:^(NSError *err) {
+            [tableView reloadData];
+        }];
     }
 
     return self;
@@ -38,6 +51,16 @@
     // register the NIBs for cell reuse
     [tableView registerNib:[UINib nibWithNibName:@"SCEEventTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCEEventTableCell"];
+
+    // TODO: need to figure out how to handle this
+    // if the main store is loaded, reset the feed
+    //    if ([contentStore isLoaded]) {
+    //        [self resetFeedFilters];
+    //    }
+    //    else {
+    //        [self addStaticMessageToFeed:@"Events could not be loaded"];
+    //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
+    //    }
 }
 
 @end

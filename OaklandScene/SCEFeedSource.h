@@ -11,6 +11,7 @@
 #import "SCEFeedViewDelegate.h"
 #import "SCEFeedViewDataSource.h"
 #import "SCEFeedItemSource.h"
+#import "SCEItemStore.h"
 
 @class SCECategory, SCEPlaceStore, SCEFeedStaticCell, SCEFeedLoadingCell;
 
@@ -31,7 +32,7 @@
     BOOL syncInProgress;
 }
 
-@property (nonatomic) SCEPlaceStore* store; // TODO: make a generic store
+@property (nonatomic) id <SCEItemStore> store; // TODO: make a generic store
 
 @property (nonatomic, readonly) NSArray* items;
 
@@ -42,7 +43,7 @@
 
 @property (nonatomic) id <SCEFeedItemSource> itemSource;
 
-- (id)initWithStore:(SCEPlaceStore*)s;
+- (id)initWithStore:(id <SCEItemStore>)s;
 
 - (void)syncWithCompletion:(void (^)(NSError *err))block;
 

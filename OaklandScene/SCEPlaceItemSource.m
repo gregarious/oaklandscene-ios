@@ -14,6 +14,7 @@
 #import "SCEPlaceTableCell.h"
 #import "SCEPlaceViewController.h"
 #import "SCEFeedView.h"
+#import "SCEURLImage.h"
 
 @implementation SCEPlaceItemSource
 

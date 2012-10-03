@@ -40,7 +40,7 @@ typedef NSUInteger SCEFeedCellType;
     return [self initWithStore:nil];
 }
 
-- (id)initWithStore:(SCEPlaceStore *)s
+- (id)initWithStore:(id <SCEItemStore>)s
 {
     self = [super init];
     if (self) {
@@ -112,13 +112,13 @@ typedef NSUInteger SCEFeedCellType;
     // if no filtering, don't bother with asking the store anything special
     if (![self filterCategory] && ![self filterKeyword]) {
         // "sync" never needs to happen, just call directly
-        onSyncComplete([[self store] places], nil);
+        onSyncComplete([[self store] items], nil);
     }
     else {
         // otherwise
-        [store findPlacesMatchingQuery:[self filterKeyword]
-                              category:[self filterCategory]
-                              onReturn:onSyncComplete];
+        [[self store] findItemsMatchingQuery:[self filterKeyword]
+                                    category:[self filterCategory]
+                                    onReturn:onSyncComplete];
     }
 }
 
