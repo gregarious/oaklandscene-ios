@@ -10,6 +10,8 @@
 
 @implementation SCEEventTableCell
 
+@synthesize nameLabel;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

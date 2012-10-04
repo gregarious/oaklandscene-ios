@@ -6,10 +6,9 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-@class SCEPlaceStore;
-
-#import "SCEFeedViewDelegate.h"
 #import "SCEFeedViewController.h"
+
+@class SCEPlaceStore;
 
 @interface SCEPlaceFeedViewController : SCEFeedViewController
 {

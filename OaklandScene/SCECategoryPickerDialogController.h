@@ -14,7 +14,6 @@
 @property (weak, nonatomic) id <SCECategoryPickerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
-@property (weak, nonatomic) IBOutlet UITextField *keywordText;
 
 - (IBAction)searchButton:(id)sender;
 - (IBAction)backgroundTapped:(id)sender;

@@ -17,6 +17,8 @@
 #import "SCETodayViewController.h"
 
 #import "SCEPlaceStore.h"
+#import "SCEEventStore.h"
+#import "SCESpecialStore.h"
 
 @implementation SCEAppDelegate
 
@@ -27,6 +29,8 @@
     
     // Initialize the stores
     [[SCEPlaceStore sharedStore] syncContentWithCompletion:nil];
+    [[SCEEventStore sharedStore] syncContentWithCompletion:nil];
+    [[SCESpecialStore sharedStore] syncContentWithCompletion:nil];
     
     // Create the 5 VCs that will live under each tab
     SCETodayViewController* todayVC = [[SCETodayViewController alloc] init];

@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "SCEGeocoded.h"
-@class SCEPlace;
+#import "JSONSerializable.h"
 
-@interface SCEEvent : NSObject <SCEGeocoded>
+@class SCEPlace, SCEPlaceStore, SCEURLImage;
+
+@interface SCEEvent : NSObject <SCEGeocoded, JSONSerializable>
+
+// id of event object on server
+@property (nonatomic, copy) NSString *resourceId;
 
 // simple string-based properties
 @property (nonatomic, copy) NSString* name;
@@ -21,10 +26,17 @@
 @property (nonatomic, copy) NSDate* startTime;
 @property (nonatomic, copy) NSDate* endTime;
 
-// key to the main image store
-@property (nonatomic, copy) NSString* imageKey;
+// url-backed image
+@property (nonatomic, strong) SCEURLImage *urlImage;
 
-// SCEPlace that event is happening at
-@property (nonatomic, weak) SCEPlace* place;
+// One or the other will be non-nil	
+@property (nonatomic, copy) NSString *placePrimitive;
+@property (nonatomic, weak) SCEPlace *place;
+
+// used to resolve place id references
+@property (nonatomic, weak) SCEPlaceStore *placeStore;
+
+// array of SCECategory objects
+@property (nonatomic, strong) NSArray *categories;
 
 @end

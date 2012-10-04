@@ -11,7 +11,6 @@
 @implementation SCECategoryPickerDialogController
 
 @synthesize categoryPicker;
-@synthesize keywordText;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,8 +33,6 @@
     
     // Do any additional setup after loading the view from its nib.
     
-    [[self keywordText] setDelegate:self];
-    
     // set up categoryPicker to emulate "backgroundTapped" if picker tapped
     UITapGestureRecognizer *tapGesture =[[UITapGestureRecognizer alloc]
                                              initWithTarget:self
@@ -47,7 +44,6 @@
 - (void)viewDidUnload
 {
     [self setCategoryPicker:nil];
-    [self setKeywordText:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -56,12 +52,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
 }
 
 - (IBAction)searchButton:(id)sender {

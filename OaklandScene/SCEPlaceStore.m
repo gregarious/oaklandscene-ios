@@ -18,7 +18,7 @@
 
 @implementation SCEPlaceStore
 
-@synthesize places, lastSynced, categories;
+@synthesize items, lastSynced, categories;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -55,9 +55,9 @@
     }
 }
 
-- (void)setPlaces:(NSArray *)ps
+- (void)setItems:(NSMutableArray *)places
 {
-    places = [[NSMutableArray alloc] initWithArray:ps];
+    items = [[NSMutableArray alloc] initWithArray:places];
     lastSynced = [NSDate date];
     
     // reset dictionary and set categories
@@ -90,7 +90,7 @@
     // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
     // TODO: error handling for NSData and/or JSON read?
     
-    NSString* filename = [[NSBundle mainBundle] pathForResource:@"places-09192012"
+    NSString* filename = [[NSBundle mainBundle] pathForResource:@"places-10032012"
                                                          ofType:@"json"];
 
     NSData* fileData = [NSData dataWithContentsOfFile:filename];
@@ -108,17 +108,18 @@
         [p readFromJSONDictionary:d];
         [newPlaces addObject:p];
     }
-    [self setPlaces:newPlaces];
+    [self setItems:newPlaces];
+    
     queryResultMap = [[NSMutableDictionary alloc] init];
 
     if (block) {
-        block([self places], nil);
+        block([self items], nil);
     }
 }
 
-- (void)findPlacesMatchingQuery:(NSString *)query
-                       category:(SCECategory *)category
-                       onReturn:(void (^)(NSArray *, NSError *))returnBlock
+- (void)findItemsMatchingQuery:(NSString *)query
+                      category:(SCECategory *)category
+                      onReturn:(void (^)(NSArray *, NSError *))returnBlock
 {
     // first ensure that the places content exists, otherwise this can't be done
     if (!lastSynced) {
@@ -134,7 +135,7 @@
 
     // if query is nil,
     if (!query) {
-        matchingObjects = places;
+        matchingObjects = [self items];
     }
     else if([queryResultMap objectForKey:query]) {
         matchingObjects = [SCEPlaceStore filter:[queryResultMap objectForKey:query]
@@ -192,6 +193,11 @@
     [connection setJsonRootObject:rootJSONObj];
     [connection start];
     
+}
+
+- (SCEPlace *)itemFromResourceId:(NSString *)rId
+{
+    return [idPlaceMap objectForKey:rId];
 }
 
 @end

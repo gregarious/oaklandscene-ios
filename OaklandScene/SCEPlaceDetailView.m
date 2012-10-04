@@ -6,12 +6,18 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
-#import <MapKit/MapKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "SCEPlaceDetailView.h"
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEAboutView.h"
 #import "SCEHoursView.h"
+
+@interface SCEPlaceDetailView ()
+
+// utility function for various set*View calls
+- replaceSubview:(UIView *)old with:(UIView *)new;
+
+@end
 
 @implementation SCEPlaceDetailView
 
@@ -111,80 +117,58 @@
     return CGSizeMake(size.width, lastSubviewBottomYPos + 20);
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+// Used in various set property calls -- necessary to  handle the subview adding/removing
+- (id)replaceSubview:(UIView *)old with:(UIView *)new
 {
-    // Drawing code
+    [old removeFromSuperview];
+    [self addSubview:new];
+    return new;
 }
-*/
 
-// Various set property calls -- overridden to handle the subview adding/removing
-// Note that setNeedsLayout is NOT called as a result of this call
-
+// Note that setNeedsLayout is NOT called as a result of these calls
 - (void)setMapView:(MKMapView *)view
 {
-    [[self mapView] removeFromSuperview];
-    mapView = view;
-
-    [self addSubview:view];
+    mapView = [self replaceSubview:[self mapView] with:view];
 }
 
 - (void)setHeaderView:(SCEPlaceDetailHeadView *)view
 {
-    [[self headerView] removeFromSuperview];
-    headerView = view;
-    [self addSubview:view];
+    headerView = [self replaceSubview:[self headerView] with:view];
 }
 
 - (void)setHoursView:(SCEHoursView *)view
 {
-    [[self hoursView] removeFromSuperview];
-    hoursView = view;
-    [self addSubview:hoursView];
+    hoursView = [self replaceSubview:[self hoursView] with:view];
 }
 
 - (void)setAboutView:(SCEAboutView *)view
 {
-    [[self aboutView] removeFromSuperview];
-    aboutView = view;
-    [self addSubview:aboutView];
+    aboutView = [self replaceSubview:[self aboutView] with:view];
 }
 
 - (void)setLeftActionButton:(UIButton *)btn
 {
-    [[self leftActionButton] removeFromSuperview];
-    leftActionButton = btn;
-    [self addSubview:leftActionButton];
+    leftActionButton = [self replaceSubview:[self leftActionButton] with:btn];
 }
 
 - (void)setRightActionButton:(UIButton *)btn
 {
-    [[self rightActionButton] removeFromSuperview];
-    rightActionButton = btn;
-    [self addSubview:rightActionButton];
+    rightActionButton = [self replaceSubview:[self rightActionButton] with:btn];
 }
 
 - (void)setLeftConnectButton:(UIButton *)btn
 {
-    [[self leftConnectButton] removeFromSuperview];
-    leftConnectButton = btn;
-    [self addSubview:leftConnectButton];
+    leftConnectButton = [self replaceSubview:[self leftConnectButton] with:btn];
 }
 
 - (void)setMiddleConnectButton:(UIButton *)btn
 {
-    [[self middleConnectButton] removeFromSuperview];
-    middleConnectButton = btn;
-    [self addSubview:middleConnectButton];
+    middleConnectButton = [self replaceSubview:[self middleConnectButton] with:btn];
 }
 
 - (void)setRightConnectButton:(UIButton *)btn
 {
-    [[self rightConnectButton] removeFromSuperview];
-    rightConnectButton = btn;
-    [self addSubview:rightConnectButton];
+    rightConnectButton = [self replaceSubview:[self rightConnectButton] with:btn];
 }
 
 @end

@@ -10,4 +10,8 @@
 
 @interface SCESpecialTableCell : SCEFeedTableCell
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *placeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *expiresLabel;
+
 @end

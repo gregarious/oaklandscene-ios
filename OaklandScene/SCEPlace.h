@@ -8,7 +8,6 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "SCEGeocoded.h"
-#import "SCEURLImage.h"
 #import "JSONSerializable.h"
 
 @class SCEEvent;

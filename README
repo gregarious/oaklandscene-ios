@@ -2,3 +2,12 @@ Pre-deploy checklist:
 
 - Ensure memory warnings handled properly. Make sure view properties are weak that should be weak and that subviews are created/destroyed in viewLoad and viewUnload.
 - Ensure any missing dealloc is filled in (e.g. delegates set to nil)
+- Add license for ISO date parser
+
+Future refactoring:
+
+- Remove ISO plugin -- not sure it's free of leaks
+- Reconsider the roles of SCE<Type>ItemSource and SCE<Type>FeedController. The 
+    controller might be the more appropriate place for this logic.
+- Remove as many redundancies as possible from the type-specific stores & controllers
+- Good sample project for iOS 6 and auto layout. Also just a good idea to review the techniques I used and try to reduce the ridiculous amount of boilerplate I put in before really searching for best practices.

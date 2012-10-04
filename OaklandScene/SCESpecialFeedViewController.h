@@ -8,7 +8,11 @@
 
 #import "SCEFeedViewController.h"
 
+@class SCESpecialStore;
+
 @interface SCESpecialFeedViewController : SCEFeedViewController
-                                            <UITableViewDataSource, UITableViewDelegate>
+{
+    SCESpecialStore *contentStore;
+}
 
 @end

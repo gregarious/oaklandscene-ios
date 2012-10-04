@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@class UIImage;
 @class SCEHoursView;
 @class SCEAboutView;
 @class SCEPlaceDetailHeadView;
-@class MKMapView;
 
 @interface SCEPlaceDetailView : UIView
 {

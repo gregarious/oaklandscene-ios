@@ -10,17 +10,19 @@
 
 @implementation SCEResultsInfoBar
 
-@synthesize infoLabel, categoryButton;
+@synthesize infoLabel, categoryButton, hideCategoryButton;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        hideCategoryButton = false;
+        
         infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 20)];
         [[self infoLabel] setFont:[UIFont boldSystemFontOfSize:14]];
         [[self infoLabel] setTextColor:[UIColor whiteColor]];
         [[self infoLabel] setBackgroundColor:[UIColor clearColor]];
-        UIBarButtonItem *textButton = [[UIBarButtonItem alloc] initWithCustomView:infoLabel];
+        labelWrapperButton = [[UIBarButtonItem alloc] initWithCustomView:infoLabel];
         
         categoryButton = [[UIBarButtonItem alloc] initWithTitle:@""
                                                           style:UIBarButtonItemStyleBordered
@@ -28,11 +30,22 @@
                                                          action:nil];
         
         toolbar = [[UIToolbar alloc] initWithFrame:frame];
-        [toolbar setItems:@[categoryButton, textButton]];
+        [toolbar setItems:@[categoryButton, labelWrapperButton]];
         
         [self addSubview:toolbar];
     }
     return self;
+}
+
+- (void)setHideCategoryButton:(BOOL)shouldHide
+{
+    hideCategoryButton = shouldHide;
+    if (shouldHide) {
+        [toolbar setItems:@[labelWrapperButton]];
+    }
+    else {
+        [toolbar setItems:@[categoryButton, labelWrapperButton]];
+    }
 }
 
 /*

@@ -44,6 +44,10 @@ typedef NSUInteger SCEFeedViewMode;
 @property (nonatomic, strong) id <SCEFeedViewDataSource> dataSource;
 @property (nonatomic, strong) id <SCEFeedViewDelegate> delegate;
 
+// NOTE: this must be set before view is loaded
+// TODO: fix this behavior?
+@property (nonatomic, assign) BOOL showResultsBar;
+
 // see note in SCEFeedView.h
 @property (nonatomic, readonly) SCEFeedView *feedViewContainer;
 

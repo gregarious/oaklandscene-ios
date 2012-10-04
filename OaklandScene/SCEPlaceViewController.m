@@ -13,23 +13,10 @@
 #import "SCEPlaceDetailHeadView.h"
 #import "SCEPlaceDetailView.h"
 #import "SCEPlace.h"
+#import "SCEURLImage.h"
 #import "SCECategory.h"
 #import "SCECategoryList.h"
-
-// quick n dirty annotation for debug purposes
-@interface SCESimpleAnnotation : NSObject<MKAnnotation>
-@property (nonatomic) CLLocationCoordinate2D coordinate;
-+ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coord;
-@end
-@implementation SCESimpleAnnotation
-@synthesize coordinate;
-+ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coord
-{
-    SCESimpleAnnotation *obj = [[SCESimpleAnnotation alloc] init];
-    [obj setCoordinate:coord];
-    return obj;
-}
-@end
+#import "SCESimpleAnnotation.h"
 
 @implementation SCEPlaceViewController
 
