@@ -8,9 +8,14 @@
 
 #import "SCESpecialViewController.h"
 #import "SCESpecial.h"
-//#import "SCESpecialDetailHeadView.h"
+#import "SCESpecialDetailHeadView.h"
 #import "SCESpecialDetailView.h"
 #import "SCEURLImage.h"
+#import "SCESimpleAnnotation.h"
+#import "SCEAboutView.h"
+#import "SCESpecialRedeemPrompt.h"
+#import "SCEPlace.h"
+#import "SCEPlaceStubView.h"
 
 @implementation SCESpecialViewController
 
@@ -36,19 +41,62 @@
     
     // set up the detailView
     SCESpecialDetailView *detailView = [[SCESpecialDetailView alloc] initWithFrame:frame];
-    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0,0,320,44)];
-    [l setText:[[self special] title]];
-    [detailView setTestLabel:l];
     
-    // TODO: set up the rest of the subviews
+    // map view
+    MKMapView *mapView = [[MKMapView alloc] init];
+    [detailView setMapView:mapView];
+    [mapView addAnnotation:[SCESimpleAnnotation
+                            annotationWithCoordinate:[[[self special] place] location]]];
+    // can't set the region till the subview is framed: do it at the bottom of this method
+
+    
+    // header view
+    SCESpecialDetailHeadView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"SCESpecialDetailHeadView"
+                                                                        owner:self
+                                                                      options:nil] objectAtIndex:0];
+    [[headerView titleLabel] setText:[[self special] title]];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateStyle:NSDateFormatterLongStyle];
+    NSString *expString = [fmt stringFromDate:[[self special] expiresDate]];
+    [[headerView expiresLabel] setText:[NSString stringWithFormat: @"Expires %@", expString]];
+
+    [detailView setHeaderView:headerView];
+
+    // place stub view
+    SCEPlaceStubView *placeStub = [[[NSBundle mainBundle] loadNibNamed:@"SCEPlaceStubView"
+                                                                 owner:self
+                                                               options:nil] objectAtIndex:0];
+    [[placeStub nameLabel] setText:[[[self special] place] name]];
+    [[placeStub addressLabel] setText:[[[self special] place] streetAddress]];
+    [detailView setPlaceStubView:placeStub];
+    
+    // TODO: hook up button actions
+    
+    // redeem prompt
+    SCESpecialRedeemPrompt *redeemPrompt = [[[NSBundle mainBundle] loadNibNamed:@"SCESpecialRedeemPrompt"
+                                                                          owner:self
+                                                                        options:nil] objectAtIndex:0];
+    NSString *instructions = [NSString stringWithFormat:@"Show this screen at %@ to redeem this special!",
+                                                        [[[self special] place] name]];
+    [[redeemPrompt instructionsLabel] setText:instructions];
+    [detailView setRedeemView:redeemPrompt];
+    
+    // about text area
+    NSString *aboutText = [[self special] description];
+    if (!aboutText || [aboutText length] > 0) {
+        SCEAboutView *aboutView = [[SCEAboutView alloc] init];
+        [aboutView setAboutText:aboutText];
+        [detailView setAboutView:aboutView];
+    }
+    
     [scrollView addSubview:detailView];
-    //
-    //    // need to know the size of the detailView, so force layout and get size
+
+    // need to know the size of the detailView, so force layout and get size
     [detailView layoutSubviews];
     [detailView sizeToFit];
-    //
-    //    // since map is now framed, we can call setRegion
-    //    [mapView setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300) animated:false];
+
+    // since map is now framed, we can call setRegion
+    [mapView setRegion:MKCoordinateRegionMakeWithDistance([[[self special] place] location], 300, 300) animated:false];
     
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];

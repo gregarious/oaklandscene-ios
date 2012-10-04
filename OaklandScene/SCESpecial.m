@@ -17,6 +17,15 @@
 @synthesize startDate, expiresDate;
 @synthesize place, placeStore;
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self setPlaceStore:[SCEPlaceStore sharedStore]];
+    }
+    return self;
+}
+
 - (void)readFromJSONDictionary:(NSDictionary *)d
 {
     [self setResourceId:[d objectForKey:@"id"]];

@@ -13,6 +13,7 @@
 #import "SCESpecialItemSource.h"
 #import "SCEFeedView.h"
 #import "SCEResultsInfoBar.h"
+#import "SCEUtils.h"
 
 @implementation SCESpecialFeedViewController
 
@@ -27,6 +28,8 @@
         // configure nav bar
 //        [[self navigationItem] setTitle:@"Available Specials"];
         [self addViewToggleButton];
+        
+        [self setShowResultsBar:NO];    // disable results bar (no categories)
         
         // TODO: set up feed source
         contentStore = [SCESpecialStore sharedStore];
@@ -53,11 +56,6 @@
     [tableView registerNib:[UINib nibWithNibName:@"SCESpecialTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCESpecialTableCell"];
     
-    // remove the category button from the base class
-    // TODO: not optimal having to undo assumpions base class makes for all
-    // feed views. refactor later.
-    [resultsInfoBar setHideCategoryButton:YES];
-    [[resultsInfoBar infoLabel] setText:@"Showing all available coupons"];
     
     // TODO: need to figure out how to handle this
     // if the main store is loaded, reset the feed

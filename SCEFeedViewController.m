@@ -22,13 +22,14 @@
 
 @implementation SCEFeedViewController
 
-@synthesize viewMode, feedViewContainer;
+@synthesize viewMode, feedViewContainer, delegate, showResultsBar;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         // default to table mode
+        [self setShowResultsBar:YES];
         [self setViewMode:SCEFeedViewModeTable];
     }
     
@@ -45,24 +46,28 @@
     CGRect frame = [[[self parentViewController] view] bounds];
     
     // set up resultsInfoBar
-    resultsInfoBar = [[SCEResultsInfoBar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
-    [[resultsInfoBar infoLabel] setText:@"closest to you"];
-    [[resultsInfoBar categoryButton] setTarget:self];
-    [[resultsInfoBar categoryButton] setAction:@selector(displayFilterDialog:)];
-    
-    NSString *catLabel = [[self dataSource] feedView:feedViewContainer
-                                    labelForCategory:[self getActiveCategoryIndex]];
-    [[resultsInfoBar categoryButton] setTitle:catLabel];
-    
-    [[self view] addSubview:resultsInfoBar];
+    CGFloat infoBarHeight = 0;
+    if ([self showResultsBar]) {
+        resultsInfoBar = [[SCEResultsInfoBar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
+        [[resultsInfoBar infoLabel] setText:@"closest to you"];
+        [[resultsInfoBar categoryButton] setTarget:self];
+        [[resultsInfoBar categoryButton] setAction:@selector(displayFilterDialog:)];
+        
+        NSString *catLabel = [[self dataSource] feedView:feedViewContainer
+                                        labelForCategory:[self getActiveCategoryIndex]];
+        [[resultsInfoBar categoryButton] setTitle:catLabel];
+        
+        [[self view] addSubview:resultsInfoBar];
+        infoBarHeight = [resultsInfoBar frame].size.height;
+    }
     
     // calcluate the amount of frame left
     CGRect contentFrame = frame;
-    contentFrame.origin.y += [resultsInfoBar frame].size.height;
+    contentFrame.origin.y += infoBarHeight;
 
     // TODO: why do we have to add in the height of the status and tab bar
     // manually? Shouldn't tab bar controller have given us a sane height?
-    contentFrame.size.height -= (20 + 49 + [resultsInfoBar frame].size.height);
+    contentFrame.size.height -= (20 + 49 + infoBarHeight);
 
     // first load up the content view container
     contentView = [[UIView alloc] initWithFrame:contentFrame];
