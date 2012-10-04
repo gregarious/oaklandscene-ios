@@ -10,6 +10,8 @@
 
 @implementation SCESpecialRedeemPrompt
 
+@synthesize instructionsLabel, thumbnail;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
