@@ -9,6 +9,7 @@
 #import "SCESpecialItemSource.h"
 
 #import "SCESpecialItemSource.h"
+#import "SCEPlace.h"
 #import "SCESpecial.h"
 #import "SCECategory.h"
 #import "SCECategoryList.h"
@@ -33,6 +34,14 @@
     SCESpecial* special = (SCESpecial *)item;
     SCESpecialTableCell *cell = [[feedView tableView] dequeueReusableCellWithIdentifier:@"SCESpecialTableCell"];
     [[cell titleLabel] setText:[special title]];
+    
+    if ([[special place] name]) {
+        [[cell placeLabel] setText:[NSString stringWithFormat:@"at %@", [[special place] name]]];
+    }
+    UIImage *img = [[[special place] urlImage] image];
+    if (img) {
+        [[cell thumbnail] setImage:img];
+    }
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     [fmt setDateStyle:NSDateFormatterLongStyle];

@@ -67,7 +67,7 @@
     
     // place info (not optional)
     [[self placeStubView] setFrame:CGRectMake(24, rasterY, 272, 0)];
-    rasterY += 100 + 10;
+    rasterY += 100 + 20;
     // TODO: find dynamic height
 //    [[self placeStubView] sizeToFit];
 //    rasterY += [[self placeStubView] frame].size.height + 20;
@@ -83,7 +83,8 @@
         rasterY += [[self aboutView] frame].size.height + 20;
     }
     
-    lastSubviewBottomYPos = rasterY;
+    // TODO: why is the +20 necessary? we already added padding above
+    lastSubviewBottomYPos = rasterY + 20;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size

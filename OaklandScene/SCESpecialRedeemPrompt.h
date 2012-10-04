@@ -10,7 +10,7 @@
 
 @interface SCESpecialRedeemPrompt : UIView
 
-@property (unsafe_unretained, nonatomic) IBOutlet UILabel *instructionsLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *instructionsLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 
 @end

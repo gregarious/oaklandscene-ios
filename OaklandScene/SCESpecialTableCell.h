@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *placeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *expiresLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 
 @end
