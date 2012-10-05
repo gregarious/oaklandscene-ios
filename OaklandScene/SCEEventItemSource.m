@@ -7,6 +7,7 @@
 //
 
 #import "SCEEventItemSource.h"
+#import "SCEPlace.h"
 #import "SCEEvent.h"
 #import "SCECategory.h"
 #import "SCECategoryList.h"
@@ -36,15 +37,20 @@
     [fmt setDateStyle:NSDateFormatterLongStyle];
     [fmt setTimeStyle:NSDateFormatterShortStyle];
     [[cell timeLabel] setText:[fmt stringFromDate:[event startTime]]];
-//    [[cell addressLabel] setText:[event streetAddress]];
-//    
-//    if ([event urlImage]) {
-//        [[cell thumbnail] setImage:[[event urlImage] image]];
-//    }
-//    else {
-//        [[cell thumbnail] setImage:nil];    // TODO: stock image?
-//    }
-//    
+    
+    NSString *placeName;
+    if ([event place]) {
+        placeName = [[event place] name];
+    }
+    else {
+        placeName = [event placePrimitive];
+    }
+    [[cell placeLabel] setText:[NSString stringWithFormat:@"at %@", placeName]];
+
+    if ([event urlImage]) {
+        [[cell thumbnail] setImage:[[event urlImage] image]];
+    }
+//
 //    NSMutableArray *categoryLabels = [NSMutableArray array];
 //    for (SCECategory *category in [event categories]) {
 //        [categoryLabels addObject:[category label]];

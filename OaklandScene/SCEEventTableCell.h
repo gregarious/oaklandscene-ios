@@ -12,5 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *placeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnail;
 
 @end

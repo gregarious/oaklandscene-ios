@@ -15,15 +15,38 @@
 
 @implementation SCEEvent
 
+// a list of places generated in-place when no instance exists in the place store
+static NSMutableArray *generatedPlaces = nil;
+
 @synthesize resourceId, name, description, url;
 @synthesize startTime, endTime;
 @synthesize urlImage;
 @synthesize place, placePrimitive, placeStore;
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self setPlaceStore:[SCEPlaceStore sharedStore]];
+    }
+    if (!generatedPlaces) {
+        generatedPlaces = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    // if this place was generated in-place during JSON deserialization, release its reference
+    if ([self place]) {
+        [generatedPlaces removeObject:[self place]];
+    }
+}
+
 - (void)readFromJSONDictionary:(NSDictionary *)d
 {
     [self setResourceId:[d objectForKey:@"id"]];
-    
+        
     [self setName:[d objectForKey:@"name"]];
     [self setDescription:[d objectForKey:@"description"]];
     [self setUrl:[d objectForKey:@"url"]];
@@ -35,13 +58,21 @@
     [self setStartTime:start];
     NSDate *end = [formatter dateFromString:[d objectForKey:@"dtend"]];
     [self setEndTime:end];
-    
+  
     id placeDict = [d objectForKey:@"place"];
     if (placeDict != [NSNull null]) {
+        SCEPlace *p;
         if ([self placeStore]) {
             NSString *rId = [placeDict objectForKey:@"id"];
-            [self setPlace:[[self placeStore] itemFromResourceId:rId]];
+            p = [[self placeStore] itemFromResourceId:rId];
         }
+        if (!p) {
+            p = [[SCEPlace alloc] init];
+            [p readFromJSONDictionary:placeDict];
+            [generatedPlaces addObject:p];  // rescue this new object from ARC
+        }
+        
+        [self setPlace:p];
     }
     else {
         [self setPlacePrimitive:[d objectForKey:@"place_primitive"]];

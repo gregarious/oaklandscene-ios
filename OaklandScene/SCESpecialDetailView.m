@@ -56,7 +56,7 @@
     
     // map view
     if ([self mapView]) {
-        [[self mapView] setFrame:CGRectMake(12.0, rasterY, 296.0, 80.0)];
+        [[self mapView] setFrame:CGRectMake(12.0, rasterY, 296, 80)];
         rasterY += [[self mapView] frame].size.height;
     }
     
@@ -66,11 +66,8 @@
     rasterY += [[self headerView] frame].size.height + 8;
     
     // place info (not optional)
-    [[self placeStubView] setFrame:CGRectMake(24, rasterY, 272, 0)];
-    rasterY += 100 + 20;
-    // TODO: find dynamic height
-//    [[self placeStubView] sizeToFit];
-//    rasterY += [[self placeStubView] frame].size.height + 20;
+    [[self placeStubView] setFrame:CGRectMake(24, rasterY, 272, 100)];
+    rasterY += [[self placeStubView] frame].size.height + 20;
 
     // redeem info (not optional)
     [[self redeemView] setFrame:CGRectMake(24, rasterY, 272, 80)];
@@ -92,7 +89,7 @@
     return CGSizeMake(size.width, lastSubviewBottomYPos);
 }
 
-// Used in various set property calls -- necessary to  handle the subview adding/removing
+// Used in various set property calls -- necessary to handle the subview adding/removing
 - (id)replaceSubview:(UIView *)old with:(UIView *)new
 {
     [old removeFromSuperview];

@@ -6,13 +6,18 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "SCEEventViewController.h"
+#import "SCEPlace.h"
+#import "SCEPlaceStubView.h"
 #import "SCEEvent.h"
-//#import "SCEEventDetailHeadView.h"
+#import "SCEEventDetailHeadView.h"
 #import "SCEEventDetailView.h"
+#import "SCEAboutView.h"
 #import "SCEURLImage.h"
 #import "SCECategory.h"
 #import "SCECategoryList.h"
+#import "SCESimpleAnnotation.h"
 
 @implementation SCEEventViewController
 
@@ -38,96 +43,90 @@
     
     // set up the detailView
     SCEEventDetailView *detailView = [[SCEEventDetailView alloc] initWithFrame:frame];
-    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0,0,320,44)];
-    [l setText:[[self event] name]];
-    [detailView setTestLabel:l];
     
-    // TODO: Adapt everything below from SCEPlaceViewController
-//    
-//    // map view
-//    MKMapView *mapView = [[MKMapView alloc] init];
-//    [detailView setMapView:mapView];
-//    [mapView addAnnotation:[SCESimpleAnnotation
-//                            annotationWithCoordinate:[[self place] location]]];
-//    // can't set the region till the subview is framed: do it at the bottom of this method
-//    
-//    // header view
-//    // need to figure out ahead of time if name will fit on one line
-//    NSInteger nibViewIndex;
-//    CGSize sz = [[[self place] name] sizeWithFont:[UIFont boldSystemFontOfSize:16]];
-//    if (sz.width <= 225) {
-//        nibViewIndex = 0;
-//    }
-//    else {
-//        nibViewIndex = 1;
-//    }
-//    SCEPlaceDetailHeadView* headerView = [[[NSBundle mainBundle] loadNibNamed:@"SCEPlaceDetailHeadView"
-//                                                                        owner:self
-//                                                                      options:nil] objectAtIndex:nibViewIndex];
-//    [[headerView nameLabel] setText:[[self place] name]];
-//    [[headerView addressLabel] setText:[[self place] streetAddress]];
-//    if ([[self place] urlImage]) {
-//        [[headerView thumbnailImage] setImage:[[[self place] urlImage] image]];
-//    }
-//    else {
-//        // TODO: replace with stock image
-//        [[headerView thumbnailImage] setImage:nil];
-//    }
-//    
-//    NSMutableArray *categoryLabels = [NSMutableArray array];
-//    for (SCECategory *category in [[self place] categories]) {
-//        [categoryLabels addObject:[category label]];
-//    }
-//    [[headerView categoryList] setCategoryLabelTexts:categoryLabels];
-//    [detailView setHeaderView:headerView];
-//    
-//    // hours subview
-//    NSArray *hours = [[self place] hours];
-//    if (hours && [hours count] > 0 ) {
-//        SCEHoursView* hoursView = [[SCEHoursView alloc] init];
-//        [hoursView setHoursArray:[[self place] hours]];
-//        [detailView setHoursView:hoursView];
-//    }
-//    
-//    // about subview
-//    SCEAboutView* aboutView = [[SCEAboutView alloc] init];
-//    [aboutView setAboutText:[[self place] description]];
-//    [detailView setAboutView:aboutView];
-//    
-//    // action buttons
-//    UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
-//                                                      owner:self
-//                                                    options:nil] objectAtIndex:0];
-//    [detailView setLeftActionButton:dirBtn];
-//    
-//    UIButton *callBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCECallButton"
-//                                                       owner:self
-//                                                     options:nil] objectAtIndex:0];
-//    [detailView setRightActionButton:callBtn];
-//    
-//    UIButton *facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectFacebookButton"
-//                                                           owner:self
-//                                                         options:nil] objectAtIndex:0];
-//    [detailView setLeftConnectButton:facebookBtn];
-//    
-//    UIButton *twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectTwitterButton"
-//                                                          owner:self
-//                                                        options:nil] objectAtIndex:0];
-//    [detailView setMiddleConnectButton:twitterBtn];
-//    
-//    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
-//                                                          owner:self
-//                                                        options:nil] objectAtIndex:0];
-//    [detailView setRightConnectButton:websiteBtn];
-//    
+    SCEPlace *place = [[self event] place];
+    
+    // map view
+
+    CLLocationCoordinate2D location = [place location];
+    if (place && location.latitude != 0.0 && location.longitude != 0.0) {
+        MKMapView *mapView = [[MKMapView alloc] init];
+        [detailView setMapView:mapView];
+        [mapView addAnnotation:[SCESimpleAnnotation
+                                annotationWithCoordinate:location]];
+        // can't set the region till the subview is framed: do it at the bottom of this method
+    }
+    else {
+        UILabel *mapReplacementLabel = [[UILabel alloc] init];
+        [mapReplacementLabel setText:@"No location information"];
+        [mapReplacementLabel setBackgroundColor:[UIColor darkGrayColor]];
+        [mapReplacementLabel setTextColor:[UIColor whiteColor]];
+        [mapReplacementLabel setTextAlignment:NSTextAlignmentCenter];
+        [detailView setMapView:mapReplacementLabel];
+    }
+    
+    // header view
+    SCEEventDetailHeadView* headerView = [[[NSBundle mainBundle] loadNibNamed:@"SCEEventDetailHeadView"
+                                                                        owner:self
+                                                                      options:nil] objectAtIndex:0];
+    [[headerView nameLabel] setText:[[self event] name]];
+    
+    if ([[[self event] urlImage] image]) {
+        [[headerView thumbnail] setImage:[[[self event] urlImage] image]];
+    }
+    
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateStyle:NSDateFormatterMediumStyle];
+    [fmt setTimeStyle:NSDateFormatterShortStyle];
+    NSString *timeString = [NSString stringWithFormat:@"%@ - %@",
+                            [fmt stringFromDate:[[self event] startTime]],
+                            [fmt stringFromDate:[[self event] endTime]]];
+    [[headerView dateLabel] setText:timeString];
+    
+    NSMutableArray *categoryLabels = [NSMutableArray array];
+    for (SCECategory *category in [[self event] categories]) {
+        [categoryLabels addObject:[category label]];
+    }
+    [[headerView categoryList] setCategoryLabelTexts:categoryLabels];
+    [detailView setHeaderView:headerView];
+    
+    // place stub view
+    SCEPlaceStubView *placeStub;
+
+    if (place) {
+        placeStub = [[[NSBundle mainBundle] loadNibNamed:@"SCEPlaceStubView"
+                                                   owner:self
+                                                 options:nil] objectAtIndex:0];
+        [[placeStub nameLabel] setText:[place name]];
+        [[placeStub addressLabel] setText:[place streetAddress]];
+    }
+    else {
+        placeStub = [[[NSBundle mainBundle] loadNibNamed:@"SCEPlaceStubView"
+                                                   owner:self
+                                                 options:nil] objectAtIndex:1];
+        [[placeStub nameLabel] setText:[event placePrimitive]];
+    }
+    [detailView setPlaceStubView:placeStub];
+
+    // NIB index 1 is the longer version of the website button
+    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
+                                                          owner:self
+                                                        options:nil] objectAtIndex:1];
+    [detailView setLeftConnectButton:websiteBtn];
+
+    
     [scrollView addSubview:detailView];
-//
-//    // need to know the size of the detailView, so force layout and get size
+
+    // need to know the size of the detailView, so force layout and get size
     [detailView layoutSubviews];
     [detailView sizeToFit];
-//
-//    // since map is now framed, we can call setRegion
-//    [mapView setRegion:MKCoordinateRegionMakeWithDistance([[self place] location], 300, 300) animated:false];
+
+    // since map is now framed, we can call setRegion
+    // first make sure it's an actual map, not a label replacement
+    if ([[detailView mapView] isKindOfClass:[MKMapView class]]) {
+        MKMapView *mapView = (MKMapView *)[detailView mapView];
+        [mapView setRegion:MKCoordinateRegionMakeWithDistance([place location], 300, 300) animated:false];
+    }
     
     [scrollView setContentSize:[detailView bounds].size];
     [self setView:scrollView];
