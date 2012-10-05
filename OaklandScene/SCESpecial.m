@@ -17,11 +17,16 @@
 @synthesize startDate, expiresDate;
 @synthesize place, placeStore;
 
+static NSMutableArray *generatedPlaces = nil;
+
 - (id)init
 {
     self = [super init];
     if (self) {
         [self setPlaceStore:[SCEPlaceStore sharedStore]];
+    }
+    if (!generatedPlaces) {
+        generatedPlaces = [NSMutableArray array];
     }
     return self;
 }
@@ -43,10 +48,19 @@
     
     id placeDict = [d objectForKey:@"place"];
     if (placeDict != [NSNull null]) {
+        // try to retreive the place from a shared store
+        // if that fails, create one on the spot from the given information
+        SCEPlace *p;
         if ([self placeStore]) {
             NSString *rId = [placeDict objectForKey:@"id"];
-            [self setPlace:[[self placeStore] itemFromResourceId:rId]];
+            p = [[self placeStore] itemFromResourceId:rId];
         }
+        if (!p) {
+            p = [[SCEPlace alloc] init];
+            [p readFromJSONDictionary:placeDict];
+            [generatedPlaces addObject:p];  // rescue this new object from ARC
+        }
+        [self setPlace:p];
     }
 }
 
