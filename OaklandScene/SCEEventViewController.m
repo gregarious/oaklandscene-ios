@@ -75,14 +75,39 @@
         [[headerView thumbnail] setImage:[[[self event] urlImage] image]];
     }
     
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateStyle:NSDateFormatterMediumStyle];
-    [fmt setTimeStyle:NSDateFormatterShortStyle];
-    NSString *timeString = [NSString stringWithFormat:@"%@ - %@",
-                            [fmt stringFromDate:[[self event] startTime]],
-                            [fmt stringFromDate:[[self event] endTime]]];
-    [[headerView dateLabel] setText:timeString];
+    // determine correct format for date string
+    NSString *medStartDate = [NSDateFormatter localizedStringFromDate:[[self event] startTime]
+                                                             dateStyle:NSDateFormatterMediumStyle
+                                                             timeStyle:NSDateFormatterNoStyle];
+    NSString *medEndDate = [NSDateFormatter localizedStringFromDate:[[self event] endTime]
+                                                             dateStyle:NSDateFormatterMediumStyle
+                                                             timeStyle:NSDateFormatterNoStyle];
     
+    NSTimeInterval duration = [[[self event] endTime] timeIntervalSinceDate:[[self event] startTime]];
+
+    NSLog(@"%@ - %@", medStartDate, medEndDate);
+    
+    // if event ends on same day it starts, or within 6 hours of it's start (e.g. 9pm-2am), don't print the end date
+    if ([medStartDate isEqualToString:medEndDate] || duration <= 3600 * 6) {   // 6 hours
+        [[headerView dateLabel] setText:[NSString stringWithFormat:@"%@ - %@",
+            [NSDateFormatter localizedStringFromDate:[[self event] startTime]
+                                           dateStyle:NSDateFormatterLongStyle
+                                           timeStyle:NSDateFormatterShortStyle],
+            [NSDateFormatter localizedStringFromDate:[[self event] endTime]
+                                           dateStyle:NSDateFormatterNoStyle
+                                           timeStyle:NSDateFormatterShortStyle]]];
+    }
+    else {
+        [[headerView dateLabel] setText:[NSString stringWithFormat:@"%@ - %@",
+             [NSDateFormatter localizedStringFromDate:[[self event] startTime]
+                                            dateStyle:NSDateFormatterMediumStyle
+                                            timeStyle:NSDateFormatterShortStyle],
+             [NSDateFormatter localizedStringFromDate:[[self event] endTime]
+                                            dateStyle:NSDateFormatterMediumStyle
+                                            timeStyle:NSDateFormatterShortStyle]]];
+        
+    }
+
     NSMutableArray *categoryLabels = [NSMutableArray array];
     for (SCECategory *category in [[self event] categories]) {
         [categoryLabels addObject:[category label]];
