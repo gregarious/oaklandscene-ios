@@ -14,7 +14,7 @@
 #import "SCESpecialFeedViewController.h"
 #import "SCENewsFeedViewController.h"
 
-#import "SCETodayViewController.h"
+#import "SCENoticesViewController.h"
 
 #import "SCEPlaceStore.h"
 #import "SCEEventStore.h"
@@ -35,7 +35,8 @@
     [[SCENewsStore sharedStore] syncContentWithCompletion:nil];
     
     // Create the 5 VCs that will live under each tab
-    SCETodayViewController* todayVC = [[SCETodayViewController alloc] init];
+    SCENoticesViewController *noticesVC = [[SCENoticesViewController alloc] init];
+    
     UINavigationController* placeVC = [[UINavigationController alloc]
                                        initWithRootViewController:[[SCEPlaceFeedViewController alloc] init]];
     UINavigationController* eventVC = [[UINavigationController alloc]
@@ -47,7 +48,7 @@
     
     // Set up the tab bar controller with the 5 sub VCs
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    [tabBarController setViewControllers:@[todayVC, placeVC, eventVC, specialVC, newsVC]];
+    [tabBarController setViewControllers:@[noticesVC, placeVC, eventVC, specialVC, newsVC]];
 
 //    [tabBarController setSelectedIndex:1];  // set to places for development
     
