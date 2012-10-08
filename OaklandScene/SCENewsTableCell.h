@@ -10,4 +10,7 @@
 
 @interface SCENewsTableCell : SCEFeedTableCell
 
+@property (weak, nonatomic) IBOutlet UILabel *headlineLabel;
+@property (weak, nonatomic) IBOutlet UILabel *publishDateLabel;
+
 @end

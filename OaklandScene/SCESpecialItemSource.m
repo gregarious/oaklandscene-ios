@@ -7,8 +7,6 @@
 //
 
 #import "SCESpecialItemSource.h"
-
-#import "SCESpecialItemSource.h"
 #import "SCEPlace.h"
 #import "SCESpecial.h"
 #import "SCECategory.h"

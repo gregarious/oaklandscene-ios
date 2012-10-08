@@ -7,16 +7,50 @@
 //
 
 #import "SCENewsViewController.h"
+#import "SCENewsStubView.h"
+#import "SCENewsStub.h"
 
 @implementation SCENewsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+@synthesize newsStub;
+
+- (id)initWithNewsStub:(SCENewsStub *)n
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
-        // Custom initialization
+        [self setNewsStub:n];
+        [self setTitle:[n title]];
     }
     return self;
+}
+
+- (void)loadView
+{
+    CGRect frame = [[[self parentViewController] view] bounds];
+    UIScrollView *scrollView = [[UIScrollView alloc]
+                                initWithFrame:frame];
+    
+    // set up the detailView
+    SCENewsStubView *detailView = [[SCENewsStubView alloc] initWithFrame:frame];
+    [[detailView headlineLabel] setText:[[self newsStub] title]];
+    [[detailView publicationDateLabel] setText:
+        [NSDateFormatter localizedStringFromDate:[[self newsStub] publicationDate]
+                                       dateStyle:NSDateFormatterLongStyle
+                                       timeStyle:NSDateFormatterNoStyle]];
+
+    // TODO: hook up safari link
+    
+    [[detailView sourceNameLabel] setText:[[self newsStub] source]];
+    [[detailView blurbLabel] setText:[[self newsStub] blurb]];
+    
+    [scrollView addSubview:detailView];
+    
+    // need to know the size of the detailView, so force layout and get size
+    [detailView layoutSubviews];
+    [detailView sizeToFit];
+    
+    [scrollView setContentSize:[detailView bounds].size];
+    [self setView:scrollView];
 }
 
 - (void)viewDidLoad

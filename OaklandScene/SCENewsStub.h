@@ -7,17 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONSerializable.h"
 
-@interface SCENewsStub : NSObject
+@interface SCENewsStub : NSObject <JSONSerializable>
 
 // basic text-based variables
 @property (nonatomic, copy) NSString* blurb;
+@property (nonatomic, copy) NSString* title;
 @property (nonatomic, copy) NSString* url;
+@property (nonatomic, copy) NSDate* publicationDate;
+
 @property (nonatomic, copy) NSString* source;
 @property (nonatomic, copy) NSString* sourceUrl;
-@property (nonatomic, copy) NSString* title;
 
-// key to the main image store
-@property (nonatomic, copy) NSString* imageKey;
+@property (nonatomic, copy) NSString* resourceId;
 
 @end

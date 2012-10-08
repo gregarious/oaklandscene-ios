@@ -31,7 +31,6 @@
         
         [self setShowResultsBar:NO];    // disable results bar (no categories)
         
-        // TODO: set up feed source
         contentStore = [SCESpecialStore sharedStore];
         SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
@@ -63,7 +62,7 @@
     //        [self resetFeedFilters];
     //    }
     //    else {
-    //        [self addStaticMessageToFeed:@"Events could not be loaded"];
+    //        [self addStaticMessageToFeed:@"Specials could not be loaded"];
     //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
     //    }
 
