@@ -11,3 +11,4 @@ Future refactoring:
     controller might be the more appropriate place for this logic.
 - Remove as many redundancies as possible from the type-specific stores & controllers
 - Good sample project for iOS 6 and auto layout. Also just a good idea to review the techniques I used and try to reduce the ridiculous amount of boilerplate I put in before really searching for best practices.
+- The NewsFeedController has no need to be so convolutd. It's a simple list feed. No categories, no search, no map. Reimplement it as a simple list feed and use it as a model for the others.

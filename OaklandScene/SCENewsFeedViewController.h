@@ -7,8 +7,13 @@
 //
 
 #import "SCEFeedViewController.h"
+#import "SCEFeedViewDataSource.h"
+
+@class SCENewsStore;
 
 @interface SCENewsFeedViewController : SCEFeedViewController
-                                        <UITableViewDataSource, UITableViewDelegate>
+{
+    SCENewsStore *contentStore;
+}
 
 @end

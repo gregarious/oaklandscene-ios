@@ -9,7 +9,6 @@
 #import "SCESpecial.h"
 #import "SCEPlace.h"
 #import "SCEPlaceStore.h"
-#import "ISO8601DateFormatter.h"
 
 @implementation SCESpecial
 
@@ -40,11 +39,10 @@ static NSMutableArray *generatedPlaces = nil;
     
     // process dates
     // TODO: error handling
-    ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
-    NSDate *start = [formatter dateFromString:[d objectForKey:@"dstart"]];
-    [self setStartDate:start];
-    NSDate *expires = [formatter dateFromString:[d objectForKey:@"dexpires"]];
-    [self setExpiresDate:expires];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"YYYY-MM-dd"];
+    [self setStartDate:[fmt dateFromString:[d objectForKey:@"dstart"]]];
+    [self setExpiresDate:[fmt dateFromString:[d objectForKey:@"dexpires"]]];
     
     id placeDict = [d objectForKey:@"place"];
     if (placeDict != [NSNull null]) {
