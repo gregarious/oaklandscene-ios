@@ -10,7 +10,7 @@
 #import "SCEGeocoded.h"
 #import "JSONSerializable.h"
 
-@class SCEPlace, SCEPlaceStore, SCEURLImage;
+@class SCEPlace, SCEPlaceStore;
 
 @interface SCEEvent : NSObject <SCEGeocoded, JSONSerializable>
 
@@ -27,7 +27,7 @@
 @property (nonatomic, copy) NSDate* endTime;
 
 // url-backed image
-@property (nonatomic, strong) SCEURLImage *urlImage;
+@property (nonatomic, strong) NSString *imageUrl;
 
 // One or the other will be non-nil	
 @property (nonatomic, copy) NSString *placePrimitive;

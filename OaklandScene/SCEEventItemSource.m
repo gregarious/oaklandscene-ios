@@ -47,8 +47,16 @@
     }
     [[cell placeLabel] setText:[NSString stringWithFormat:@"at %@", placeName]];
 
-    if ([event urlImage]) {
-        [[cell thumbnail] setImage:[[event urlImage] image]];
+    // start off with default image, then load url-based one
+    [[cell thumbnail] setImage:[UIImage imageNamed:@"default-event.png"]];
+    if ([event imageUrl]) {
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:[event imageUrl]
+                                                   onCompletion:
+         ^void(UIImage *image, NSError *err) {
+            if (image) {
+                [[cell thumbnail] setImage:image];
+            }
+        }];
     }
 //
 //    NSMutableArray *categoryLabels = [NSMutableArray array];

@@ -10,7 +10,7 @@
 #import "SCEGeocoded.h"
 #import "JSONSerializable.h"
 
-@class SCEPlace, SCEPlaceStore, SCEURLImage;
+@class SCEPlace, SCEPlaceStore;
 
 @interface SCESpecial : NSObject <SCEGeocoded, JSONSerializable>
 

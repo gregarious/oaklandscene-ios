@@ -71,8 +71,14 @@
                                                                       options:nil] objectAtIndex:0];
     [[headerView nameLabel] setText:[[self event] name]];
     
-    if ([[[self event] urlImage] image]) {
-        [[headerView thumbnail] setImage:[[[self event] urlImage] image]];
+    if ([[self event] imageUrl]) {
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:[[self event] imageUrl]
+                                                   onCompletion:
+         ^void(UIImage *image, NSError *err) {
+             if (image) {
+                 [[headerView thumbnail] setImage:image];
+             }
+         }];
     }
     
     // determine correct format for date string

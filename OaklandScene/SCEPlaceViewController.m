@@ -63,12 +63,14 @@
                                                                       options:nil] objectAtIndex:nibViewIndex];
     [[headerView nameLabel] setText:[[self place] name]];
     [[headerView addressLabel] setText:[[self place] streetAddress]];
-    if ([[self place] urlImage]) {
-        [[headerView thumbnailImage] setImage:[[[self place] urlImage] image]];
-    }
-    else {
-        // TODO: replace with stock image
-        [[headerView thumbnailImage] setImage:nil];
+    if ([[self place] imageUrl]) {
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:[[self place] imageUrl]
+                                                   onCompletion:
+         ^void(UIImage *image, NSError *err) {
+             if (image) {
+                 [[headerView thumbnailImage] setImage:image];
+             }
+         }];
     }
     
     NSMutableArray *categoryLabels = [NSMutableArray array];

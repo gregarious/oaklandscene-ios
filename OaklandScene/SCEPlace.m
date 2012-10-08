@@ -36,7 +36,7 @@
 @synthesize resourceId;
 @synthesize name, description, phone, url, facebookId, twitterUsername;
 @synthesize streetAddress, postalCode, location;
-@synthesize urlImage;
+@synthesize imageUrl;
 @synthesize categories;
 @synthesize events, specials;
 
@@ -92,15 +92,15 @@
     [self setCategories:workingCategories];
     
     // finally the image
-    id relativePath = [d objectForKey:@"image"];
-    if (relativePath && relativePath != [NSNull null]) {
-        NSURL *imageUrl = [NSURL URLWithString:relativePath
-                                 relativeToURL:[NSURL URLWithString:@"http://www.scenable.com"]];
-
-        [self setUrlImage:[[SCEURLImage alloc] initWithUrl:imageUrl]];
-        [[self urlImage] fetch];
+    id urlString = [d objectForKey:@"image"];
+    if (urlString && urlString != [NSNull null]) {
+        [self setImageUrl:urlString];
+        if ([self imageUrl]) {
+            // fetch into store now (will have no effect if image already stored)
+            [[SCEURLImageStore sharedStore] fetchImageWithURLString:[self imageUrl]
+                                                       onCompletion:nil];
+        }
     }
-
 }
 
 @end

@@ -12,7 +12,6 @@
 
 @class SCEEvent;
 @class SCESpecial;
-@class SCEURLImage;
 
 // Simple struct-like construct of a single days/hours entry
 @interface SCEPlaceHours : NSObject <JSONSerializable>
@@ -49,7 +48,7 @@
 @property (nonatomic, strong) NSArray *hours;
 
 // url-backed image
-@property (nonatomic, strong) SCEURLImage *urlImage;
+@property (nonatomic, strong) NSString *imageUrl;
 
 // array of SCECategory objects
 @property (nonatomic, strong) NSArray *categories;

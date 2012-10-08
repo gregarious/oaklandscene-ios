@@ -36,9 +36,15 @@
     if ([[special place] name]) {
         [[cell placeLabel] setText:[NSString stringWithFormat:@"at %@", [[special place] name]]];
     }
-    UIImage *img = [[[special place] urlImage] image];
-    if (img) {
-        [[cell thumbnail] setImage:img];
+    
+    if ([[special place] imageUrl]) {
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:[[special place] imageUrl]
+                                                   onCompletion:
+         ^void(UIImage *image, NSError *err) {
+             if (image) {
+                 [[cell thumbnail] setImage:image];
+             }
+         }];
     }
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];

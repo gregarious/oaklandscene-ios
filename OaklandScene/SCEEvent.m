@@ -20,7 +20,7 @@ static NSMutableArray *generatedPlaces = nil;
 
 @synthesize resourceId, name, description, url;
 @synthesize startTime, endTime;
-@synthesize urlImage;
+@synthesize imageUrl;
 @synthesize place, placePrimitive, placeStore;
 
 - (id)init
@@ -90,13 +90,12 @@ static NSMutableArray *generatedPlaces = nil;
     [self setCategories:workingCategories];
     
     // finally the image
-    id relativePath = [d objectForKey:@"image"];
-    if (relativePath && relativePath != [NSNull null]) {
-        NSURL *imageUrl = [NSURL URLWithString:relativePath
-                                 relativeToURL:[NSURL URLWithString:@"http://www.scenable.com"]];
-        
-        [self setUrlImage:[[SCEURLImage alloc] initWithUrl:imageUrl]];
-        [[self urlImage] fetch];
+    id urlString = [d objectForKey:@"image"];
+    if (urlString && urlString != [NSNull null]) {
+        [self setImageUrl:urlString];
+        // fetch into store now (will have no effect if image already stored)
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:[self imageUrl]
+                                                   onCompletion:nil];
     }
 }
 

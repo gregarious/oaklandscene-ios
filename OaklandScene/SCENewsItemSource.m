@@ -12,7 +12,6 @@
 #import "SCECategory.h"
 #import "SCECategoryList.h"
 #import "SCEFeedView.h"
-#import "SCEURLImage.h"
 #import "SCENewsViewController.h"
 #import "SCENewsTableCell.h"
 
