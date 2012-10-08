@@ -78,9 +78,15 @@
                                                                         options:nil] objectAtIndex:0];
     NSString *instructions = [NSString stringWithFormat:@"Show this screen at %@ to redeem this special!",
                                                         [[[self special] place] name]];
-    UIImage *img = [[[[self special] place] urlImage] image];
-    if (img) {
-        [[redeemPrompt thumbnail] setImage:img];
+    NSString *imgUrl = [[[self special] place] imageUrl];
+    if (imgUrl) {
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:imgUrl
+                                                   onCompletion:
+         ^void(UIImage *image, NSError *err) {
+             if (image) {
+                [[redeemPrompt thumbnail] setImage:image];
+             }
+         }];
     }
     [[redeemPrompt instructionsLabel] setText:instructions];
     [detailView setRedeemView:redeemPrompt];

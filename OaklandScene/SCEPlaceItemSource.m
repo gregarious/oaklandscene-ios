@@ -34,11 +34,16 @@
     [[cell nameLabel] setText:[place name]];
     [[cell addressLabel] setText:[place streetAddress]];
     
-    if ([place urlImage]) {
-        [[cell thumbnail] setImage:[[place urlImage] image]];
-    }
-    else {
-        [[cell thumbnail] setImage:nil];    // TODO: stock image?
+    // start off with default image, then load url-based one
+    [[cell thumbnail] setImage:[UIImage imageNamed:@"default-place.png"]];
+    if ([place imageUrl]) {
+        [[SCEURLImageStore sharedStore] fetchImageWithURLString:[place imageUrl]
+                                                   onCompletion:
+         ^void(UIImage *image, NSError *err) {
+             if (image) {
+                 [[cell thumbnail] setImage:image];
+             }
+         }];
     }
     
     NSMutableArray *categoryLabels = [NSMutableArray array];
