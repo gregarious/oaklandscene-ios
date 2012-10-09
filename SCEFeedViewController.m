@@ -326,7 +326,7 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIViewController *detailController = [[self delegate] feedView:feedViewContainer
-                                         didSelectTableCellForItem:[indexPath row]];
+                                         didSelectTableCellWithIndex:[indexPath row]];
     if (detailController) {
         [detailController setHidesBottomBarWhenPushed:YES];
         [[self navigationController] pushViewController:detailController animated:YES];
@@ -344,6 +344,36 @@ numberOfRowsInComponent:(NSInteger)component
 {
     return [[self dataSource] feedView:feedViewContainer
                       annotationForItem:index];
+}
+
+- (void)mapView:(MKMapView *)mv
+    annotationView:(MKAnnotationView *)av
+    calloutAccessoryControlTapped:(UIControl *)control
+{
+    SCESimpleAnnotation *annotation = (SCESimpleAnnotation *)[av annotation];
+    UIViewController *detailController = [[self delegate] feedView:feedViewContainer
+                                         didSelectAnnotation:annotation];
+    if (detailController) {
+        [detailController setHidesBottomBarWhenPushed:YES];
+        [[self navigationController] pushViewController:detailController animated:YES];
+    }
+
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    // start pin
+    static NSString *pinIdentifier = @"SCEMapPin";
+    MKPinAnnotationView *pin = (MKPinAnnotationView*)[mv dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
+    
+    if (!pin) {
+    	pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pinIdentifier];
+    	[pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+    	[pin setCanShowCallout:YES];
+        [pin setEnabled:YES];
+    }
+    
+    return pin;
 }
 
 @end

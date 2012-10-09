@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class UITableViewCell, SCEFeedView, SCECategory;
+@class UITableViewCell, SCEFeedView, SCECategory, SCESimpleAnnotation;
 
 @protocol SCEFeedViewDelegate <NSObject>
 
@@ -18,10 +18,10 @@
 
 // return a new VC if the selection should load a new view
 - (UIViewController *)feedView:(SCEFeedView *)feedView
-     didSelectTableCellForItem:(NSInteger)itemIndex;
+     didSelectTableCellWithIndex:(NSInteger)itemIndex;
 
-//- (UIViewController *)feedView:(SCEFeedView *)feedView
-//    didSelectAnnotationForItem:(NSInteger)itemIndex;
+- (UIViewController *)feedView:(SCEFeedView *)feedView
+    didSelectAnnotation:(SCESimpleAnnotation *)annotation;
 
 /*** Search-related methods ***/
 - (void)feedView:(SCEFeedView *)feedView

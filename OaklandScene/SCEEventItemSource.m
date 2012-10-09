@@ -73,10 +73,10 @@
 {
     SCEEvent* event = (SCEEvent *)item;
     
-    SCESimpleAnnotation *annotation = [[SCESimpleAnnotation alloc] init];
-    [annotation setCoordinate:[[event place] location]];
-    [annotation setTitle:[event name]];
-    [annotation setSubtitle:[[event place] name]];
+    SCESimpleAnnotation *annotation = [SCESimpleAnnotation annotationWithCoordinate:[[event place] location]
+                                                                              title:[event name]
+                                                                           subtitle:[[event place] name]
+                                                                         resourceId:[event resourceId]];
     
     return annotation;
 }

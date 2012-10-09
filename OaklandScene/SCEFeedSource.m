@@ -230,7 +230,7 @@ typedef NSUInteger SCEFeedCellType;
     }
 }
 
-- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectTableCellForItem:(NSInteger)itemIndex
+- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectTableCellWithIndex:(NSInteger)itemIndex
 {
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
@@ -252,6 +252,15 @@ typedef NSUInteger SCEFeedCellType;
                                             animated:YES];
     }
     return nil;
+}
+
+- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectAnnotation:(SCESimpleAnnotation *)annotation
+{
+    id item = [[self store] itemFromResourceId:[annotation resourceId]];
+    if (!item) {
+        return nil;
+    }
+    return [[self itemSource] feedView:feedView didSelectItem:item];
 }
 
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(NSInteger)itemIndex

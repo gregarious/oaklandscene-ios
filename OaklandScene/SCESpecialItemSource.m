@@ -61,10 +61,11 @@
 {
     SCESpecial* special = (SCESpecial *)item;
     
-    SCESimpleAnnotation *annotation = [[SCESimpleAnnotation alloc] init];
-    [annotation setCoordinate:[[special place] location]];
-    [annotation setTitle:[special title]];
-    [annotation setSubtitle:[[special place] name]];
+    SCESimpleAnnotation *annotation = [SCESimpleAnnotation annotationWithCoordinate:[[special place] location]
+                                                                              title:[special title]
+                                                                           subtitle:[[special place] name]
+                                                                         resourceId:[special resourceId]];
+
     
     return annotation;
 }

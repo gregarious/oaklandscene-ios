@@ -60,10 +60,10 @@
 {
     SCEPlace* place = (SCEPlace *)item;
     
-    SCESimpleAnnotation *annotation = [[SCESimpleAnnotation alloc] init];
-    [annotation setCoordinate:[place location]];
-    [annotation setTitle:[place name]];
-    [annotation setSubtitle:[place streetAddress]];
+    SCESimpleAnnotation *annotation = [SCESimpleAnnotation annotationWithCoordinate:[place location]
+                                                                              title:[place name]
+                                                                           subtitle:[place streetAddress]
+                                                                         resourceId:[place resourceId]];
 
     return annotation;
 }
