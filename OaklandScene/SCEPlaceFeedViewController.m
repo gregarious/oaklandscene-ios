@@ -12,11 +12,15 @@
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
 #import "SCECategoryList.h"
-#import "SCEFeedSource.h"
+#import "SCEPlaceFeedSource.h"
 #import "SCEFeedView.h"
 #import "SCEMapView.h"
-
+#import "SCEResultsInfoBar.h"
 #import "SCEPlaceItemSource.h"
+
+@interface SCEPlaceFeedViewController ()
+- (void)refreshResultsBarLabel;
+@end
 
 @implementation SCEPlaceFeedViewController
 
@@ -43,12 +47,11 @@
         
         contentStore = [SCEPlaceStore sharedStore];
         // start with store centered at default center point
-        [contentStore setAnchorCoordinate:[SCEPlaceFeedViewController defaultDisplayRegion].center];
         
-        SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
-        
+        feedSource = [[SCEPlaceFeedSource alloc] initWithStore:contentStore];
         [feedSource setItemSource:[[SCEPlaceItemSource alloc] init]];
-        
+        [feedSource setAnchorCoordinate:[SCEPlaceFeedViewController defaultDisplayRegion].center];
+
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
         
@@ -67,6 +70,14 @@
     // register the NIBs for cell reuse
     [tableView registerNib:[UINib nibWithNibName:@"SCEPlaceTableCell" bundle:nil]
         forCellReuseIdentifier:@"SCEPlaceTableCell"];
+
+    // set up the labels that will be in the results info bar
+    mapResultsBarLabel = @"";
+    tableResultsBarLabel = @"closest to you";
+    [self refreshResultsBarLabel];
+    
+    [[resultsInfoBar reloadButton] setTarget:self];
+    [[resultsInfoBar reloadButton] setAction:@selector(refreshMapResults:)];
     
     // TODO: need to figure out how to handle this
     // if the main store is loaded, reset the feed
@@ -79,10 +90,112 @@
 //    }
 }
 
+- (void)setViewMode:(SCEFeedViewMode)viewMode
+{
+    // first set the reload button visibility
+    if (viewMode == SCEFeedViewModeTable) {
+        // if showing table mode, be sure it's centered on user's location
+        if ([locationManager location]) {
+            [self refreshFeedWithCenter:[[locationManager location] coordinate]];
+        }
+        else {
+            [self refreshFeedWithCenter:[SCEFeedViewController defaultDisplayRegion].center];
+        }
+        
+        // also hide reload button
+        [resultsInfoBar setShowReloadButton:NO];
+        
+        // reload data to account for recent resort
+        [tableView reloadData];
+        
+    }
+    else {        
+        // if map mode, show reload button on toolbar
+        [resultsInfoBar setShowReloadButton:YES];
+        
+        // reload data to ensure we're in sync with the list view
+        [mapView reloadData];
+    }
+
+    [super setViewMode:viewMode];
+    
+    [self refreshResultsBarLabel];
+}
+
+// Before view appears, ensure content is set correctly depending on view
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSLog(@"viewWillAppear: %d", animated);
+//    if ([CLLocationManager locationServicesEnabled]) {
+//        CLLocationDistance dist = 0;
+//        if ([locationManager location]) {
+//            CLLocation *oldLocation = [[CLLocation alloc] initWithLatitude:[contentStore anchorCoordinate].latitude
+//                                                                 longitude:[contentStore anchorCoordinate].longitude];
+//            dist = [[locationManager location] distanceFromLocation:oldLocation];
+//        }
+//
+//        if (dist > 250) {
+//            // if coords have moved farther than 250m, refresh all the data
+//            [contentStore setAnchorCoordinate:[[locationManager location] coordinate]];
+//            [feedSource syncWithCompletion:^(NSError* block) {
+//                [tableView reloadData];
+//                [mapView reloadData];
+//            }];
+//        }
+//    }
+}
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+//    if (![resultsInfoBar showReloadButton]) {
+//        [resultsInfoBar setShowReloadButton:YES];
+//    }
+}
+
+-(void)refreshMapResults:(id)sender
+{
+    [self refreshFeedWithCenter:[mapView centerCoordinate]];
+    [mapView reloadData];
+}
+
+-(void)refreshFeedWithCenter:(CLLocationCoordinate2D)coord
+{
+    [feedSource setAnchorCoordinate:coord];
+    [feedSource sortItems];
+    
+    NSLog(@"Refreshed with center (%f, %f)", coord.latitude, coord.longitude);
+}
+
+-(void)refreshResultsBarLabel
+{
+    if([self viewMode] == SCEFeedViewModeTable) {
+        [[resultsInfoBar infoLabel] setText:tableResultsBarLabel];
+    }
+    else {
+        [[resultsInfoBar infoLabel] setText:mapResultsBarLabel];
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)sb
+{
+    [super searchBarCancelButtonClicked:sb];
+    mapResultsBarLabel = @"";
+    tableResultsBarLabel = @"closest to you";
+    [self refreshResultsBarLabel];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)sb
+{
+    [super searchBarSearchButtonClicked:sb];
+    mapResultsBarLabel = tableResultsBarLabel = @"matching seach query";
+    [self refreshResultsBarLabel];
+}
+
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     NSLog(@"Location update occurred");
-    [contentStore setAnchorCoordinate:[[locations lastObject] coordinate]];
+//    [feedSource setAnchorCoordinate:[[locations lastObject] coordinate]];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

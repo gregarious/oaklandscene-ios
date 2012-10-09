@@ -12,6 +12,7 @@
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
 #import "SCEMapView.h"
+#import "SCEResultsInfoBar.h"
 #import "SCEEventItemSource.h"
 
 @implementation SCEEventFeedViewController
@@ -54,6 +55,8 @@
     [tableView registerNib:[UINib nibWithNibName:@"SCEEventTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCEEventTableCell"];
 
+    [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+    
     // TODO: need to figure out how to handle this
     // if the main store is loaded, reset the feed
     //    if ([contentStore isLoaded]) {
@@ -63,6 +66,18 @@
     //        [self addStaticMessageToFeed:@"Events could not be loaded"];
     //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
     //    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)sb
+{
+    [super searchBarCancelButtonClicked:sb];
+    [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)sb
+{
+    [super searchBarSearchButtonClicked:sb];
+    [[resultsInfoBar infoLabel] setText:@"matching seach query"];
 }
 
 @end

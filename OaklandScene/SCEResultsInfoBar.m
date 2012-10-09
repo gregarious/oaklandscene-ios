@@ -10,16 +10,16 @@
 
 @implementation SCEResultsInfoBar
 
-@synthesize infoLabel, categoryButton, hideCategoryButton;
+@synthesize infoLabel, categoryButton;
+@synthesize reloadButton, showReloadButton;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        hideCategoryButton = false;
-        
-        infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 20)];
+        infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 20)];
         [[self infoLabel] setFont:[UIFont boldSystemFontOfSize:14]];
+        [[self infoLabel] setAdjustsFontSizeToFitWidth:YES];
         [[self infoLabel] setTextColor:[UIColor whiteColor]];
         [[self infoLabel] setBackgroundColor:[UIColor clearColor]];
         labelWrapperButton = [[UIBarButtonItem alloc] initWithCustomView:infoLabel];
@@ -29,7 +29,18 @@
                                                          target:nil
                                                          action:nil];
         
+        spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                               target:nil
+                                                               action:nil];
+        
+        reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                     target:nil
+                                                                     action:nil];
+        
+        
         toolbar = [[UIToolbar alloc] initWithFrame:frame];
+        [self setShowReloadButton:NO];  // will also lay out the items
+        
         [toolbar setItems:@[categoryButton, labelWrapperButton]];
         
         [self addSubview:toolbar];
@@ -37,11 +48,11 @@
     return self;
 }
 
-- (void)setHideCategoryButton:(BOOL)shouldHide
+- (void)setShowReloadButton:(BOOL)show
 {
-    hideCategoryButton = shouldHide;
-    if (shouldHide) {
-        [toolbar setItems:@[labelWrapperButton]];
+    showReloadButton = show;
+    if (show) {
+        [toolbar setItems:@[categoryButton, labelWrapperButton, spacer, reloadButton]];
     }
     else {
         [toolbar setItems:@[categoryButton, labelWrapperButton]];

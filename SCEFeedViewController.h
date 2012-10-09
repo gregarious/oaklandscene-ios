@@ -24,7 +24,6 @@
 {
     // subviews
     UISearchBar *searchBar;
-    SCEResultsInfoBar *resultsInfoBar;
     
     // parent container for feed content subviews
     UIView *contentView;
@@ -36,6 +35,9 @@
 
     // semi-transparent tappable layer to disable user input when search bar is first responder
     UIControl *contentMaskView;
+    
+    @protected
+    SCEResultsInfoBar *resultsInfoBar;
 }
 
 enum {

@@ -14,7 +14,14 @@
 @interface SCEPlaceFeedViewController : SCEFeedViewController <CLLocationManagerDelegate>
 {
     SCEPlaceStore *contentStore;
+    SCEPlaceFeedSource *feedSource;
     CLLocationManager *locationManager;
+    NSString *mapResultsBarLabel;
+    NSString *tableResultsBarLabel;
 }
+
+
+-(void)refreshMapResults:(id)sender;
+-(void)refreshFeedWithCenter:(CLLocationCoordinate2D)coord;
 
 @end

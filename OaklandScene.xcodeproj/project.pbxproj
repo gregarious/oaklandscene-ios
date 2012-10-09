@@ -16,6 +16,7 @@
 		3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */; };
 		375645DA162337A7004E8B73 /* news-10062012.json in Resources */ = {isa = PBXBuildFile; fileRef = 375645D9162337A7004E8B73 /* news-10062012.json */; };
 		375645EC1623BE45004E8B73 /* SCEMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 375645EB1623BE45004E8B73 /* SCEMapView.m */; };
+		375645F61624AF67004E8B73 /* SCEPlaceFeedSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 375645F51624AF67004E8B73 /* SCEPlaceFeedSource.m */; };
 		37570412160A7825004A6D45 /* SCEFeedSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37570411160A7825004A6D45 /* SCEFeedSource.m */; };
 		37642D7D15F6A0670024B6A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7C15F6A0670024B6A2 /* UIKit.framework */; };
 		37642D7F15F6A0670024B6A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7E15F6A0670024B6A2 /* Foundation.framework */; };
@@ -180,6 +181,8 @@
 		375645EA1623BE45004E8B73 /* SCEMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEMapView.h; sourceTree = "<group>"; };
 		375645EB1623BE45004E8B73 /* SCEMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEMapView.m; sourceTree = "<group>"; };
 		375645EF1623C0E7004E8B73 /* SCEMapViewDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEMapViewDataSource.h; sourceTree = "<group>"; };
+		375645F41624AF67004E8B73 /* SCEPlaceFeedSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceFeedSource.h; sourceTree = "<group>"; };
+		375645F51624AF67004E8B73 /* SCEPlaceFeedSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceFeedSource.m; sourceTree = "<group>"; };
 		37570410160A7825004A6D45 /* SCEFeedSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedSource.h; sourceTree = "<group>"; };
 		37570411160A7825004A6D45 /* SCEFeedSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedSource.m; sourceTree = "<group>"; };
 		37642D7815F6A0670024B6A2 /* OaklandScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OaklandScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -418,6 +421,8 @@
 				37E3EA2D15FA67BD00964876 /* SCEPlace.m */,
 				37EB7A17161B8D5C00E56154 /* SCEPlaceItemSource.h */,
 				37EB7A18161B8D5C00E56154 /* SCEPlaceItemSource.m */,
+				375645F41624AF67004E8B73 /* SCEPlaceFeedSource.h */,
+				375645F51624AF67004E8B73 /* SCEPlaceFeedSource.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1146,6 +1151,7 @@
 				37ADB7541621E6A800C104B9 /* SCENewsStubView.m in Sources */,
 				4FB7555B16233CDA00B768D6 /* SCENoticesViewController.m in Sources */,
 				375645EC1623BE45004E8B73 /* SCEMapView.m in Sources */,
+				375645F61624AF67004E8B73 /* SCEPlaceFeedSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

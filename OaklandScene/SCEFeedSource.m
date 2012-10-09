@@ -33,7 +33,8 @@ typedef NSUInteger SCEFeedCellType;
 
 @implementation SCEFeedSource
 
-@synthesize store, items, pageLength;
+@synthesize items = _items;
+@synthesize store, pageLength;
 @synthesize filterCategory, filterKeyword;
 @synthesize itemSource;
 
@@ -67,16 +68,16 @@ typedef NSUInteger SCEFeedCellType;
     statusCell = loadingCell;
     
     // clear items until sync is finished
-    items = nil;
+    _items = nil;
     shownItemRange.length = shownItemRange.location = 0;
 
     // once the proper items have been retreived, store them and call the completion block
     void (^onSyncComplete)(NSArray *, NSError *) = ^void (NSArray *matches, NSError *err) {
-        items = matches;
+        _items = matches;
         
-        if (items) {
-            NSLog(@"Sync complete: %d matches", [items count]);
-            if ([items count] == 0) {
+        if ([self items]) {
+            NSLog(@"Sync complete: %d matches", [[self items] count]);
+            if ([[self items] count] == 0) {
                 // TODO: make this more efficient?
                 SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
                                                                        owner:self
@@ -204,9 +205,6 @@ typedef NSUInteger SCEFeedCellType;
     // refresh the table now to show loading message
     [[feedView tableView] reloadData];
     [[feedView mapView] reloadData];
-    
-    // update the info bar text
-    [[[feedView resultsInfoBar] infoLabel] setText:@"matching custom search"];
 }
 
 - (void)didCancelSearchForFeedView:(SCEFeedView *)feedView
@@ -282,7 +280,7 @@ typedef NSUInteger SCEFeedCellType;
 {
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
-        id item = [items objectAtIndex:itemIndex];
+        id item = [[self items] objectAtIndex:itemIndex];
         return [[self itemSource] feedView:feedView
                            tableCellForItem:item];
     }
@@ -296,7 +294,7 @@ typedef NSUInteger SCEFeedCellType;
 
 - (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(NSInteger)itemIndex
 {
-    id item = [items objectAtIndex:itemIndex];
+    id item = [[self items] objectAtIndex:itemIndex];
     return [[self itemSource] feedView:feedView
                  annotationForItem:item];
 }

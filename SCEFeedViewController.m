@@ -40,7 +40,7 @@
 + (MKCoordinateRegion)defaultDisplayRegion
 {
     MKCoordinateRegion region;
-    region.center = CLLocationCoordinate2DMake(40.4448302, -79.9524878);
+    region.center = CLLocationCoordinate2DMake(40.444053, -79.953187);
     region.span.latitudeDelta = region.span.longitudeDelta = .05;
     return region;
 }
@@ -58,7 +58,6 @@
     CGFloat infoBarHeight = 0;
     if ([self showResultsBar]) {
         resultsInfoBar = [[SCEResultsInfoBar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
-        [[resultsInfoBar infoLabel] setText:@"closest to you"];
         [[resultsInfoBar categoryButton] setTarget:self];
         [[resultsInfoBar categoryButton] setAction:@selector(displayFilterDialog:)];
         
@@ -234,6 +233,9 @@
     [self disableSearchFocus];
     [[self delegate] feedView:feedViewContainer
          didSubmitSearchQuery:[sb text]];
+    
+    // update the info bar text
+    [[resultsInfoBar infoLabel] setText:@"matching search query"];
 }
 
 // removes the search view from the title bar.
@@ -247,6 +249,8 @@
     [self addSearchButton];
     
     [[self delegate] didCancelSearchForFeedView:feedViewContainer];
+
+    [[resultsInfoBar infoLabel] setText:@""];
 }
 
 // enables the search bar
