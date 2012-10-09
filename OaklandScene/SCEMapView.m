@@ -12,11 +12,12 @@
 
 @synthesize dataSource;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame defaultRegion:(MKCoordinateRegion)region
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setDefaultRegion:region];
+        [self setRegion:region];
     }
     return self;
 }
@@ -29,6 +30,7 @@
 
 - (void)reloadData
 {
+    // removes al lcurrent annotations and rebuilds them from the data source
     [self removeAnnotations:[self annotations]];
     NSInteger totalAnnotations = [[self dataSource] numberOfAnnotationsInMapView:self];
     for (NSInteger i = 0; i < totalAnnotations; ++i) {
@@ -43,18 +45,18 @@
 - (void)resizeToAnnotations
 {
     MKCoordinateRegion region;
-    // start with values that will immediately be overridden
-    CLLocationDegrees   maxLat = -90,
-                        minLat = 90,
-                        maxLng = -180,
-                        minLng = 180;
     
     if ([[self annotations] count] == 0) {
-        // sensible default with no annotations
-        region.center = CLLocationCoordinate2DMake(40.4448302, -79.9524878);
-        region.span = MKCoordinateSpanMake(.005, .005);
+        // if no annotations, move to the default region
+        region = [self defaultRegion];
     }
     else {
+        // start with values that will immediately be overridden
+        CLLocationDegrees maxLat = -90,
+                          minLat = 90,
+                          maxLng = -180,
+                          minLng = 180;
+
         for (id<MKAnnotation> ann in [self annotations]) {
             CLLocationDegrees lat = [ann coordinate].latitude;
             CLLocationDegrees lng = [ann coordinate].longitude;
@@ -67,9 +69,8 @@
                                                    minLng+(maxLng-minLng)/2.0);
 
         // clamp span to at least .001 lat/lng
-        region.span = MKCoordinateSpanMake(MAX(maxLat-minLat, .001) * 1.05,
-                                           MAX(maxLng-minLng, .001) * 1.05);
-        NSLog(@"%f, %f", region.center.latitude, region.center.longitude);
+        region.span = MKCoordinateSpanMake(MAX(maxLat-minLat, .001) * 1.1,
+                                           MAX(maxLng-minLng, .001) * 1.1);
     }
     
     [self setRegion:region animated:YES];

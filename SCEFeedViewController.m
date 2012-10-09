@@ -37,6 +37,14 @@
     return self;
 }
 
++ (MKCoordinateRegion)defaultDisplayRegion
+{
+    MKCoordinateRegion region;
+    region.center = CLLocationCoordinate2DMake(40.4448302, -79.9524878);
+    region.span.latitudeDelta = region.span.longitudeDelta = .05;
+    return region;
+}
+
 -(void)loadView
 {
     [super loadView];
@@ -80,7 +88,8 @@
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
-    mapView = [[SCEMapView alloc] initWithFrame:[contentView bounds]];
+    mapView = [[SCEMapView alloc] initWithFrame:[contentView bounds]
+                                  defaultRegion:[SCEFeedViewController defaultDisplayRegion]];
     [mapView setDelegate:self];
     [mapView setDataSource:self];
     
@@ -99,6 +108,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [mapView setShowsUserLocation:YES];
 }
 
 - (void)viewDidUnload
@@ -151,6 +161,8 @@
                                 reason:@"supplied mode constant is unsupported"
                               userInfo:nil];
     }
+    
+    [self viewWillAppear:NO];   // call manually to allow view to reorganize its data based on view mode
     [contentView addSubview:contentSubview];
 }
 
@@ -362,7 +374,11 @@ numberOfRowsInComponent:(NSInteger)component
 
 - (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    // start pin
+    // if the annotation is the user location, let the system handle it
+    if ([mv userLocation] == annotation) {
+        return nil;
+    }
+    
     static NSString *pinIdentifier = @"SCEMapPin";
     MKPinAnnotationView *pin = (MKPinAnnotationView*)[mv dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
     

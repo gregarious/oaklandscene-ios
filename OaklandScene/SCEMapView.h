@@ -12,7 +12,9 @@
 @interface SCEMapView : MKMapView
 
 @property (nonatomic, strong) id<SCEMapViewDataSource> dataSource;
+@property (nonatomic) MKCoordinateRegion defaultRegion;
 
+- (id)initWithFrame:(CGRect)frame defaultRegion:(MKCoordinateRegion)region;
 - (void)reloadData;
 
 @end

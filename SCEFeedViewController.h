@@ -55,6 +55,8 @@ typedef NSUInteger SCEFeedViewMode;
 // see note in SCEFeedView.h
 @property (nonatomic, readonly) SCEFeedView *feedViewContainer;
 
++ (MKCoordinateRegion)defaultDisplayRegion;
+
 - (void)toggleViewMode:(id)sender;
 
 - (void)addViewToggleButton;

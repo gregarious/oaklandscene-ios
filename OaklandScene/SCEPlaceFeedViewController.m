@@ -42,7 +42,8 @@
         }
         
         contentStore = [SCEPlaceStore sharedStore];
-        [contentStore setAnchorCoordinate:CLLocationCoordinate2DMake(40.4448302, -79.9524878)];
+        // start with store centered at default center point
+        [contentStore setAnchorCoordinate:[SCEPlaceFeedViewController defaultDisplayRegion].center];
         
         SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
