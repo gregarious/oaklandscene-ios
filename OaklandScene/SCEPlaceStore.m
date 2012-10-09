@@ -12,6 +12,28 @@
 #import "SCEAPIConnection.h"
 #import "SCEAPIResponse.h"
 
+
+@implementation SCEAnchoredPlaceItem
+@synthesize place, distance;
+
+- (id)initWithPlace:(SCEPlace *)p anchor:(CLLocationCoordinate2D)coord
+{
+    self = [super init];
+    if (self) {
+        [self setPlace:p];
+        CLLocationDegrees dlat = coord.latitude - [p location].latitude;
+        CLLocationDegrees dlng = coord.latitude - [p location].latitude;
+        [self setDistance:sqrt(dlat*dlat + dlng*dlng)];
+    }
+    return self;
+}
+@end
+
+
+/*---------------------------------------------------------------------*/
+/*---------------------------------------------------------------------*/
+
+
 @interface SCEPlaceStore ()
 + (NSArray *)filter:(NSArray *)objects byCategory:(SCECategory *)category;
 @end
@@ -19,6 +41,7 @@
 @implementation SCEPlaceStore
 
 @synthesize items, lastSynced, categories;
+@synthesize anchorCoordinate;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -199,5 +222,38 @@
 {
     return [idPlaceMap objectForKey:rId];
 }
+
+// Sorting related methods
+
+- (void)setAnchorCoordinate:(CLLocationCoordinate2D)coord
+{
+    anchorCoordinate = coord;
+    [self sortItems];
+}
+
+- (void)sortItems
+{
+    if ([self items] && anchorCoordinate.latitude != 0 && anchorCoordinate.longitude != 0) {
+        //  TODO: optimize if necessary. lots of copying going on here.
+        NSMutableArray *anchoredPlaces = [NSMutableArray arrayWithCapacity:[[self items] count]];
+        for (SCEPlace *place in [self items]) {
+            [anchoredPlaces addObject:[[SCEAnchoredPlaceItem alloc] initWithPlace:place
+                                                                           anchor:anchorCoordinate]];
+        }
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"distance"
+                                                                         ascending:YES];
+        NSArray *sorted = [anchoredPlaces sortedArrayUsingDescriptors:@[sortDescriptor]];
+        
+        NSMutableArray *placesOnly = [NSMutableArray arrayWithCapacity:[[self items] count]];
+        for (SCEAnchoredPlaceItem *anchoredPlace in sorted) {
+            [placesOnly addObject:[anchoredPlace place]];
+        }
+        
+        [self setItems:[NSArray arrayWithArray:placesOnly]];
+    }
+    else {
+    }
+}
+
 
 @end

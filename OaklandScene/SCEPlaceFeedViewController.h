@@ -6,13 +6,15 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
 #import "SCEFeedViewController.h"
 
-@class SCEPlaceStore;
+@class SCEPlaceStore, SCEPlaceFeedSource;
 
-@interface SCEPlaceFeedViewController : SCEFeedViewController
+@interface SCEPlaceFeedViewController : SCEFeedViewController <CLLocationManagerDelegate>
 {
     SCEPlaceStore *contentStore;
+    CLLocationManager *locationManager;
 }
 
 @end

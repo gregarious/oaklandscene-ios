@@ -32,7 +32,17 @@
         [self addViewToggleButton];
         [self addSearchButton];
         
+        // set up the location services
+        if ([CLLocationManager locationServicesEnabled]) {
+            locationManager = [[CLLocationManager alloc] init];
+            [locationManager setDelegate:self];
+            [locationManager setDistanceFilter:250];
+            [locationManager startUpdatingLocation];
+        }
+        
         contentStore = [SCEPlaceStore sharedStore];
+        [contentStore setAnchorCoordinate:CLLocationCoordinate2DMake(40.4448302, -79.9524878)];
+        
         SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
         [feedSource setItemSource:[[SCEPlaceItemSource alloc] init]];
@@ -54,7 +64,7 @@
     // register the NIBs for cell reuse
     [tableView registerNib:[UINib nibWithNibName:@"SCEPlaceTableCell" bundle:nil]
         forCellReuseIdentifier:@"SCEPlaceTableCell"];
-
+    
     // TODO: need to figure out how to handle this
     // if the main store is loaded, reset the feed
 //    if ([contentStore isLoaded]) {
@@ -64,6 +74,17 @@
 //        [self addStaticMessageToFeed:@"Places could not be loaded"];
 //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
 //    }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    NSLog(@"Location update occurred");
+    [contentStore setAnchorCoordinate:[[locations lastObject] coordinate]];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"locationManager didFailWithError: %@", error);
 }
 
 @end
