@@ -8,12 +8,14 @@
 
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
 #import "SCEResultsInfoBar.h"
 #import "SCEFeeditemSource.h"
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
 #import "SCEFeeditemSource.h"
 #import "SCEFeedStaticCell.h"
+#import "SCESimpleAnnotation.h"
 
 @interface SCEFeedSource ()
 
@@ -178,10 +180,12 @@ typedef NSUInteger SCEFeedCellType;
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
             [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+            [[feedView mapView] reloadData];
         }];
 
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
+        [[feedView mapView] reloadData];
         
         // TODO: better to update category button title here maybe?
     }
@@ -199,6 +203,7 @@ typedef NSUInteger SCEFeedCellType;
     
     // refresh the table now to show loading message
     [[feedView tableView] reloadData];
+    [[feedView mapView] reloadData];
     
     // update the info bar text
     [[[feedView resultsInfoBar] infoLabel] setText:@"matching custom search"];
@@ -218,6 +223,7 @@ typedef NSUInteger SCEFeedCellType;
     
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
+        [[feedView mapView] reloadData];
         
         // update the info bar text
         [[[feedView resultsInfoBar] infoLabel] setText:@"closest to you"];
@@ -238,6 +244,7 @@ typedef NSUInteger SCEFeedCellType;
             shownItemRange.length = [[self items] count];
         }
         [[feedView tableView] reloadData];
+        [[feedView mapView] reloadData];
         // scroll down so new item is at top of list
         [[feedView tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex
                                                                         inSection:0]
@@ -276,6 +283,13 @@ typedef NSUInteger SCEFeedCellType;
     else {
         return showMoreCell;
     }
+}
+
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(NSInteger)itemIndex
+{
+    id item = [items objectAtIndex:itemIndex];
+    return [[self itemSource] feedView:feedView
+                 annotationForItem:item];
 }
 
 - (NSInteger)numberOfItemsInFeedView:(SCEFeedView *)feedView

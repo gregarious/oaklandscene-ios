@@ -14,9 +14,13 @@
 @synthesize coordinate;
 
 + (id)annotationWithCoordinate:(CLLocationCoordinate2D)coord
+                         title:(NSString *)title
+                      subtitle:(NSString *)subtitle
 {
     SCESimpleAnnotation *obj = [[SCESimpleAnnotation alloc] init];
     [obj setCoordinate:coord];
+    [obj setTitle:title];
+    [obj setSubtitle:subtitle];
     return obj;
 }
 

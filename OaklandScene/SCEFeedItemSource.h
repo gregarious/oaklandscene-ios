@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 @class SCEFeedView;
 
@@ -14,6 +15,9 @@
 
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView
              tableCellForItem:(id)item;
+
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView
+         annotationForItem:(id)item;
 
 - (CGFloat)feedView:(SCEFeedView *)feedView
 tableCellHeightForItem:(id)item;

@@ -15,6 +15,7 @@
 #import "SCEURLImage.h"
 #import "SCESpecialViewController.h"
 #import "SCESpecialTableCell.h"
+#import "SCESimpleAnnotation.h"
 
 @implementation SCESpecialItemSource
 
@@ -54,6 +55,18 @@
     
     return cell;
     
+}
+
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(id)item
+{
+    SCESpecial* special = (SCESpecial *)item;
+    
+    SCESimpleAnnotation *annotation = [[SCESimpleAnnotation alloc] init];
+    [annotation setCoordinate:[[special place] location]];
+    [annotation setTitle:[special title]];
+    [annotation setSubtitle:[[special place] name]];
+    
+    return annotation;
 }
 
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(id)item

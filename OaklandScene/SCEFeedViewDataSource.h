@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 @class UITableViewCell, SCEFeedView;
 
@@ -17,6 +18,9 @@
 /*** Table-related methods ***/
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView
              tableCellForItem:(NSInteger)itemIndex;
+
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView
+             annotationForItem:(NSInteger)itemIndex;
 
 /*** Category filter-related methods ***/
 - (NSString *)feedView:(SCEFeedView *)feedView

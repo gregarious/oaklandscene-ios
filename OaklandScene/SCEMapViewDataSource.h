@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
+@class SCEMapView;
 
 @protocol SCEMapViewDataSource <NSObject>
 
+- (NSInteger)numberOfAnnotationsInMapView:(SCEMapView *)mapView;
+- (id<MKAnnotation>)mapView:(SCEMapView *)mapView annotationForIndex:(NSInteger)index;
+
 @end
+

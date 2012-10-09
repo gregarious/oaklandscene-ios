@@ -13,7 +13,7 @@
 #import "SCESpecialItemSource.h"
 #import "SCEFeedView.h"
 #import "SCEResultsInfoBar.h"
-#import "SCEUtils.h"
+#import "SCEMapView.h"
 
 @implementation SCESpecialFeedViewController
 
@@ -41,6 +41,7 @@
         
         [feedSource syncWithCompletion:^(NSError *err) {
             [tableView reloadData];
+            [mapView reloadData];
         }];
     }
     

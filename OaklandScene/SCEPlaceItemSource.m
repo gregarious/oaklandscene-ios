@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCESimpleAnnotation.h"
 #import "SCEPlaceItemSource.h"
 #import "SCEPlace.h"
 #import "SCECategory.h"
@@ -53,7 +54,18 @@
     [[cell categoryList] setCategoryLabelTexts:categoryLabels];
     
     return cell;
+}
 
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(id)item
+{
+    SCEPlace* place = (SCEPlace *)item;
+    
+    SCESimpleAnnotation *annotation = [[SCESimpleAnnotation alloc] init];
+    [annotation setCoordinate:[place location]];
+    [annotation setTitle:[place name]];
+    [annotation setSubtitle:[place streetAddress]];
+
+    return annotation;
 }
 
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(id)item

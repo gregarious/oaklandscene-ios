@@ -14,6 +14,7 @@
 #import "SCECategoryList.h"
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
 
 #import "SCEPlaceItemSource.h"
 
@@ -52,6 +53,7 @@
         
         [feedSource syncWithCompletion:^(NSError *err) {
             [tableView reloadData];
+            [mapView reloadData];
         }];
     }
     return self;

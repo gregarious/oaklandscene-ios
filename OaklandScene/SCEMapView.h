@@ -7,7 +7,12 @@
 //
 
 #import <MapKit/MapKit.h>
+#import "SCEMapViewDataSource.h"
 
 @interface SCEMapView : MKMapView
+
+@property (nonatomic, strong) id<SCEMapViewDataSource> dataSource;
+
+- (void)reloadData;
 
 @end

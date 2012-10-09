@@ -18,7 +18,10 @@
 
 // return a new VC if the selection should load a new view
 - (UIViewController *)feedView:(SCEFeedView *)feedView
-    didSelectTableCellForItem:(NSInteger)itemIndex;
+     didSelectTableCellForItem:(NSInteger)itemIndex;
+
+//- (UIViewController *)feedView:(SCEFeedView *)feedView
+//    didSelectAnnotationForItem:(NSInteger)itemIndex;
 
 /*** Search-related methods ***/
 - (void)feedView:(SCEFeedView *)feedView

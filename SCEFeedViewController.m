@@ -10,6 +10,7 @@
 #import "SCEFeedViewController.h"
 #import "SCECategoryPickerDialogController.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
 #import "SCEResultsInfoBar.h"
 
 @interface SCEFeedViewController ()
@@ -79,8 +80,9 @@
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
-    mapView = [[UIView alloc] init];
-    [mapView addSubview:[[MKMapView alloc] initWithFrame:[contentView bounds]]];
+    mapView = [[SCEMapView alloc] initWithFrame:[contentView bounds]];
+    [mapView setDelegate:self];
+    [mapView setDataSource:self];
     
     // ensure primary view is in sync with the viewMode variable
     [self setViewMode:[self viewMode]];
@@ -331,5 +333,17 @@ numberOfRowsInComponent:(NSInteger)component
     }
 }
 
+/**** SCEMapViewDataSource & MKMapViewDelegate methods ****/
+
+- (NSInteger)numberOfAnnotationsInMapView:(SCEMapView *)mapView
+{
+    return [[self dataSource] numberOfItemsInFeedView:feedViewContainer];
+}
+
+- (id<MKAnnotation>)mapView:(SCEMapView *)mapView annotationForIndex:(NSInteger)index
+{
+    return [[self dataSource] feedView:feedViewContainer
+                      annotationForItem:index];
+}
 
 @end

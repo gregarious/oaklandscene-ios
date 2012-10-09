@@ -18,7 +18,7 @@
          this for now.
  */
 
-@class SCEResultsInfoBar;
+@class SCEResultsInfoBar, SCEMapView;
 
 @interface SCEFeedView : UIView
 
@@ -29,6 +29,6 @@
 @property (nonatomic, weak) UIView *contentView;
 
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, weak) UIView *mapView;
+@property (nonatomic, weak) SCEMapView *mapView;
 
 @end

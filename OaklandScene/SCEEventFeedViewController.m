@@ -11,6 +11,7 @@
 #import "SCEEventStore.h"
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
 #import "SCEEventItemSource.h"
 
 @implementation SCEEventFeedViewController
@@ -38,6 +39,7 @@
         
         [feedSource syncWithCompletion:^(NSError *err) {
             [tableView reloadData];
+            [mapView reloadData];
         }];
     }
 

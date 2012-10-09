@@ -40,6 +40,11 @@
     return cell;
 }
 
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(id)item
+{
+    return nil; // no map view for news
+}
+
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(id)item
 {
     return 72;
