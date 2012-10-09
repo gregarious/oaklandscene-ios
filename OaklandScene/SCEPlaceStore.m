@@ -22,7 +22,7 @@
     if (self) {
         [self setPlace:p];
         CLLocationDegrees dlat = coord.latitude - [p location].latitude;
-        CLLocationDegrees dlng = coord.latitude - [p location].latitude;
+        CLLocationDegrees dlng = coord.longitude - [p location].longitude;
         [self setDistance:sqrt(dlat*dlat + dlng*dlng)];
     }
     return self;
