@@ -108,7 +108,9 @@ typedef NSUInteger SCEFeedCellType;
             statusCell = cell;
         }
         
-        block(err);
+        if (block) {
+            block(err);
+        }
         syncInProgress = false;
     };
     
@@ -181,12 +183,12 @@ typedef NSUInteger SCEFeedCellType;
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
             [self resetTable:[feedView tableView]]; // handles reload and scroll to top
-            [[feedView mapView] reloadData];
+            [[feedView mapView] reloadDataAndAutoresize:YES];
         }];
 
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
-        [[feedView mapView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:NO];
         
         // TODO: better to update category button title here maybe?
     }
@@ -200,12 +202,12 @@ typedef NSUInteger SCEFeedCellType;
     // TODO: consider ongoing syncs
     [self syncWithCompletion:^(NSError *err) {
         [self resetTable:[feedView tableView]]; // handles reload and scroll to top
-        [[feedView mapView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:YES];
     }];
     
     // refresh the table now to show loading message
     [[feedView tableView] reloadData];
-    [[feedView mapView] reloadData];
+    [[feedView mapView] reloadDataAndAutoresize:NO];
 }
 
 - (void)didCancelSearchForFeedView:(SCEFeedView *)feedView
@@ -218,12 +220,12 @@ typedef NSUInteger SCEFeedCellType;
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
             [self resetTable:[feedView tableView]]; // handles reload and scroll to top
-            [[feedView mapView] reloadData];
+            [[feedView mapView] reloadDataAndAutoresize:YES];
         }];
     
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
-        [[feedView mapView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:NO];
         
         // update the info bar text
         [[[feedView resultsInfoBar] infoLabel] setText:@"closest to you"];
@@ -244,7 +246,7 @@ typedef NSUInteger SCEFeedCellType;
             shownItemRange.length = [[self items] count];
         }
         [[feedView tableView] reloadData];
-        [[feedView mapView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:YES];
         // scroll down so new item is at top of list
         [[feedView tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex
                                                                         inSection:0]
@@ -301,10 +303,22 @@ typedef NSUInteger SCEFeedCellType;
                  annotationForItem:item];
 }
 
+- (NSInteger)numberOfAnnotationsInFeedView:(SCEFeedView *)feedView
+{
+    return shownItemRange.length;
+}
+
+// TODO: this was hacky. shouldn't be doign this logic here if we're
+//       trying to have the same backing data mode lfor both list and
+//       map feeds. Had to create numberOfAnnotationsInFeedView because
+//       of it.
 - (NSInteger)numberOfItemsInFeedView:(SCEFeedView *)feedView
 {
     if (shownItemRange.length < [[self items] count]) {
         return shownItemRange.length + 1;   // leave room for "Show More"
+    }
+    else if ([[self items] count] == 0) {
+        return 1;   // allow room for status cell
     }
     else {
         return shownItemRange.length;

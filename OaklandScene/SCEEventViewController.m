@@ -92,8 +92,6 @@
                                                              timeStyle:NSDateFormatterNoStyle];
     
     NSTimeInterval duration = [[[self event] endTime] timeIntervalSinceDate:[[self event] startTime]];
-
-    NSLog(@"%@ - %@", medStartDate, medEndDate);
     
     // if event ends on same day it starts, or within 6 hours of it's start (e.g. 9pm-2am), don't print the end date
     if ([medStartDate isEqualToString:medEndDate] || duration <= 3600 * 6) {   // 6 hours

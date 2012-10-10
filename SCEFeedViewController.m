@@ -209,6 +209,19 @@
     }
 }
 
+- (void)disableInterface
+{
+    [[resultsInfoBar categoryButton] setEnabled:NO];
+    [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
+}
+
+- (void)enableInterface
+{
+    [[resultsInfoBar categoryButton] setEnabled:YES];
+    [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
+}
+
+
 /**** UISearchBarDelegate & related methods ****/
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -353,7 +366,7 @@ numberOfRowsInComponent:(NSInteger)component
 
 - (NSInteger)numberOfAnnotationsInMapView:(SCEMapView *)mapView
 {
-    return [[self dataSource] numberOfItemsInFeedView:feedViewContainer];
+    return [[self dataSource] numberOfAnnotationsInFeedView:feedViewContainer];
 }
 
 - (id<MKAnnotation>)mapView:(SCEMapView *)mapView annotationForIndex:(NSInteger)index

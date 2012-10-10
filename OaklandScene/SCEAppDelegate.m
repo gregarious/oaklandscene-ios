@@ -106,7 +106,7 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
     // if we make it here, all the stores are synced
     if (syncErrorDuringLoad) {
         [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                    message:@"The most recent information could not be retreived."
+                                    message:@"There was a problem retreiving the most recent information."
                                    delegate:nil
                           cancelButtonTitle:@"Ok"
                           otherButtonTitles:nil] show];

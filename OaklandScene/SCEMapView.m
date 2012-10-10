@@ -25,21 +25,39 @@
 - (void)setDataSource:(id<SCEMapViewDataSource>)ds
 {
     dataSource = ds;
-    [self reloadData];
+    [self reloadDataAndAutoresize:YES];
 }
 
-- (void)reloadData
+- (void)reloadDataAndAutoresize:(BOOL)shouldAutoresize
 {
-    // removes al lcurrent annotations and rebuilds them from the data source
-    [self removeAnnotations:[self annotations]];
+    BOOL userLocationAlreadyPresent = NO;
+    for (id<MKAnnotation> ann in [self annotations]) {
+        if ([ann isKindOfClass:[MKUserLocation class]]) {
+            userLocationAlreadyPresent = YES;
+        }
+        else {
+            [self removeAnnotation:ann];
+        }
+    }
+    
+//    // removes all current annotations and rebuilds them from the data source
+//    [self removeAnnotations:[self annotations]];
+    
     NSInteger totalAnnotations = [[self dataSource] numberOfAnnotationsInMapView:self];
     for (NSInteger i = 0; i < totalAnnotations; ++i) {
         id<MKAnnotation> ann = [[self dataSource] mapView:self annotationForIndex:i];
+
+        if (userLocationAlreadyPresent && [ann isKindOfClass:[MKUserLocation class]]) {
+            continue;   // skip adding the user annotation if it's already there
+        }
         if ([ann coordinate].latitude != 0 && [ann coordinate].longitude != 0) {
             [self addAnnotation:ann];
         }
     }
-    [self resizeToAnnotations];
+    
+    if (shouldAutoresize) {
+        [self resizeToAnnotations];
+    }
 }
 
 - (void)resizeToAnnotations

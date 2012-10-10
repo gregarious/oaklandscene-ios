@@ -31,16 +31,18 @@
         [self addSearchButton];
         
         contentStore = [SCEEventStore sharedStore];
-        SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
+        feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
         [feedSource setItemSource:[[SCEEventItemSource alloc] init]];
         
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
         
+        [self disableInterface];
         [feedSource syncWithCompletion:^(NSError *err) {
+            [self enableInterface];
             [tableView reloadData];
-            [mapView reloadData];
+            [mapView reloadDataAndAutoresize:YES];
         }];
     }
 
@@ -56,16 +58,24 @@
            forCellReuseIdentifier:@"SCEEventTableCell"];
 
     [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-    // TODO: need to figure out how to handle this
-    // if the main store is loaded, reset the feed
-    //    if ([contentStore isLoaded]) {
-    //        [self resetFeedFilters];
-    //    }
-    //    else {
-    //        [self addStaticMessageToFeed:@"Events could not be loaded"];
-    //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
-    //    }
+    // if the store hasn't been loaded, try again now
+    if (![contentStore isLoaded]) {
+        [self disableInterface];
+        [contentStore syncContentWithCompletion:^(NSArray *items, NSError *err) {
+            [feedSource syncWithCompletion:^(NSError *err) {
+                NSLog(@"cannot sync with store");
+                [self enableInterface];
+                [tableView reloadData];
+                [mapView reloadDataAndAutoresize:YES];
+            }];
+        }];
+    }
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)sb

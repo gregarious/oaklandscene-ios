@@ -14,6 +14,7 @@
 @protocol SCEFeedViewDataSource <NSObject>
 
 - (NSInteger)numberOfItemsInFeedView:(SCEFeedView *)feedView;
+- (NSInteger)numberOfAnnotationsInFeedView:(SCEFeedView *)feedView;
 
 /*** Table-related methods ***/
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView

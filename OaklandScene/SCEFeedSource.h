@@ -36,7 +36,7 @@
     NSArray *_items;
 }
 
-@property (nonatomic) id <SCEItemStore> store; // TODO: make a generic store
+@property (nonatomic) id <SCEItemStore> store;
 
 @property (nonatomic, readonly) NSArray* items;
 

@@ -68,5 +68,7 @@ typedef NSUInteger SCEFeedViewMode;
 - (void)enableSearchBar:(id)sender;
 - (void)displayFilterDialog:(id)sender;
 
+- (void)disableInterface;
+- (void)enableInterface;
 
 @end

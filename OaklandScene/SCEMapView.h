@@ -15,6 +15,6 @@
 @property (nonatomic) MKCoordinateRegion defaultRegion;
 
 - (id)initWithFrame:(CGRect)frame defaultRegion:(MKCoordinateRegion)region;
-- (void)reloadData;
+- (void)reloadDataAndAutoresize:(BOOL)shouldAutoresize;
 
 @end

@@ -54,10 +54,12 @@
 
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
-        
+
+        [self disableInterface];
         [feedSource syncWithCompletion:^(NSError *err) {
+            [self enableInterface];
             [tableView reloadData];
-            [mapView reloadData];
+            [mapView reloadDataAndAutoresize:YES];
         }];
     }
     return self;
@@ -114,7 +116,7 @@
         [resultsInfoBar setShowReloadButton:YES];
         
         // reload data to ensure we're in sync with the list view
-        [mapView reloadData];
+        [mapView reloadDataAndAutoresize:YES];
     }
 
     [super setViewMode:viewMode];
@@ -122,27 +124,21 @@
     [self refreshResultsBarLabel];
 }
 
-// Before view appears, ensure content is set correctly depending on view
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    if ([CLLocationManager locationServicesEnabled]) {
-//        CLLocationDistance dist = 0;
-//        if ([locationManager location]) {
-//            CLLocation *oldLocation = [[CLLocation alloc] initWithLatitude:[contentStore anchorCoordinate].latitude
-//                                                                 longitude:[contentStore anchorCoordinate].longitude];
-//            dist = [[locationManager location] distanceFromLocation:oldLocation];
-//        }
-//
-//        if (dist > 250) {
-//            // if coords have moved farther than 250m, refresh all the data
-//            [contentStore setAnchorCoordinate:[[locationManager location] coordinate]];
-//            [feedSource syncWithCompletion:^(NSError* block) {
-//                [tableView reloadData];
-//                [mapView reloadData];
-//            }];
-//        }
-//    }
+    
+    // if the store hasn't been loaded, try again now
+    if (![contentStore isLoaded]) {
+        [self disableInterface];
+        [contentStore syncContentWithCompletion:^(NSArray *items, NSError *err) {
+            [feedSource syncWithCompletion:^(NSError *err) {
+                [self enableInterface];
+                [tableView reloadData];
+                [mapView reloadDataAndAutoresize:YES];
+            }];
+        }];
+    }
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
@@ -155,7 +151,7 @@
 -(void)refreshMapResults:(id)sender
 {
     [self refreshFeedWithCenter:[mapView centerCoordinate]];
-    [mapView reloadData];
+    [mapView reloadDataAndAutoresize:YES];
 }
 
 -(void)refreshFeedWithCenter:(CLLocationCoordinate2D)coord

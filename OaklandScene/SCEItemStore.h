@@ -12,9 +12,10 @@
 @protocol SCEItemStore <NSObject>
 
 @property (nonatomic, copy) NSMutableArray* items;
+@property (nonatomic, readonly) NSArray* categories;
+
 @property (nonatomic, readonly) NSDate* lastSynced;
 @property (nonatomic, readonly) BOOL syncInProgress;
-@property (nonatomic, readonly) NSArray* categories;
 
 + (id)sharedStore;
 

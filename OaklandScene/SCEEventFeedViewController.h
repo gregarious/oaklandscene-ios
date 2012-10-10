@@ -8,10 +8,11 @@
 
 #import "SCEFeedViewController.h"
 
-@class SCEEventStore;
+@class SCEEventStore, SCEFeedSource;
 
 @interface SCEEventFeedViewController : SCEFeedViewController
 {
     SCEEventStore *contentStore;
+    SCEFeedSource *feedSource;
 }
 @end
