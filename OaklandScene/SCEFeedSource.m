@@ -200,6 +200,7 @@ typedef NSUInteger SCEFeedCellType;
     // TODO: consider ongoing syncs
     [self syncWithCompletion:^(NSError *err) {
         [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+        [[feedView mapView] reloadData];
     }];
     
     // refresh the table now to show loading message
@@ -217,6 +218,7 @@ typedef NSUInteger SCEFeedCellType;
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
             [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+            [[feedView mapView] reloadData];
         }];
     
         // refresh the table now to show loading message
