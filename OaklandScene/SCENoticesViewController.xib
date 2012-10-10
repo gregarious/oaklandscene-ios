@@ -94,9 +94,9 @@
 						<int key="IBUIContentMode">4</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage" id="819716666">
+						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">test_pod.jpg</string>
+							<string key="NSResourceName">pod_default.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="493849844">
@@ -139,7 +139,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">This is a notice about Oakland. it will be SUPER intereesting and a maximum of 3, tres, lines. shalosh is three is hebrew!</string>
+						<string key="IBUIText"/>
 						<object class="NSColor" key="IBUITextColor" id="831337133">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -395,7 +395,10 @@
 						<int key="IBUIContentMode">4</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="819716666"/>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">pod5_default.png</string>
+						</object>
 					</object>
 					<object class="IBUIImageView" id="452859859">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -434,7 +437,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">This is a notice about Oakland. it will be SUPER intereesting and a maximum of 3, tres, lines. shalosh is three is hebrew!</string>
+						<string key="IBUIText"/>
 						<reference key="IBUITextColor" ref="831337133"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
@@ -963,9 +966,10 @@
 			<string key="cell_bkgd_noarrow.png">{312, 70}</string>
 			<string key="notice_bkgd.png">{293, 223}</string>
 			<string key="pic_of_day_head.png">{320, 42}</string>
+			<string key="pod5_default.png">{540, 540}</string>
+			<string key="pod_default.png">{220, 220}</string>
 			<string key="pod_image_frame.png">{293, 223}</string>
 			<string key="single_bkgd.png">{320, 480}</string>
-			<string key="test_pod.jpg">{1024, 768}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
