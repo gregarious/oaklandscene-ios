@@ -14,7 +14,6 @@
 {
     if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
         ([UIScreen mainScreen].scale > 1.0)) {
-        NSLog(@"%f", [[UIScreen mainScreen] bounds].size.height);
         if ([[UIScreen mainScreen] bounds].size.height >= 481.0) {   // 480 is 3.5-inch
             return SCEResolutionRetina4;
         }
