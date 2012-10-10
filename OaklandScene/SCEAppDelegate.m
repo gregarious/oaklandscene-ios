@@ -16,10 +16,14 @@
 
 #import "SCENoticesViewController.h"
 
+#import "SCEItemStore.h"
 #import "SCEPlaceStore.h"
 #import "SCEEventStore.h"
 #import "SCESpecialStore.h"
 #import "SCENewsStore.h"
+
+// amount of time before stores should be synced from server (24 hrs)
+NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
 
 @implementation SCEAppDelegate
 
@@ -28,11 +32,86 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    // TODO: debug
+    UIView *launchView = [[UIView alloc] initWithFrame:[[self window] bounds]];
+    UILabel *label = [[UILabel alloc] init];
+    [label setText:@"Loading"];
+    [label sizeToFit];
+    [launchView addSubview:label];
+    
+    staticLaunchViewController = [[UIViewController alloc] init];
+    [staticLaunchViewController setView:launchView];
+    self.window.rootViewController = staticLaunchViewController;
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{   
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    // set up the static launch view controller
+    self.window.rootViewController = staticLaunchViewController;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
     // Initialize the stores
-    [[SCEPlaceStore sharedStore] syncContentWithCompletion:nil];
-    [[SCEEventStore sharedStore] syncContentWithCompletion:nil];
-    [[SCESpecialStore sharedStore] syncContentWithCompletion:nil];
-    [[SCENewsStore sharedStore] syncContentWithCompletion:nil];
+    contentStores = @[[SCEPlaceStore sharedStore],
+                        [SCEEventStore sharedStore],
+                        [SCESpecialStore sharedStore],
+                        [SCENewsStore sharedStore]];
+    
+    syncErrorDuringLoad = NO;
+    for (id<SCEItemStore> store in contentStores) {
+        if ([store lastSynced] == nil ||
+            -[[store lastSynced] timeIntervalSinceNow] > staleSyncThreshold)
+        {
+            NSLog(@"%@ out of date. Syncing now.", [store class]);
+            [store syncContentWithCompletion:^void(NSArray *a, NSError *err) {
+                [self onContentStoreSync:err];
+            }];
+        }
+    }
+    // in case no of the stores needed snc, this direct call will execute
+    [self onContentStoreSync:nil];
+}
+
+- (void)onContentStoreSync:(NSError *)err
+{
+    if (err) {
+        syncErrorDuringLoad = YES;
+    }
+    
+    // ensure thread-saftey during sync checking
+    @synchronized(contentStores) {
+        for (id<SCEItemStore> store in contentStores) {
+            if ([store syncInProgress]) {
+                return;
+            }
+        }
+    }
+    
+    // if we make it here, all the stores are synced
+    if (syncErrorDuringLoad) {
+        [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+                                    message:@"There was a problem retreiving the most recent information."
+                                   delegate:nil
+                          cancelButtonTitle:@"Ok"
+                          otherButtonTitles:nil] show];
+
+    }
     
     // Create the 5 VCs that will live under each tab
     SCENoticesViewController *noticesVC = [[SCENoticesViewController alloc] init];
@@ -49,35 +128,9 @@
     // Set up the tab bar controller with the 5 sub VCs
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     [tabBarController setViewControllers:@[noticesVC, placeVC, eventVC, specialVC, newsVC]];
-
-//    [tabBarController setSelectedIndex:1];  // set to places for development
     
     // set the window root controller
-    self.window.rootViewController = tabBarController;
-    [self.window makeKeyAndVisible];
-    return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[self window] setRootViewController:tabBarController];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

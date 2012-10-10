@@ -22,6 +22,7 @@
 @property (nonatomic, copy) NSMutableArray* items;
 @property (nonatomic, readonly) NSDate* lastSynced;
 @property (nonatomic, readonly) NSArray* categories;    // always [] for specials
+@property (nonatomic, readonly) BOOL syncInProgress;
 // TODO: get rid of categories requirement for SCEItemStore
 
 @end

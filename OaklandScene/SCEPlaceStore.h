@@ -7,11 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "JSONSerializable.h"
 #import "SCEItemStore.h"
-
-@class SCEPlace;
-@class SCECategory;
 
 @interface SCEPlaceStore : NSObject <SCEItemStore>
 {
@@ -22,5 +20,6 @@
 @property (nonatomic, copy) NSMutableArray* items;
 @property (nonatomic, readonly) NSDate* lastSynced;
 @property (nonatomic, readonly) NSArray* categories;
+@property (nonatomic, readonly) BOOL syncInProgress;
 
 @end

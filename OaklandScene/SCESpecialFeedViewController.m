@@ -13,7 +13,7 @@
 #import "SCESpecialItemSource.h"
 #import "SCEFeedView.h"
 #import "SCEResultsInfoBar.h"
-#import "SCEUtils.h"
+#import "SCEMapView.h"
 
 @implementation SCESpecialFeedViewController
 
@@ -32,15 +32,18 @@
         [self setShowResultsBar:NO];    // disable results bar (no categories)
         
         contentStore = [SCESpecialStore sharedStore];
-        SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
+        feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
         [feedSource setItemSource:[[SCESpecialItemSource alloc] init]];
         
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
         
+        [self disableInterface];
         [feedSource syncWithCompletion:^(NSError *err) {
+            [self enableInterface];
             [tableView reloadData];
+            [mapView reloadDataAndAutoresize:YES];
         }];
     }
     
@@ -54,18 +57,23 @@
     // register the NIBs for cell reuse
     [tableView registerNib:[UINib nibWithNibName:@"SCESpecialTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCESpecialTableCell"];
-    
-    
-    // TODO: need to figure out how to handle this
-    // if the main store is loaded, reset the feed
-    //    if ([contentStore isLoaded]) {
-    //        [self resetFeedFilters];
-    //    }
-    //    else {
-    //        [self addStaticMessageToFeed:@"Specials could not be loaded"];
-    //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
-    //    }
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // if the store hasn't been loaded, try again now
+    if (![contentStore isLoaded]) {
+        [self disableInterface];
+        [contentStore syncContentWithCompletion:^(NSArray *items, NSError *err) {
+            [feedSource syncWithCompletion:^(NSError *err) {
+                [self enableInterface];
+                [tableView reloadData];
+                [mapView reloadDataAndAutoresize:YES];
+            }];
+        }];
+    }
 }
 
 @end

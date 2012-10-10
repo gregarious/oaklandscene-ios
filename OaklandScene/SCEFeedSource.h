@@ -30,9 +30,13 @@
     id statusCell;
     
     BOOL syncInProgress;
+    
+    // protected backing object for sake of PlaceFeedSource item setting
+    @protected
+    NSArray *_items;
 }
 
-@property (nonatomic) id <SCEItemStore> store; // TODO: make a generic store
+@property (nonatomic) id <SCEItemStore> store;
 
 @property (nonatomic, readonly) NSArray* items;
 

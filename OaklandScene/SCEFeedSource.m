@@ -8,12 +8,14 @@
 
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
 #import "SCEResultsInfoBar.h"
 #import "SCEFeeditemSource.h"
 #import "SCEPlaceStore.h"
 #import "SCECategory.h"
 #import "SCEFeeditemSource.h"
 #import "SCEFeedStaticCell.h"
+#import "SCESimpleAnnotation.h"
 
 @interface SCEFeedSource ()
 
@@ -31,7 +33,8 @@ typedef NSUInteger SCEFeedCellType;
 
 @implementation SCEFeedSource
 
-@synthesize store, items, pageLength;
+@synthesize items = _items;
+@synthesize store, pageLength;
 @synthesize filterCategory, filterKeyword;
 @synthesize itemSource;
 
@@ -65,16 +68,16 @@ typedef NSUInteger SCEFeedCellType;
     statusCell = loadingCell;
     
     // clear items until sync is finished
-    items = nil;
+    _items = nil;
     shownItemRange.length = shownItemRange.location = 0;
 
     // once the proper items have been retreived, store them and call the completion block
     void (^onSyncComplete)(NSArray *, NSError *) = ^void (NSArray *matches, NSError *err) {
-        items = matches;
+        _items = matches;
         
-        if (items) {
-            NSLog(@"Sync complete: %d matches", [items count]);
-            if ([items count] == 0) {
+        if ([self items]) {
+            NSLog(@"Sync complete: %d matches", [[self items] count]);
+            if ([[self items] count] == 0) {
                 // TODO: make this more efficient?
                 SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
                                                                        owner:self
@@ -94,18 +97,20 @@ typedef NSUInteger SCEFeedCellType;
             SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
                                                                     owner:self
                                                                   options:nil][0];
-
-            // on error, alert the user via an alert, and fill the table with a "no places" message
-            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                        message:[err localizedDescription]
-                                       delegate:nil
-                              cancelButtonTitle:@"Ok"
-                              otherButtonTitles:nil] show];
+// TODO: this alert is too noisy on initial load, but might be good for syncs after it
+//            // on error, alert the user via an alert, and fill the table with a "no places" message
+//            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+//                                        message:[err localizedDescription]
+//                                       delegate:nil
+//                              cancelButtonTitle:@"Ok"
+//                              otherButtonTitles:nil] show];
             [[cell textLabel] setText:@"No results found"];
             statusCell = cell;
         }
         
-        block(err);
+        if (block) {
+            block(err);
+        }
         syncInProgress = false;
     };
     
@@ -178,10 +183,12 @@ typedef NSUInteger SCEFeedCellType;
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
             [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+            [[feedView mapView] reloadDataAndAutoresize:YES];
         }];
 
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:NO];
         
         // TODO: better to update category button title here maybe?
     }
@@ -195,13 +202,12 @@ typedef NSUInteger SCEFeedCellType;
     // TODO: consider ongoing syncs
     [self syncWithCompletion:^(NSError *err) {
         [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+        [[feedView mapView] reloadDataAndAutoresize:YES];
     }];
     
     // refresh the table now to show loading message
     [[feedView tableView] reloadData];
-    
-    // update the info bar text
-    [[[feedView resultsInfoBar] infoLabel] setText:@"matching custom search"];
+    [[feedView mapView] reloadDataAndAutoresize:NO];
 }
 
 - (void)didCancelSearchForFeedView:(SCEFeedView *)feedView
@@ -214,17 +220,19 @@ typedef NSUInteger SCEFeedCellType;
         // TODO: consider ongoing syncs
         [self syncWithCompletion:^(NSError *err) {
             [self resetTable:[feedView tableView]]; // handles reload and scroll to top
+            [[feedView mapView] reloadDataAndAutoresize:YES];
         }];
     
         // refresh the table now to show loading message
         [[feedView tableView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:NO];
         
         // update the info bar text
         [[[feedView resultsInfoBar] infoLabel] setText:@"closest to you"];
     }
 }
 
-- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectTableCellForItem:(NSInteger)itemIndex
+- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectTableCellWithIndex:(NSInteger)itemIndex
 {
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
@@ -238,6 +246,7 @@ typedef NSUInteger SCEFeedCellType;
             shownItemRange.length = [[self items] count];
         }
         [[feedView tableView] reloadData];
+        [[feedView mapView] reloadDataAndAutoresize:YES];
         // scroll down so new item is at top of list
         [[feedView tableView] scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:itemIndex
                                                                         inSection:0]
@@ -245,6 +254,15 @@ typedef NSUInteger SCEFeedCellType;
                                             animated:YES];
     }
     return nil;
+}
+
+- (UIViewController *)feedView:(SCEFeedView *)feedView didSelectAnnotation:(SCESimpleAnnotation *)annotation
+{
+    id item = [[self store] itemFromResourceId:[annotation resourceId]];
+    if (!item) {
+        return nil;
+    }
+    return [[self itemSource] feedView:feedView didSelectItem:item];
 }
 
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(NSInteger)itemIndex
@@ -266,7 +284,7 @@ typedef NSUInteger SCEFeedCellType;
 {
     SCEFeedCellType cellType = [self cellTypeForIndex:itemIndex];
     if (cellType == SCEFeedCellTypeItem) {
-        id item = [items objectAtIndex:itemIndex];
+        id item = [[self items] objectAtIndex:itemIndex];
         return [[self itemSource] feedView:feedView
                            tableCellForItem:item];
     }
@@ -278,10 +296,29 @@ typedef NSUInteger SCEFeedCellType;
     }
 }
 
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(NSInteger)itemIndex
+{
+    id item = [[self items] objectAtIndex:itemIndex];
+    return [[self itemSource] feedView:feedView
+                 annotationForItem:item];
+}
+
+- (NSInteger)numberOfAnnotationsInFeedView:(SCEFeedView *)feedView
+{
+    return shownItemRange.length;
+}
+
+// TODO: this was hacky. shouldn't be doign this logic here if we're
+//       trying to have the same backing data mode lfor both list and
+//       map feeds. Had to create numberOfAnnotationsInFeedView because
+//       of it.
 - (NSInteger)numberOfItemsInFeedView:(SCEFeedView *)feedView
 {
     if (shownItemRange.length < [[self items] count]) {
         return shownItemRange.length + 1;   // leave room for "Show More"
+    }
+    else if ([[self items] count] == 0) {
+        return 1;   // allow room for status cell
     }
     else {
         return shownItemRange.length;

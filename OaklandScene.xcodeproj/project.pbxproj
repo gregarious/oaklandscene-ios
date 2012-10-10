@@ -14,7 +14,8 @@
 		3747AC6015FA74840053BC32 /* SCESpecial.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC5F15FA74840053BC32 /* SCESpecial.m */; };
 		3747AC6415FA76BB0053BC32 /* SCENewsStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6315FA76BB0053BC32 /* SCENewsStub.m */; };
 		3747AC6815FA886A0053BC32 /* SCEPlaceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */; };
-		375645DA162337A7004E8B73 /* news-10062012.json in Resources */ = {isa = PBXBuildFile; fileRef = 375645D9162337A7004E8B73 /* news-10062012.json */; };
+		375645EC1623BE45004E8B73 /* SCEMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 375645EB1623BE45004E8B73 /* SCEMapView.m */; };
+		375645F61624AF67004E8B73 /* SCEPlaceFeedSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 375645F51624AF67004E8B73 /* SCEPlaceFeedSource.m */; };
 		37570412160A7825004A6D45 /* SCEFeedSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37570411160A7825004A6D45 /* SCEFeedSource.m */; };
 		37642D7D15F6A0670024B6A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7C15F6A0670024B6A2 /* UIKit.framework */; };
 		37642D7F15F6A0670024B6A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37642D7E15F6A0670024B6A2 /* Foundation.framework */; };
@@ -29,7 +30,6 @@
 		37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9A15F6A0670024B6A2 /* second@2x.png */; };
 		37642DA115F6A0670024B6A2 /* SCETodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */; };
 		37642DD715F7B5980024B6A2 /* SCEFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */; };
-		37642DE215F7B69D0024B6A2 /* SCEFeedMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */; };
 		37642DE315F7B69D0024B6A2 /* SCEFeedMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */; };
 		37642DEB15F7B7DD0024B6A2 /* SCEFeedTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */; };
 		37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */; };
@@ -50,13 +50,11 @@
 		37ADB74E1620E1E100C104B9 /* SCENewsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB74D1620E1E100C104B9 /* SCENewsStore.m */; };
 		37ADB7511621E15D00C104B9 /* SCENewsItemSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB7501621E15C00C104B9 /* SCENewsItemSource.m */; };
 		37ADB7541621E6A800C104B9 /* SCENewsStubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB7531621E6A800C104B9 /* SCENewsStubView.m */; };
-		37C99A36161CABB80090A76B /* events-10032012.json in Resources */ = {isa = PBXBuildFile; fileRef = 37C99A35161CABB80090A76B /* events-10032012.json */; };
 		37C99A38161CABE10090A76B /* places-10032012.json in Resources */ = {isa = PBXBuildFile; fileRef = 37C99A37161CABE10090A76B /* places-10032012.json */; };
 		37C99A3B161CAC0E0090A76B /* SCEEventItemSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C99A3A161CAC0E0090A76B /* SCEEventItemSource.m */; };
 		37C99A3E161CAF6F0090A76B /* SCEEventDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C99A3D161CAF6F0090A76B /* SCEEventDetailView.m */; };
 		37C99A43161CB6270090A76B /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C99A34161CA4D10090A76B /* ISO8601DateFormatter.m */; };
 		37C99A46161CED580090A76B /* SCESpecialStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C99A45161CED580090A76B /* SCESpecialStore.m */; };
-		37C99A48161CEF650090A76B /* specials-10032012.json in Resources */ = {isa = PBXBuildFile; fileRef = 37C99A47161CEF650090A76B /* specials-10032012.json */; };
 		37C99A4B161CF0E60090A76B /* SCESpecialItemSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C99A4A161CF0E60090A76B /* SCESpecialItemSource.m */; };
 		37C99A4E161CF7970090A76B /* SCESpecialDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C99A4D161CF7970090A76B /* SCESpecialDetailView.m */; };
 		37C99A55161DE9DB0090A76B /* SCESpecialDetailHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37C99A54161DE9DB0090A76B /* SCESpecialDetailHeadView.xib */; };
@@ -188,7 +186,13 @@
 		3747AC6615FA886A0053BC32 /* SCEPlaceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceStore.h; sourceTree = "<group>"; };
 		3747AC6715FA886A0053BC32 /* SCEPlaceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceStore.m; sourceTree = "<group>"; };
 		3747AC7015FA92940053BC32 /* JSONSerializable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONSerializable.h; sourceTree = "<group>"; };
-		375645D9162337A7004E8B73 /* news-10062012.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "news-10062012.json"; sourceTree = "<group>"; };
+		375645DF16236C64004E8B73 /* sennott-square.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "sennott-square.gpx"; sourceTree = "<group>"; };
+		375645E016236C6F004E8B73 /* project-olympus.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "project-olympus.gpx"; sourceTree = "<group>"; };
+		375645EA1623BE45004E8B73 /* SCEMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEMapView.h; sourceTree = "<group>"; };
+		375645EB1623BE45004E8B73 /* SCEMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEMapView.m; sourceTree = "<group>"; };
+		375645EF1623C0E7004E8B73 /* SCEMapViewDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEMapViewDataSource.h; sourceTree = "<group>"; };
+		375645F41624AF67004E8B73 /* SCEPlaceFeedSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEPlaceFeedSource.h; sourceTree = "<group>"; };
+		375645F51624AF67004E8B73 /* SCEPlaceFeedSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEPlaceFeedSource.m; sourceTree = "<group>"; };
 		37570410160A7825004A6D45 /* SCEFeedSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedSource.h; sourceTree = "<group>"; };
 		37570411160A7825004A6D45 /* SCEFeedSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedSource.m; sourceTree = "<group>"; };
 		37642D7815F6A0670024B6A2 /* OaklandScene.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OaklandScene.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,8 +214,6 @@
 		37642DA015F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCETodayViewController.xib; sourceTree = "<group>"; };
 		37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEFeedViewController.h; path = ../SCEFeedViewController.h; sourceTree = "<group>"; };
 		37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCEFeedViewController.m; path = ../SCEFeedViewController.m; sourceTree = "<group>"; };
-		37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeedMapViewController.h; sourceTree = "<group>"; };
-		37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedMapViewController.m; sourceTree = "<group>"; };
 		37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedMapViewController.xib; sourceTree = "<group>"; };
 		37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEFeedTableCell.h; path = ../SCEFeedTableCell.h; sourceTree = "<group>"; };
 		37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCEFeedTableCell.m; path = ../SCEFeedTableCell.m; sourceTree = "<group>"; };
@@ -250,7 +252,6 @@
 		37ADB7531621E6A800C104B9 /* SCENewsStubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENewsStubView.m; sourceTree = "<group>"; };
 		37C99A33161CA4D10090A76B /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		37C99A34161CA4D10090A76B /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
-		37C99A35161CABB80090A76B /* events-10032012.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "events-10032012.json"; sourceTree = "<group>"; };
 		37C99A37161CABE10090A76B /* places-10032012.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "places-10032012.json"; sourceTree = "<group>"; };
 		37C99A39161CAC0E0090A76B /* SCEEventItemSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEEventItemSource.h; sourceTree = "<group>"; };
 		37C99A3A161CAC0E0090A76B /* SCEEventItemSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEEventItemSource.m; sourceTree = "<group>"; };
@@ -259,7 +260,6 @@
 		37C99A42161CB2B30090A76B /* SCEItemStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEItemStore.h; sourceTree = "<group>"; };
 		37C99A44161CED580090A76B /* SCESpecialStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecialStore.h; sourceTree = "<group>"; };
 		37C99A45161CED580090A76B /* SCESpecialStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecialStore.m; sourceTree = "<group>"; };
-		37C99A47161CEF650090A76B /* specials-10032012.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "specials-10032012.json"; sourceTree = "<group>"; };
 		37C99A49161CF0E60090A76B /* SCESpecialItemSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecialItemSource.h; sourceTree = "<group>"; };
 		37C99A4A161CF0E60090A76B /* SCESpecialItemSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecialItemSource.m; sourceTree = "<group>"; };
 		37C99A4C161CF7970090A76B /* SCESpecialDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecialDetailView.h; sourceTree = "<group>"; };
@@ -443,6 +443,8 @@
 				37E3EA2D15FA67BD00964876 /* SCEPlace.m */,
 				37EB7A17161B8D5C00E56154 /* SCEPlaceItemSource.h */,
 				37EB7A18161B8D5C00E56154 /* SCEPlaceItemSource.m */,
+				375645F41624AF67004E8B73 /* SCEPlaceFeedSource.h */,
+				375645F51624AF67004E8B73 /* SCEPlaceFeedSource.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -513,8 +515,6 @@
 			children = (
 				37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */,
 				37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */,
-				37642DDF15F7B69C0024B6A2 /* SCEFeedMapViewController.h */,
-				37642DE015F7B69C0024B6A2 /* SCEFeedMapViewController.m */,
 				37ED1DD41607BE4B009CA46D /* SCECategoryPickerDialogController.h */,
 				37ED1DD51607BE4B009CA46D /* SCECategoryPickerDialogController.m */,
 			);
@@ -696,8 +696,19 @@
 				37C99A5C161DEA790090A76B /* SCEPlaceStubView.h */,
 				37C99A5D161DEA790090A76B /* SCEPlaceStubView.m */,
 				37C99A5F161DEA8C0090A76B /* SCEPlaceStubView.xib */,
+				375645EA1623BE45004E8B73 /* SCEMapView.h */,
+				375645EB1623BE45004E8B73 /* SCEMapView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		375645E116236C7C004E8B73 /* Sample GPX */ = {
+			isa = PBXGroup;
+			children = (
+				375645E016236C6F004E8B73 /* project-olympus.gpx */,
+				375645DF16236C64004E8B73 /* sennott-square.gpx */,
+			);
+			name = "Sample GPX";
 			sourceTree = "<group>";
 		};
 		37642D6D15F6A0670024B6A2 = {
@@ -754,6 +765,7 @@
 				37C99A32161CA4A60090A76B /* Utilities */,
 				37F22538160A276700140ED5 /* Data */,
 				37642DD315F6BBAB0024B6A2 /* Images */,
+				375645E116236C7C004E8B73 /* Sample GPX */,
 				37642D8415F6A0670024B6A2 /* OaklandScene-Info.plist */,
 				37642D8515F6A0670024B6A2 /* InfoPlist.strings */,
 				37642D8815F6A0670024B6A2 /* main.m */,
@@ -785,6 +797,7 @@
 				37EB7A12161B60DE00E56154 /* SCEFeedViewDataSource.h */,
 				37EB7A16161B740D00E56154 /* SCEFeedItemSource.h */,
 				37ED1DCB16079928009CA46D /* SCECategoryPickerDelegate.h */,
+				375645EF1623C0E7004E8B73 /* SCEMapViewDataSource.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -841,10 +854,7 @@
 		37F22538160A276700140ED5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				375645D9162337A7004E8B73 /* news-10062012.json */,
-				37C99A47161CEF650090A76B /* specials-10032012.json */,
 				37C99A37161CABE10090A76B /* places-10032012.json */,
-				37C99A35161CABB80090A76B /* events-10032012.json */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1076,9 +1086,7 @@
 				371965D51614B4AE0069A41E /* clock.png in Resources */,
 				371965D61614B4AE0069A41E /* clock@2x.png in Resources */,
 				37CD7F1F1615EBC5004F840F /* README in Resources */,
-				37C99A36161CABB80090A76B /* events-10032012.json in Resources */,
 				37C99A38161CABE10090A76B /* places-10032012.json in Resources */,
-				37C99A48161CEF650090A76B /* specials-10032012.json in Resources */,
 				37C99A55161DE9DB0090A76B /* SCESpecialDetailHeadView.xib in Resources */,
 				37C99A60161DEA8C0090A76B /* SCEPlaceStubView.xib in Resources */,
 				37C99A76161E29160090A76B /* default-event.png in Resources */,
@@ -1098,7 +1106,6 @@
 				4F3D755B161F3E0200AFD042 /* SCEWelcomePage.xib in Resources */,
 				4F5809AC162329B10012D7A9 /* cell_bkgd_noarrow.png in Resources */,
 				4F5809AD162329B10012D7A9 /* cell_bkgd_noarrow@2x.png in Resources */,
-				375645DA162337A7004E8B73 /* news-10062012.json in Resources */,
 				4FB7555C16233CDA00B768D6 /* SCENoticesViewController.xib in Resources */,
 				4FB7555F16233F1000B768D6 /* pic_of_day_head.png in Resources */,
 				4FB7556016233F1000B768D6 /* pic_of_day_head@2x.png in Resources */,
@@ -1145,7 +1152,6 @@
 				37642D8D15F6A0670024B6A2 /* SCEAppDelegate.m in Sources */,
 				37642D9715F6A0670024B6A2 /* SCETodayViewController.m in Sources */,
 				37642DD715F7B5980024B6A2 /* SCEFeedViewController.m in Sources */,
-				37642DE215F7B69D0024B6A2 /* SCEFeedMapViewController.m in Sources */,
 				37642DEB15F7B7DD0024B6A2 /* SCEFeedTableCell.m in Sources */,
 				37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */,
 				37642DFB15F7B9DA0024B6A2 /* SCEPlaceViewController.m in Sources */,
@@ -1196,6 +1202,8 @@
 				37ADB7511621E15D00C104B9 /* SCENewsItemSource.m in Sources */,
 				37ADB7541621E6A800C104B9 /* SCENewsStubView.m in Sources */,
 				4FB7555B16233CDA00B768D6 /* SCENoticesViewController.m in Sources */,
+				375645EC1623BE45004E8B73 /* SCEMapView.m in Sources */,
+				375645F61624AF67004E8B73 /* SCEPlaceFeedSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1276,6 +1284,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OaklandScene/OaklandScene-Prefix.pch";
 				INFOPLIST_FILE = "OaklandScene/OaklandScene-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1287,6 +1296,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OaklandScene/OaklandScene-Prefix.pch";
 				INFOPLIST_FILE = "OaklandScene/OaklandScene-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -21,7 +21,7 @@ static NSMutableArray *generatedPlaces = nil;
 @synthesize resourceId, name, description, url;
 @synthesize startTime, endTime;
 @synthesize imageUrl;
-@synthesize place, placePrimitive, placeStore;
+@synthesize place, placePrimitive, placeStore, categories;
 
 - (id)init
 {

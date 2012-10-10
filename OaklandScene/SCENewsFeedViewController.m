@@ -29,16 +29,18 @@
         [self setShowResultsBar:NO];    // disable results bar (no categories)
         
         contentStore = [SCENewsStore sharedStore];
-        SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
+        feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
         [feedSource setItemSource:[[SCENewsItemSource alloc] init]];
         
-        [feedSource syncWithCompletion:^(NSError *err) {
-            [tableView reloadData];
-        }];
-        
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
+        
+        [self disableInterface];
+        [feedSource syncWithCompletion:^(NSError *err) {
+            [self enableInterface];
+            [tableView reloadData];
+        }];
     }
     
     return self;
@@ -51,16 +53,22 @@
     // register the NIBs for cell reuse
     [tableView registerNib:[UINib nibWithNibName:@"SCENewsTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCENewsTableCell"];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-    // TODO: need to figure out how to handle this
-    // if the main store is loaded, reset the feed
-    //    if ([contentStore isLoaded]) {
-    //        [self resetFeedFilters];
-    //    }
-    //    else {
-    //        [self addStaticMessageToFeed:@"News could not be loaded"];
-    //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
-    //    }
+    // if the store hasn't been loaded, try again now
+    if (![contentStore isLoaded]) {
+        [self disableInterface];
+        [contentStore syncContentWithCompletion:^(NSArray *items, NSError *err) {
+            [feedSource syncWithCompletion:^(NSError *err) {
+                [self enableInterface];
+                [tableView reloadData];
+            }];
+        }];
+    }
 }
 
 @end

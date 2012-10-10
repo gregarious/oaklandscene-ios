@@ -8,11 +8,12 @@
 
 #import "SCEFeedViewController.h"
 
-@class SCESpecialStore;
+@class SCESpecialStore, SCEFeedSource;
 
 @interface SCESpecialFeedViewController : SCEFeedViewController
 {
     SCESpecialStore *contentStore;
+    SCEFeedSource *feedSource;
 }
 
 @end

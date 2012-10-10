@@ -18,7 +18,7 @@
 
 @implementation SCEPlaceStore
 
-@synthesize items, lastSynced, categories;
+@synthesize items, lastSynced, categories, syncInProgress;
 
 + (SCEPlaceStore *)sharedStore
 {
@@ -58,7 +58,6 @@
 - (void)setItems:(NSMutableArray *)places
 {
     items = [[NSMutableArray alloc] initWithArray:places];
-    lastSynced = [NSDate date];
     
     // reset dictionary and set categories
     idPlaceMap = [[NSMutableDictionary alloc] init];
@@ -84,6 +83,8 @@
 
 - (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
+    syncInProgress = YES;
+    
     // Disabled API-based Place fetching. Just shipping with bundled content.
     // See 61258b0aa70be0111a337b6e566fde96d3cda390 for old version
     
@@ -109,11 +110,13 @@
         [newPlaces addObject:p];
     }
     [self setItems:newPlaces];
+    lastSynced = [NSDate date];
     
     queryResultMap = [[NSMutableDictionary alloc] init];
 
     if (block) {
         block([self items], nil);
+        syncInProgress = NO;
     }
 }
 
@@ -199,5 +202,7 @@
 {
     return [idPlaceMap objectForKey:rId];
 }
+
+
 
 @end

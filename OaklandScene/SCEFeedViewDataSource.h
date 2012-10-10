@@ -7,16 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
 @class UITableViewCell, SCEFeedView;
 
 @protocol SCEFeedViewDataSource <NSObject>
 
 - (NSInteger)numberOfItemsInFeedView:(SCEFeedView *)feedView;
+- (NSInteger)numberOfAnnotationsInFeedView:(SCEFeedView *)feedView;
 
 /*** Table-related methods ***/
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView
              tableCellForItem:(NSInteger)itemIndex;
+
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView
+             annotationForItem:(NSInteger)itemIndex;
 
 /*** Category filter-related methods ***/
 - (NSString *)feedView:(SCEFeedView *)feedView

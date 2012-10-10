@@ -11,6 +11,8 @@
 #import "SCEEventStore.h"
 #import "SCEFeedSource.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
+#import "SCEResultsInfoBar.h"
 #import "SCEEventItemSource.h"
 
 @implementation SCEEventFeedViewController
@@ -29,15 +31,18 @@
         [self addSearchButton];
         
         contentStore = [SCEEventStore sharedStore];
-        SCEFeedSource *feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
+        feedSource = [[SCEFeedSource alloc] initWithStore:contentStore];
         
         [feedSource setItemSource:[[SCEEventItemSource alloc] init]];
         
         [self setDelegate:feedSource];
         [self setDataSource:feedSource];
         
+        [self disableInterface];
         [feedSource syncWithCompletion:^(NSError *err) {
+            [self enableInterface];
             [tableView reloadData];
+            [mapView reloadDataAndAutoresize:YES];
         }];
     }
 
@@ -52,15 +57,37 @@
     [tableView registerNib:[UINib nibWithNibName:@"SCEEventTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCEEventTableCell"];
 
-    // TODO: need to figure out how to handle this
-    // if the main store is loaded, reset the feed
-    //    if ([contentStore isLoaded]) {
-    //        [self resetFeedFilters];
-    //    }
-    //    else {
-    //        [self addStaticMessageToFeed:@"Events could not be loaded"];
-    //        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
-    //    }
+    [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // if the store hasn't been loaded, try again now
+    if (![contentStore isLoaded]) {
+        [self disableInterface];
+        [contentStore syncContentWithCompletion:^(NSArray *items, NSError *err) {
+            [feedSource syncWithCompletion:^(NSError *err) {
+                NSLog(@"cannot sync with store");
+                [self enableInterface];
+                [tableView reloadData];
+                [mapView reloadDataAndAutoresize:YES];
+            }];
+        }];
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)sb
+{
+    [super searchBarCancelButtonClicked:sb];
+    [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)sb
+{
+    [super searchBarSearchButtonClicked:sb];
+    [[resultsInfoBar infoLabel] setText:@"matching seach query"];
 }
 
 @end

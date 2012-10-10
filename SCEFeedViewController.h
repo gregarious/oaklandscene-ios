@@ -7,20 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "SCECategoryPickerDelegate.h"
 #import "SCEFeedViewDataSource.h"
 #import "SCEFeedViewDelegate.h"
+#import "SCEMapViewDataSource.h"
 
-@class SCEFeedView, SCEResultsInfoBar;
+@class SCEFeedView, SCEMapView, SCEResultsInfoBar;
 
 @interface SCEFeedViewController : UIViewController <UISearchBarDelegate,
                                                         UITableViewDataSource,
                                                         UITableViewDelegate,
+                                                        SCEMapViewDataSource,
+                                                        MKMapViewDelegate,
                                                         SCECategoryPickerDelegate>
 {
     // subviews
     UISearchBar *searchBar;
-    SCEResultsInfoBar *resultsInfoBar;
     
     // parent container for feed content subviews
     UIView *contentView;
@@ -28,10 +31,13 @@
     
     // these two feed content subviews displayed mutually-exclusively
     UITableView *tableView;
-    UIView *mapView;    // TODO: will probably subview once map mode development happens
+    SCEMapView *mapView;    // TODO: will probably subview once map mode development happens
 
     // semi-transparent tappable layer to disable user input when search bar is first responder
     UIControl *contentMaskView;
+    
+    @protected
+    SCEResultsInfoBar *resultsInfoBar;
 }
 
 enum {
@@ -51,6 +57,8 @@ typedef NSUInteger SCEFeedViewMode;
 // see note in SCEFeedView.h
 @property (nonatomic, readonly) SCEFeedView *feedViewContainer;
 
++ (MKCoordinateRegion)defaultDisplayRegion;
+
 - (void)toggleViewMode:(id)sender;
 
 - (void)addViewToggleButton;
@@ -60,5 +68,7 @@ typedef NSUInteger SCEFeedViewMode;
 - (void)enableSearchBar:(id)sender;
 - (void)displayFilterDialog:(id)sender;
 
+- (void)disableInterface;
+- (void)enableInterface;
 
 @end

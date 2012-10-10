@@ -41,8 +41,16 @@ static NSMutableArray *generatedPlaces = nil;
     // TODO: error handling
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     [fmt setDateFormat:@"YYYY-MM-dd"];
-    [self setStartDate:[fmt dateFromString:[d objectForKey:@"dstart"]]];
-    [self setExpiresDate:[fmt dateFromString:[d objectForKey:@"dexpires"]]];
+    
+    id data = [d objectForKey:@"dstart"];
+    if (data != [NSNull null]) {
+        [self setStartDate:[fmt dateFromString:data]];
+    }
+    
+    data = [d objectForKey:@"dexpires"];
+    if (data != [NSNull null]) {
+        [self setExpiresDate:[fmt dateFromString:data]];
+    }
     
     id placeDict = [d objectForKey:@"place"];
     if (placeDict != [NSNull null]) {

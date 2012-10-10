@@ -18,7 +18,7 @@
 
 @implementation SCEEventStore
 
-@synthesize items, lastSynced, categories;
+@synthesize items, lastSynced, categories, syncInProgress;
 
 + (SCEEventStore *)sharedStore
 {
@@ -58,7 +58,6 @@
 - (void)setItems:(NSMutableArray *)events
 {
     items = [[NSMutableArray alloc] initWithArray:events];
-    lastSynced = [NSDate date];
     
     // reset dictionary and set categories
     idEventMap = [[NSMutableDictionary alloc] init];
@@ -84,36 +83,57 @@
 
 - (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    // TODO: Reenable API-based fetching.
+    // TODO: error handling for JSON read?
+    syncInProgress = YES;
     
-    // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
-    // TODO: error handling for NSData and/or JSON read?
+    // TODO: add time zone support
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss"];
+    NSString *isoNowString = [fmt stringFromDate:[NSDate date]];
+
+    NSString *urlString = [NSString stringWithFormat:@"%@&dtend__gt=%@",
+                           @"http://www.scenable.com/api/v1/event/?format=json&listed=true&limit=0",
+                           isoNowString];
     
-    NSString* filename = [[NSBundle mainBundle] pathForResource:@"events-10032012"
-                                                         ofType:@"json"];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                         cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                     timeoutInterval:8];
     
-    NSData* fileData = [NSData dataWithContentsOfFile:filename];
-    NSMutableDictionary *d = [NSJSONSerialization JSONObjectWithData:fileData
-                                                             options:0
-                                                               error:nil];
-    SCEAPIResponse *response = [[SCEAPIResponse alloc] init];
-    [response readFromJSONDictionary:d];
+    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
     
-    // Run through the objects in the API response, interpretting them as Events
-    NSMutableArray *newEvents = [[NSMutableArray alloc]
-                                    initWithCapacity:[[response objects] count]];
-    for (NSDictionary *d in [response objects]) {
-        SCEEvent *e = [[SCEEvent alloc] init];
-        [e readFromJSONDictionary:d];
-        [newEvents addObject:e];
-    }
-    [self setItems:newEvents];
+    // connection will let this response object interpret the JSON
+    SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
+    [connection setJsonRootObject:rootJSONObj];
     
-    queryResultMap = [[NSMutableDictionary alloc] init];
+    // on completed connection, set the internal place cache and call the given
+    // block with the next array of places (or on error, just pass it through)
+    [connection setCompletionBlock:
+     ^void(SCEAPIResponse *response, NSError *err) {
+         NSArray *objectsReturned = nil;
+         if (response) {
+             // Run through the objects in the API response, interpretting them as Events
+             NSMutableArray *newEvents = [[NSMutableArray alloc]
+                                          initWithCapacity:[[response objects] count]];
+             for (NSDictionary *d in [response objects]) {
+                 SCEEvent *e = [[SCEEvent alloc] init];
+                 [e readFromJSONDictionary:d];
+                 [newEvents addObject:e];
+             }
+             [self setItems:newEvents];
+             lastSynced = [NSDate date];
+             
+             objectsReturned = newEvents;
+             
+             queryResultMap = [[NSMutableDictionary alloc] init];
+         }
+         
+         syncInProgress = NO;
+         if (block) {
+             block(objectsReturned, err);
+         }
+     }];
     
-    if (block) {
-        block([self items], nil);
-    }
+    [connection start];
 }
 
 - (void)findItemsMatchingQuery:(NSString *)query
@@ -201,48 +221,3 @@
 
 @end
 
-/* From old SCEPlaceStore
-- (void)fetchContentWithCompletion:(void (^)(NSArray *, NSError *))block
-{
-    
-    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:8000/api/v1/place/?format=json&listed=true&limit=0"];
-    NSURLRequest *req = [NSURLRequest requestWithURL:url];
-    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
-    
-    // connection will let this response object interpret the JSON
-    SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
-    [connection setJsonRootObject:rootJSONObj];
-    
-    // on completed connection, set the internal place cache and call the given
-    // block with the next array of places (or on error, just pass it through)
-    [connection setCompletionBlock:
-     ^void(SCEAPIResponse *response, NSError *err) {
-         if (response) {
-             NSMutableArray *newPlaces = [[NSMutableArray alloc]
-                                          initWithCapacity:[[response objects] count]];
-             
-             for (NSDictionary *d in [response objects]) {
-                 SCEPlace *p = [[SCEPlace alloc] init];
-                 [p readFromJSONDictionary:d];
-                 [newPlaces addObject:p];
-             }
-             [self setPlaces:newPlaces];
-             lastSuccessfulFetch = [NSDate date];
-             queryResultMap = [[NSMutableDictionary alloc] init];
-             
-             if (block) {
-                 block([self places], nil);
-             }
-         }
-         else {
-             if (block) {
-                 block(nil, err);
-             }
-         }
-     }
-     ];
-    
-    
-    [connection start];
-}
-*/

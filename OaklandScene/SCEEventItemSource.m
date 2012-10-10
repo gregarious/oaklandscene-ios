@@ -7,6 +7,7 @@
 //
 
 #import "SCEEventItemSource.h"
+#import "SCESimpleAnnotation.h"
 #import "SCEPlace.h"
 #import "SCEEvent.h"
 #import "SCECategory.h"
@@ -66,7 +67,18 @@
 //    [[cell categoryList] setCategoryLabelTexts:categoryLabels];
     
     return cell;
+}
+
+- (id<MKAnnotation>)feedView:(SCEFeedView *)feedView annotationForItem:(id)item
+{
+    SCEEvent* event = (SCEEvent *)item;
     
+    SCESimpleAnnotation *annotation = [SCESimpleAnnotation annotationWithCoordinate:[[event place] location]
+                                                                              title:[event name]
+                                                                           subtitle:[[event place] name]
+                                                                         resourceId:[event resourceId]];
+    
+    return annotation;
 }
 
 - (CGFloat)feedView:(SCEFeedView *)feedView tableCellHeightForItem:(id)item

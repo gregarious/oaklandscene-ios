@@ -9,11 +9,12 @@
 #import "SCEFeedViewController.h"
 #import "SCEFeedViewDataSource.h"
 
-@class SCENewsStore;
+@class SCENewsStore, SCEFeedSource;
 
 @interface SCENewsFeedViewController : SCEFeedViewController
 {
     SCENewsStore *contentStore;
+    SCEFeedSource *feedSource;
 }
 
 @end

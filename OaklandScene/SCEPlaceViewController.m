@@ -44,8 +44,10 @@
     // map view
     MKMapView *mapView = [[MKMapView alloc] init];
     [detailView setMapView:mapView];
-    [mapView addAnnotation:[SCESimpleAnnotation
-                            annotationWithCoordinate:[[self place] location]]];
+    [mapView addAnnotation:[SCESimpleAnnotation annotationWithCoordinate:[[self place] location]
+                                                                   title:nil
+                                                                subtitle:nil
+                                                              resourceId:nil]];
     // can't set the region till the subview is framed: do it at the bottom of this method
     
     // header view

@@ -10,6 +10,7 @@
 #import "SCEFeedViewController.h"
 #import "SCECategoryPickerDialogController.h"
 #import "SCEFeedView.h"
+#import "SCEMapView.h"
 #import "SCEResultsInfoBar.h"
 
 @interface SCEFeedViewController ()
@@ -36,6 +37,14 @@
     return self;
 }
 
++ (MKCoordinateRegion)defaultDisplayRegion
+{
+    MKCoordinateRegion region;
+    region.center = CLLocationCoordinate2DMake(40.444053, -79.953187);
+    region.span.latitudeDelta = region.span.longitudeDelta = .05;
+    return region;
+}
+
 -(void)loadView
 {
     [super loadView];
@@ -49,7 +58,6 @@
     CGFloat infoBarHeight = 0;
     if ([self showResultsBar]) {
         resultsInfoBar = [[SCEResultsInfoBar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
-        [[resultsInfoBar infoLabel] setText:@"closest to you"];
         [[resultsInfoBar categoryButton] setTarget:self];
         [[resultsInfoBar categoryButton] setAction:@selector(displayFilterDialog:)];
         
@@ -79,8 +87,10 @@
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
-    mapView = [[UIView alloc] init];
-    [mapView addSubview:[[MKMapView alloc] initWithFrame:[contentView bounds]]];
+    mapView = [[SCEMapView alloc] initWithFrame:[contentView bounds]
+                                  defaultRegion:[SCEFeedViewController defaultDisplayRegion]];
+    [mapView setDelegate:self];
+    [mapView setDataSource:self];
     
     // ensure primary view is in sync with the viewMode variable
     [self setViewMode:[self viewMode]];
@@ -97,6 +107,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [mapView setShowsUserLocation:YES];
 }
 
 - (void)viewDidUnload
@@ -149,6 +160,8 @@
                                 reason:@"supplied mode constant is unsupported"
                               userInfo:nil];
     }
+    
+    [self viewWillAppear:NO];   // call manually to allow view to reorganize its data based on view mode
     [contentView addSubview:contentSubview];
 }
 
@@ -196,6 +209,19 @@
     }
 }
 
+- (void)disableInterface
+{
+    [[resultsInfoBar categoryButton] setEnabled:NO];
+    [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
+}
+
+- (void)enableInterface
+{
+    [[resultsInfoBar categoryButton] setEnabled:YES];
+    [[[self navigationItem] rightBarButtonItem] setEnabled:YES];
+}
+
+
 /**** UISearchBarDelegate & related methods ****/
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -220,6 +246,9 @@
     [self disableSearchFocus];
     [[self delegate] feedView:feedViewContainer
          didSubmitSearchQuery:[sb text]];
+    
+    // update the info bar text
+    [[resultsInfoBar infoLabel] setText:@"matching search query"];
 }
 
 // removes the search view from the title bar.
@@ -233,6 +262,8 @@
     [self addSearchButton];
     
     [[self delegate] didCancelSearchForFeedView:feedViewContainer];
+
+    [[resultsInfoBar infoLabel] setText:@""];
 }
 
 // enables the search bar
@@ -324,12 +355,58 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIViewController *detailController = [[self delegate] feedView:feedViewContainer
-                                         didSelectTableCellForItem:[indexPath row]];
+                                         didSelectTableCellWithIndex:[indexPath row]];
     if (detailController) {
         [detailController setHidesBottomBarWhenPushed:YES];
         [[self navigationController] pushViewController:detailController animated:YES];
     }
 }
 
+/**** SCEMapViewDataSource & MKMapViewDelegate methods ****/
+
+- (NSInteger)numberOfAnnotationsInMapView:(SCEMapView *)mapView
+{
+    return [[self dataSource] numberOfAnnotationsInFeedView:feedViewContainer];
+}
+
+- (id<MKAnnotation>)mapView:(SCEMapView *)mapView annotationForIndex:(NSInteger)index
+{
+    return [[self dataSource] feedView:feedViewContainer
+                      annotationForItem:index];
+}
+
+- (void)mapView:(MKMapView *)mv
+    annotationView:(MKAnnotationView *)av
+    calloutAccessoryControlTapped:(UIControl *)control
+{
+    SCESimpleAnnotation *annotation = (SCESimpleAnnotation *)[av annotation];
+    UIViewController *detailController = [[self delegate] feedView:feedViewContainer
+                                         didSelectAnnotation:annotation];
+    if (detailController) {
+        [detailController setHidesBottomBarWhenPushed:YES];
+        [[self navigationController] pushViewController:detailController animated:YES];
+    }
+
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    // if the annotation is the user location, let the system handle it
+    if ([mv userLocation] == annotation) {
+        return nil;
+    }
+    
+    static NSString *pinIdentifier = @"SCEMapPin";
+    MKPinAnnotationView *pin = (MKPinAnnotationView*)[mv dequeueReusableAnnotationViewWithIdentifier:pinIdentifier];
+    
+    if (!pin) {
+    	pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:pinIdentifier];
+    	[pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+    	[pin setCanShowCallout:YES];
+        [pin setEnabled:YES];
+    }
+    
+    return pin;
+}
 
 @end
