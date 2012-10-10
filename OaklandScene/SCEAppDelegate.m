@@ -39,6 +39,9 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
     [label sizeToFit];
     [launchView addSubview:label];
     
+    // create this now to give a chance for the image to load
+    noticesViewController = [[SCENoticesViewController alloc] init];
+    
     staticLaunchViewController = [[UIViewController alloc] init];
     [staticLaunchViewController setView:launchView];
     self.window.rootViewController = staticLaunchViewController;
@@ -113,9 +116,7 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
 
     }
     
-    // Create the 5 VCs that will live under each tab
-    SCENoticesViewController *noticesVC = [[SCENoticesViewController alloc] init];
-    
+    // Create the 4 feed-based VCs
     UINavigationController* placeVC = [[UINavigationController alloc]
                                        initWithRootViewController:[[SCEPlaceFeedViewController alloc] init]];
     UINavigationController* eventVC = [[UINavigationController alloc]
@@ -127,7 +128,7 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
     
     // Set up the tab bar controller with the 5 sub VCs
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    [tabBarController setViewControllers:@[noticesVC, placeVC, eventVC, specialVC, newsVC]];
+    [tabBarController setViewControllers:@[noticesViewController, placeVC, eventVC, specialVC, newsVC]];
     
     // set the window root controller
     [[self window] setRootViewController:tabBarController];

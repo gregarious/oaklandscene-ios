@@ -47,6 +47,8 @@
 		3765EDD9160A39DF004E9225 /* SCEFeedStaticCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3765EDD8160A39DF004E9225 /* SCEFeedStaticCell.m */; };
 		3765EDDB160A3A07004E9225 /* SCEFeedLoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */; };
 		3765EDDD160A3A25004E9225 /* SCEFeedStaticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */; };
+		37711246162611CF00DFCF28 /* SCENotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 37711245162611CF00DFCF28 /* SCENotice.m */; };
+		3771124A162611DA00DFCF28 /* SCEFeaturedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 37711249162611DA00DFCF28 /* SCEFeaturedImage.m */; };
 		37ADB74E1620E1E100C104B9 /* SCENewsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB74D1620E1E100C104B9 /* SCENewsStore.m */; };
 		37ADB7511621E15D00C104B9 /* SCENewsItemSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB7501621E15C00C104B9 /* SCENewsItemSource.m */; };
 		37ADB7541621E6A800C104B9 /* SCENewsStubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB7531621E6A800C104B9 /* SCENewsStubView.m */; };
@@ -230,6 +232,10 @@
 		3765EDD8160A39DF004E9225 /* SCEFeedStaticCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeedStaticCell.m; sourceTree = "<group>"; };
 		3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedLoadingCell.xib; sourceTree = "<group>"; };
 		3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedStaticCell.xib; sourceTree = "<group>"; };
+		37711244162611CF00DFCF28 /* SCENotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENotice.h; sourceTree = "<group>"; };
+		37711245162611CF00DFCF28 /* SCENotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENotice.m; sourceTree = "<group>"; };
+		37711248162611DA00DFCF28 /* SCEFeaturedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeaturedImage.h; sourceTree = "<group>"; };
+		37711249162611DA00DFCF28 /* SCEFeaturedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeaturedImage.m; sourceTree = "<group>"; };
 		37ADB74C1620E1E100C104B9 /* SCENewsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsStore.h; sourceTree = "<group>"; };
 		37ADB74D1620E1E100C104B9 /* SCENewsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENewsStore.m; sourceTree = "<group>"; };
 		37ADB74F1621E15C00C104B9 /* SCENewsItemSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsItemSource.h; sourceTree = "<group>"; };
@@ -864,6 +870,10 @@
 				4FB7555816233CDA00B768D6 /* SCENoticesViewController.h */,
 				4FB7555916233CDA00B768D6 /* SCENoticesViewController.m */,
 				4FB7555A16233CDA00B768D6 /* SCENoticesViewController.xib */,
+				37711244162611CF00DFCF28 /* SCENotice.h */,
+				37711245162611CF00DFCF28 /* SCENotice.m */,
+				37711248162611DA00DFCF28 /* SCEFeaturedImage.h */,
+				37711249162611DA00DFCF28 /* SCEFeaturedImage.m */,
 			);
 			name = Notices;
 			sourceTree = "<group>";
@@ -1140,6 +1150,8 @@
 				4FB7555B16233CDA00B768D6 /* SCENoticesViewController.m in Sources */,
 				375645EC1623BE45004E8B73 /* SCEMapView.m in Sources */,
 				375645F61624AF67004E8B73 /* SCEPlaceFeedSource.m in Sources */,
+				37711246162611CF00DFCF28 /* SCENotice.m in Sources */,
+				3771124A162611DA00DFCF28 /* SCEFeaturedImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

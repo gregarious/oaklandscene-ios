@@ -12,6 +12,13 @@
 
 @interface SCEUtils : NSObject
 
+typedef enum {
+    SCEResolutionNonRetina = 0,
+    SCEResolutionRetina3_5 = 1,
+    SCEResolutionRetina4 = 2
+} SCEResolution;
+
++ (SCEResolution)screenResolution;
 + (void)logRect:(CGRect)rect withLabel:(NSString *)labelText;
 
 @end

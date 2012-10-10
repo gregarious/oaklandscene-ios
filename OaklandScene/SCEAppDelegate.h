@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCENoticesViewController;
+
 @interface SCEAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 {
     NSArray *contentStores;
     BOOL syncErrorDuringLoad;
     UIViewController *staticLaunchViewController;
+    SCENoticesViewController *noticesViewController;
 }
 
 @property (strong, nonatomic) UIWindow *window;
