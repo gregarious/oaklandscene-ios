@@ -9,10 +9,11 @@
 #import "SCENewsStub.h"
 #import "SCENewsStore.h"
 #import "SCEAPIResponse.h"
+#import "SCEAPIConnection.h"
 
 @implementation SCENewsStore
 
-@synthesize items, lastSynced, categories;
+@synthesize items, lastSynced, categories, syncInProgress;
 
 + (SCENewsStore *)sharedStore
 {
@@ -45,34 +46,49 @@
 
 - (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    // TODO: Reenable API-based fetching.
+    // TODO: error handling for JSON read?
+    syncInProgress = YES;
     
-    // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
-    // TODO: error handling for NSData and/or JSON read?
+    // TODO: add time zone support
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"YYYY-MM-dd"];
     
-    NSString* filename = [[NSBundle mainBundle] pathForResource:@"news-10062012"
-                                                         ofType:@"json"];
+    NSString *urlString = @"http://www.scenable.com/api/v1/news/?format=json&listed=true&limit=0";    
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                         cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                     timeoutInterval:8];
     
-    NSData* fileData = [NSData dataWithContentsOfFile:filename];
-    NSMutableDictionary *d = [NSJSONSerialization JSONObjectWithData:fileData
-                                                             options:0
-                                                               error:nil];
-    SCEAPIResponse *response = [[SCEAPIResponse alloc] init];
-    [response readFromJSONDictionary:d];
+    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
     
-    // Run through the objects in the API response, interpretting them as Events
-    NSMutableArray *newItems = [[NSMutableArray alloc]
-                                   initWithCapacity:[[response objects] count]];
-    for (NSDictionary *d in [response objects]) {
-        SCENewsStub *n = [[SCENewsStub alloc] init];
-        [n readFromJSONDictionary:d];
-        [newItems addObject:n];
-    }
-    [self setItems:newItems];
+    // connection will let this response object interpret the JSON
+    SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
+    [connection setJsonRootObject:rootJSONObj];
     
-    if (block) {
-        block([self items], nil);
-    }
+    // on completed connection, set the internal place cache and call the given
+    // block with the next array of places (or on error, just pass it through)
+    [connection setCompletionBlock:
+     ^void(SCEAPIResponse *response, NSError *err) {
+         NSArray *objectsReturned = nil;
+         if (response) {
+             // Run through the objects in the API response, interpretting them as news items
+             NSMutableArray *newItems = [[NSMutableArray alloc]
+                                            initWithCapacity:[[response objects] count]];
+             for (NSDictionary *d in [response objects]) {
+                 SCENewsStub *s = [[SCENewsStub alloc] init];
+                 [s readFromJSONDictionary:d];
+                 [newItems addObject:s];
+             }
+             [self setItems:newItems];
+             objectsReturned = newItems;
+         }
+         
+         syncInProgress = NO;
+         if (block) {
+             block(objectsReturned, err);
+         }
+     }];
+    
+    [connection start];
 }
 
 // news is not currently searchable, just call return block with error

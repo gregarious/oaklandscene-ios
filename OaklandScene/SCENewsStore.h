@@ -17,5 +17,5 @@
 @property (nonatomic, copy) NSMutableArray* items;
 @property (nonatomic, readonly) NSDate* lastSynced;
 @property (nonatomic, readonly) NSArray* categories;
-
+@property (nonatomic, readonly) BOOL syncInProgress;
 @end

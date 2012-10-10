@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface SCEAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+{
+    NSArray *contentStores;
+    BOOL syncErrorDuringLoad;
+    UIViewController *staticLaunchViewController;
+}
 
 @property (strong, nonatomic) UIWindow *window;
+
+- (void)onContentStoreSync:(NSError *)err;
 
 @end

@@ -14,7 +14,7 @@
 
 @implementation SCESpecialStore
 
-@synthesize items, lastSynced, categories;
+@synthesize items, lastSynced, categories, syncInProgress;
 
 + (SCESpecialStore *)sharedStore
 {
@@ -47,38 +47,57 @@
 
 - (void)syncContentWithCompletion:(void (^)(NSArray *, NSError *))block
 {
-    // TODO: Reenable API-based fetching.
+    // TODO: error handling for JSON read?
+    syncInProgress = YES;
     
-    // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
-    // TODO: error handling for NSData and/or JSON read?
+    // TODO: add time zone support
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"YYYY-MM-dd"];
+    NSString *isoNowString = [fmt stringFromDate:[NSDate date]];
     
-    NSString* filename = [[NSBundle mainBundle] pathForResource:@"specials-10032012"
-                                                         ofType:@"json"];
+    NSString *urlString = [NSString stringWithFormat:@"%@&dexpires__gte=%@",
+                           @"http://www.scenable.com/api/v1/special/?format=json&listed=true&limit=0",
+                           isoNowString];
     
-    NSData* fileData = [NSData dataWithContentsOfFile:filename];
-    NSMutableDictionary *d = [NSJSONSerialization JSONObjectWithData:fileData
-                                                             options:0
-                                                               error:nil];
-    SCEAPIResponse *response = [[SCEAPIResponse alloc] init];
-    [response readFromJSONDictionary:d];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                         cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                     timeoutInterval:8];
     
-    // Run through the objects in the API response, interpretting them as Events
-    NSMutableArray *newSpecials = [[NSMutableArray alloc]
-                                   initWithCapacity:[[response objects] count]];
-    for (NSDictionary *d in [response objects]) {
-        SCESpecial *s = [[SCESpecial alloc] init];
-        [s readFromJSONDictionary:d];
-        [newSpecials addObject:s];
-    }
-    [self setItems:newSpecials];
+    SCEAPIConnection *connection = [[SCEAPIConnection alloc] initWithRequest:req];
     
-    queryResultMap = [[NSMutableDictionary alloc] init];
+    // connection will let this response object interpret the JSON
+    SCEAPIResponse *rootJSONObj = [[SCEAPIResponse alloc] init];
+    [connection setJsonRootObject:rootJSONObj];
     
-    if (block) {
-        block([self items], nil);
-    }
+    // on completed connection, set the internal place cache and call the given
+    // block with the next array of places (or on error, just pass it through)
+    [connection setCompletionBlock:
+     ^void(SCEAPIResponse *response, NSError *err) {
+         NSArray *objectsReturned = nil;
+         if (response) {
+             // Run through the objects in the API response, interpretting them as Specials
+             NSMutableArray *newSpecials = [[NSMutableArray alloc]
+                                          initWithCapacity:[[response objects] count]];
+             for (NSDictionary *d in [response objects]) {
+                 SCESpecial *s = [[SCESpecial alloc] init];
+                 [s readFromJSONDictionary:d];
+                 [newSpecials addObject:s];
+             }
+             [self setItems:newSpecials];
+             objectsReturned = newSpecials;
+             
+             queryResultMap = [[NSMutableDictionary alloc] init];
+         }
+         
+         syncInProgress = NO;
+         if (block) {
+             block(objectsReturned, err);
+         }
+     }];
+    
+    [connection start];
 }
-
+    
 // specials are not currently searchable, just call return block with error
 - (void)findItemsMatchingQuery:(NSString *)query
                       category:(SCECategory *)category

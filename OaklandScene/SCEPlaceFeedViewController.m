@@ -126,7 +126,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear: %d", animated);
 //    if ([CLLocationManager locationServicesEnabled]) {
 //        CLLocationDistance dist = 0;
 //        if ([locationManager location]) {
@@ -163,8 +162,6 @@
 {
     [feedSource setAnchorCoordinate:coord];
     [feedSource sortItems];
-    
-    NSLog(@"Refreshed with center (%f, %f)", coord.latitude, coord.longitude);
 }
 
 -(void)refreshResultsBarLabel

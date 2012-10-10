@@ -97,13 +97,13 @@ typedef NSUInteger SCEFeedCellType;
             SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
                                                                     owner:self
                                                                   options:nil][0];
-
-            // on error, alert the user via an alert, and fill the table with a "no places" message
-            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                        message:[err localizedDescription]
-                                       delegate:nil
-                              cancelButtonTitle:@"Ok"
-                              otherButtonTitles:nil] show];
+// TODO: this alert is too noisy on initial load, but might be good for syncs after it
+//            // on error, alert the user via an alert, and fill the table with a "no places" message
+//            [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+//                                        message:[err localizedDescription]
+//                                       delegate:nil
+//                              cancelButtonTitle:@"Ok"
+//                              otherButtonTitles:nil] show];
             [[cell textLabel] setText:@"No results found"];
             statusCell = cell;
         }
