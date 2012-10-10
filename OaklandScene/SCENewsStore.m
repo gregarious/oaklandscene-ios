@@ -32,7 +32,6 @@
 - (void)setItems:(NSMutableArray *)newsItems
 {
     items = [[NSMutableArray alloc] initWithArray:newsItems];
-    lastSynced = [NSDate date];
     
     // reset dictionary
     idNewsStubMap = [[NSMutableDictionary alloc] init];
@@ -79,6 +78,8 @@
                  [newItems addObject:s];
              }
              [self setItems:newItems];
+             lastSynced = [NSDate date];
+             
              objectsReturned = newItems;
          }
          

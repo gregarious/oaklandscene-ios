@@ -58,7 +58,6 @@
 - (void)setItems:(NSMutableArray *)places
 {
     items = [[NSMutableArray alloc] initWithArray:places];
-    lastSynced = [NSDate date];
     
     // reset dictionary and set categories
     idPlaceMap = [[NSMutableDictionary alloc] init];
@@ -111,6 +110,7 @@
         [newPlaces addObject:p];
     }
     [self setItems:newPlaces];
+    lastSynced = [NSDate date];
     
     queryResultMap = [[NSMutableDictionary alloc] init];
 

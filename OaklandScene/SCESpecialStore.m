@@ -33,7 +33,6 @@
 - (void)setItems:(NSMutableArray *)specials
 {
     items = [[NSMutableArray alloc] initWithArray:specials];
-    lastSynced = [NSDate date];
     
     // reset dictionary
     idSpecialMap = [[NSMutableDictionary alloc] init];
@@ -84,6 +83,7 @@
                  [newSpecials addObject:s];
              }
              [self setItems:newSpecials];
+             lastSynced = [NSDate date];
              objectsReturned = newSpecials;
              
              queryResultMap = [[NSMutableDictionary alloc] init];
