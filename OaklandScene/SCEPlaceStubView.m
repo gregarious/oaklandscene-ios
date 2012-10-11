@@ -35,11 +35,11 @@
 }
 */
 
-- (IBAction)placePageButton:(id)sender {
-    NSLog(@"place button pressed");
+- (IBAction)placePageButtonTapped:(id)sender {
+    [[self delegate] placePageButtonTapped];
 }
 
-- (IBAction)directionsButton:(id)sender {
-    NSLog(@"directions button pressed");
+- (IBAction)directionsButtonTapped:(id)sender {
+    [[self delegate] directionsButtonTapped];
 }
 @end

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SCEEventViewController.h"
 #import "SCEPlace.h"
+#import "SCEPlaceStore.h"
 #import "SCEPlaceStubView.h"
+#import "SCEPlaceViewController.h"
 #import "SCEEvent.h"
 #import "SCEEventDetailHeadView.h"
 #import "SCEEventDetailView.h"
@@ -130,6 +132,15 @@
                                                  options:nil] objectAtIndex:0];
         [[placeStub nameLabel] setText:[place name]];
         [[placeStub addressLabel] setText:[place streetAddress]];
+        [placeStub setDelegate:self];
+        
+        if (![[[SCEPlaceStore sharedStore] items] containsObject:place]) {
+            [[placeStub placePageButton] setEnabled:NO];
+        }
+        
+        if (![place daddr]) {
+            [[placeStub placePageButton] setEnabled:NO];
+        }
     }
     else {
         placeStub = [[[NSBundle mainBundle] loadNibNamed:@"SCEPlaceStubView"
@@ -140,11 +151,15 @@
     [detailView setPlaceStubView:placeStub];
 
     // NIB index 1 is the longer version of the website button
-    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
-                                                          owner:self
-                                                        options:nil] objectAtIndex:1];
-    [detailView setLeftConnectButton:websiteBtn];
-
+    if ([[self event] url]) {
+        UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
+                                                              owner:self
+                                                            options:nil] objectAtIndex:1];
+        [detailView setLeftConnectButton:websiteBtn];
+        [websiteBtn addTarget:self
+                       action:@selector(buttonPress:)
+             forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [scrollView addSubview:detailView];
 
@@ -180,5 +195,38 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)placePageButtonTapped
+{
+    NSString *placeId = [[[self event] place] resourceId];
+    if (placeId) {
+        SCEPlace *place = [[SCEPlaceStore sharedStore] itemFromResourceId:placeId];
+        if (place) {
+            SCEPlaceViewController *vc = [[SCEPlaceViewController alloc] initWithPlace:place];
+            [[self navigationController] pushViewController:vc animated:YES];
+        }
+        else {
+            // TODO: alert place page coudn't be found?
+        }
+    }
+}
+
+- (void)directionsButtonTapped
+{
+    // TODO: if directions is the target and iOS <6, open in a webview
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", [[[self event] place] daddr]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];    
+}
+
+- (void)buttonPress:(id)sender
+{
+    // TODO: open in a webview and add http:// if necessary
+    
+    // only handles website button. others handled by PlaceStubDelegate methods
+    NSURL *url = [NSURL URLWithString:[[self event] url]];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
 
 @end

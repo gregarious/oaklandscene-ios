@@ -186,6 +186,7 @@
 		3720BDE5162645790012EF76 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		3720BDEC1626663A0012EF76 /* SCECategoryPickerDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCECategoryPickerDialog.h; sourceTree = "<group>"; };
 		3720BDED1626663A0012EF76 /* SCECategoryPickerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCECategoryPickerDialog.m; sourceTree = "<group>"; };
+		3720BDEF16269AB20012EF76 /* SCEPlaceStubDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCEPlaceStubDelegate.h; sourceTree = "<group>"; };
 		3747AC5E15FA74840053BC32 /* SCESpecial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCESpecial.h; sourceTree = "<group>"; };
 		3747AC5F15FA74840053BC32 /* SCESpecial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCESpecial.m; sourceTree = "<group>"; };
 		3747AC6215FA76BB0053BC32 /* SCENewsStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsStub.h; sourceTree = "<group>"; };
@@ -808,6 +809,7 @@
 				37EB7A16161B740D00E56154 /* SCEFeedItemSource.h */,
 				37ED1DCB16079928009CA46D /* SCECategoryPickerDelegate.h */,
 				375645EF1623C0E7004E8B73 /* SCEMapViewDataSource.h */,
+				3720BDEF16269AB20012EF76 /* SCEPlaceStubDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

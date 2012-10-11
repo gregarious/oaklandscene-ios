@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCEPlaceStubDelegate.h"
 
 @interface SCEPlaceStubView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UIButton *placePageButton;
+@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 
-- (IBAction)placePageButton:(id)sender;
-- (IBAction)directionsButton:(id)sender;
+@property (strong, nonatomic) id<SCEPlaceStubDelegate> delegate;
+
+- (IBAction)placePageButtonTapped:(id)sender;
+- (IBAction)directionsButtonTapped:(id)sender;
 
 
 @end
