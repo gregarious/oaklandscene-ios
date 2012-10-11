@@ -221,7 +221,9 @@
         urlString = [NSString stringWithFormat:@"tel://%@",[[self place] phone]];
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagDirections) {
-        urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", [[self place] daddr]];
+        NSString *daddr = [[[self place] daddr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", daddr];
+        NSLog(@"%@", urlString);
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagFacebook) {
         urlString = [NSString stringWithFormat:@"http://www.facebook.com/%@", [[self place] facebookId]];

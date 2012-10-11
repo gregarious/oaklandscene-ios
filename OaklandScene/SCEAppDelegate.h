@@ -15,6 +15,8 @@
     NSArray *contentStores;
     BOOL syncErrorDuringLoad;
     UIViewController *staticLaunchViewController;
+    UITabBarController *tabBarController;
+    
     SCENoticesViewController *noticesViewController;
 }
 

@@ -67,6 +67,8 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    self.window.rootViewController = staticLaunchViewController;
+
     // Initialize the stores
     contentStores = @[[SCEPlaceStore sharedStore],
                         [SCEEventStore sharedStore],
@@ -112,20 +114,23 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
                           otherButtonTitles:nil] show];
 
     }
-    
-    // Create the 4 feed-based VCs
-    UINavigationController* placeVC = [[UINavigationController alloc]
-                                       initWithRootViewController:[[SCEPlaceFeedViewController alloc] init]];
-    UINavigationController* eventVC = [[UINavigationController alloc]
-                                       initWithRootViewController:[[SCEEventFeedViewController alloc] init]];
-    UINavigationController* specialVC = [[UINavigationController alloc]
-                                         initWithRootViewController:[[SCESpecialFeedViewController alloc] init]];
-    UINavigationController* newsVC = [[UINavigationController alloc]
-                                      initWithRootViewController:[[SCENewsFeedViewController alloc] init]];
-    
-    // Set up the tab bar controller with the 5 sub VCs
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    [tabBarController setViewControllers:@[noticesViewController, placeVC, eventVC, specialVC, newsVC]];
+
+    // only create a new tab bar if it's the first load
+    if (!tabBarController) {
+        // Create the 4 feed-based VCs
+        UINavigationController* placeVC = [[UINavigationController alloc]
+                                           initWithRootViewController:[[SCEPlaceFeedViewController alloc] init]];
+        UINavigationController* eventVC = [[UINavigationController alloc]
+                                           initWithRootViewController:[[SCEEventFeedViewController alloc] init]];
+        UINavigationController* specialVC = [[UINavigationController alloc]
+                                             initWithRootViewController:[[SCESpecialFeedViewController alloc] init]];
+        UINavigationController* newsVC = [[UINavigationController alloc]
+                                          initWithRootViewController:[[SCENewsFeedViewController alloc] init]];
+        
+        // Set up the tab bar controller with the 5 sub VCs
+        tabBarController = [[UITabBarController alloc] init];
+        [tabBarController setViewControllers:@[noticesViewController, placeVC, eventVC, specialVC, newsVC]];
+    }
     
     // set the window root controller
     [[self window] setRootViewController:tabBarController];

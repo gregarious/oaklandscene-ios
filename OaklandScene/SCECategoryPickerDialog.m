@@ -17,6 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         toolbar = [[UIToolbar alloc] init];
+        [toolbar setTintColor:[UIColor lightGrayColor]];
         [toolbar sizeToFit];
         [self addSubview:toolbar];
         

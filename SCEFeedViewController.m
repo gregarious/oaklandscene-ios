@@ -205,6 +205,7 @@
     done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                          target:self
                                                          action:@selector(donePickingCategory:)];
+//    [done setTintColor:[UIColor blueColor]];
     [[categoryPickerDialog toolbar] setItems:@[done]];
     [[self view] addSubview:categoryPickerDialog];
     
