@@ -66,11 +66,10 @@
     
     // place info (not optional)
     if ([self placeStubView]) {
-        [[self placeStubView] setFrame:CGRectMake(24, rasterY, 272, 0)];
-        rasterY += 100 + 20;
-        // TODO: find dynamic height
-        //    [[self placeStubView] sizeToFit];
-        //    rasterY += [[self placeStubView] frame].size.height + 20;
+        CGRect stubFrame = [[self placeStubView] frame];
+        stubFrame.origin = CGPointMake(24, rasterY);
+        [[self placeStubView] setFrame:stubFrame];
+        rasterY += [[self placeStubView] frame].size.height + 10;
     }
     
     if ([self leftConnectButton] || [self rightConnectButton]) {
