@@ -21,6 +21,7 @@
 #import "SCEEventStore.h"
 #import "SCESpecialStore.h"
 #import "SCENewsStore.h"
+#import "SCESplashView.h"
 
 // amount of time before stores should be synced from server (24 hrs)
 NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
@@ -32,18 +33,14 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    // TODO: debug
-    UIView *launchView = [[UIView alloc] initWithFrame:[[self window] bounds]];
-    UILabel *label = [[UILabel alloc] init];
-    [label setText:@"Loading"];
-    [label sizeToFit];
-    [launchView addSubview:label];
+    SCESplashView *loadingView = [[SCESplashView alloc] initWithFrame:[[self window] bounds]];
     
     // create this now to give a chance for the image to load
     noticesViewController = [[SCENoticesViewController alloc] init];
     
     staticLaunchViewController = [[UIViewController alloc] init];
-    [staticLaunchViewController setView:launchView];
+    [staticLaunchViewController setWantsFullScreenLayout:YES];
+    [staticLaunchViewController setView:loadingView];
     self.window.rootViewController = staticLaunchViewController;
     [self.window makeKeyAndVisible];
     
