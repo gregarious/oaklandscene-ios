@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+#import "SCEPlaceStubDelegate.h"
+
 @class SCESpecial;
 
-@interface SCESpecialViewController : UIViewController
+@interface SCESpecialViewController : UIViewController <SCEPlaceStubDelegate>
 
 @property (nonatomic, strong) SCESpecial *special;
 

@@ -13,5 +13,6 @@
 @property (nonatomic, strong) SCENewsStub *newsStub;
 
 - (id)initWithNewsStub:(SCENewsStub *)s;
+- (void)buttonPress:(id)sender;
 
 @end

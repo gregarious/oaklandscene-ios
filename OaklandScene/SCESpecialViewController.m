@@ -16,6 +16,8 @@
 #import "SCESpecialRedeemPrompt.h"
 #import "SCEPlace.h"
 #import "SCEPlaceStubView.h"
+#import "SCEPlaceViewController.h"
+#import "SCEPlaceStore.h"
 
 @implementation SCESpecialViewController
 
@@ -72,6 +74,16 @@
     [[placeStub nameLabel] setText:[[[self special] place] name]];
     [[placeStub addressLabel] setText:[[[self special] place] streetAddress]];
     [detailView setPlaceStubView:placeStub];
+    
+    [placeStub setDelegate:self];
+    
+    if (![[[SCEPlaceStore sharedStore] items] containsObject:[[self special] place]]) {
+        [[placeStub placePageButton] setEnabled:NO];
+    }
+    
+    if (![[[self special] place] daddr]) {
+        [[placeStub placePageButton] setEnabled:NO];
+    }
     
     // TODO: hook up button actions
     
@@ -132,5 +144,29 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)placePageButtonTapped
+{
+    NSString *placeId = [[[self special] place] resourceId];
+    if (placeId) {
+        SCEPlace *place = [[SCEPlaceStore sharedStore] itemFromResourceId:placeId];
+        if (place) {
+            SCEPlaceViewController *vc = [[SCEPlaceViewController alloc] initWithPlace:place];
+            [[self navigationController] pushViewController:vc animated:YES];
+        }
+        else {
+            // TODO: alert place page coudn't be found?
+        }
+    }
+}
+
+- (void)directionsButtonTapped
+{
+    // TODO: if directions is the target and iOS <6, open in a webview
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", [[[self special] place] daddr]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+}
+
 
 @end

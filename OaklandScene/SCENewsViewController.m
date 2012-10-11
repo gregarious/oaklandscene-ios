@@ -38,7 +38,10 @@
                                        dateStyle:NSDateFormatterLongStyle
                                        timeStyle:NSDateFormatterNoStyle]];
 
-    // TODO: hook up safari link
+    // hook up button to open link
+    [[detailView openSourceButton] addTarget:self
+                                      action:@selector(buttonPress:)
+                            forControlEvents:UIControlEventTouchUpInside];
     
     [[detailView sourceNameLabel] setText:[[self newsStub] source]];
     [[detailView blurbLabel] setText:[[self newsStub] blurb]];
@@ -69,6 +72,15 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)buttonPress:(id)sender
+{
+    // TODO: open in a webview and add http:// if necessary
+    
+    // only handles website button
+    NSURL *url = [NSURL URLWithString:[[self newsStub] url]];
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 @end

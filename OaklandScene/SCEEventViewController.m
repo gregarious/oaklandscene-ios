@@ -132,6 +132,7 @@
                                                  options:nil] objectAtIndex:0];
         [[placeStub nameLabel] setText:[place name]];
         [[placeStub addressLabel] setText:[place streetAddress]];
+
         [placeStub setDelegate:self];
         
         if (![[[SCEPlaceStore sharedStore] items] containsObject:place]) {
