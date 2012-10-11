@@ -76,12 +76,15 @@
                           minLng = 180;
 
         for (id<MKAnnotation> ann in [self annotations]) {
-            CLLocationDegrees lat = [ann coordinate].latitude;
-            CLLocationDegrees lng = [ann coordinate].longitude;
-            maxLat = MAX(maxLat, lat);
-            minLat = MIN(minLat, lat);
-            maxLng = MAX(maxLng, lng);
-            minLng = MIN(minLng, lng);
+            // ignore the user location annotation from calculation
+            if(![ann isKindOfClass:[MKUserLocation class]]) {
+                CLLocationDegrees lat = [ann coordinate].latitude;
+                CLLocationDegrees lng = [ann coordinate].longitude;
+                maxLat = MAX(maxLat, lat);
+                minLat = MIN(minLat, lat);
+                maxLng = MAX(maxLng, lng);
+                minLng = MIN(minLng, lng);
+            }
         }
         region.center = CLLocationCoordinate2DMake(minLat+(maxLat-minLat)/2.0,
                                                    minLng+(maxLng-minLng)/2.0);
