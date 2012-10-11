@@ -95,31 +95,96 @@
     [aboutView setAboutText:[[self place] description]];
     [detailView setAboutView:aboutView];
 
+    
+    SCEPlace *p = [self place];
     // action buttons
-    UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
-                                                      owner:self
-                                                    options:nil] objectAtIndex:0];
-    [detailView setLeftActionButton:dirBtn];
+    UIButton *dirBtn, *callBtn;
+    if ([p location].latitude != 0 && [p location].longitude != 0) {
+        dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
+                                                owner:self
+                                              options:nil] objectAtIndex:0];
+        [dirBtn setTag:SCEPlaceDetailButtonTagDirections];
+        [dirBtn addTarget:self
+                   action:@selector(buttonPress:)
+         forControlEvents:UIControlEventTouchUpInside];
+    }
     
-    UIButton *callBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCECallButton"
-                                                      owner:self
-                                                    options:nil] objectAtIndex:0];
-    [detailView setRightActionButton:callBtn];
-
-    UIButton *facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectFacebookButton"
-                                                           owner:self
-                                                         options:nil] objectAtIndex:0];
-    [detailView setLeftConnectButton:facebookBtn];
+    if ([p phone] && [[p phone] length] >= 7) {
+        callBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCECallButton"
+                                                 owner:self
+                                               options:nil] objectAtIndex:0];
+        [callBtn setTag:SCEPlaceDetailButtonTagCall];
+        [callBtn addTarget:self
+                   action:@selector(buttonPress:)
+         forControlEvents:UIControlEventTouchUpInside];
+    }
     
-    UIButton *twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectTwitterButton"
-                                                           owner:self
-                                                         options:nil] objectAtIndex:0];
-    [detailView setMiddleConnectButton:twitterBtn];
+    // TODO: set up the button setting like an array, like UIToolbar
+    if (dirBtn) {
+        [detailView setLeftActionButton:dirBtn];
+        if (callBtn) {
+            [detailView setRightActionButton:callBtn];
+        }
+    }
+    else if (callBtn) {
+        [detailView setLeftActionButton:callBtn];
+    }
+    
 
-    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
-                                                          owner:self
-                                                        options:nil] objectAtIndex:0];
-    [detailView setRightConnectButton:websiteBtn];
+    UIButton *facebookBtn, *twitterBtn, *websiteBtn;
+    
+    if ([p facebookId] && [[p facebookId] length] > 0) {
+        facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectFacebookButton"
+                                                     owner:self
+                                                   options:nil] objectAtIndex:0];
+        [facebookBtn setTag:SCEPlaceDetailButtonTagFacebook];
+        [facebookBtn addTarget:self
+                        action:@selector(buttonPress:)
+              forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if ([p twitterUsername] && [[p twitterUsername] length] > 0) {
+        twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectTwitterButton"
+                                                    owner:self
+                                                  options:nil] objectAtIndex:0];
+        [twitterBtn setTag:SCEPlaceDetailButtonTagTwitter];
+        [twitterBtn addTarget:self
+                        action:@selector(buttonPress:)
+              forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if ([p url] && [[p url] length] > 0) {
+        websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
+                                                    owner:self
+                                                  options:nil] objectAtIndex:0];
+        [websiteBtn setTag:SCEPlaceDetailButtonTagWebsite];
+        [websiteBtn addTarget:self
+                       action:@selector(buttonPress:)
+             forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    // TODO: Bwahahaha. Set up the button setting like an array, like UIToolbar
+    if (facebookBtn) {
+        [detailView setLeftConnectButton:facebookBtn];
+        if (twitterBtn) {
+            [detailView setMiddleConnectButton:twitterBtn];
+            if (websiteBtn) {
+                [detailView setRightConnectButton:websiteBtn];
+            }
+        }
+        else if (websiteBtn) {
+            [detailView setMiddleConnectButton:websiteBtn];
+        }
+    }
+    else if (twitterBtn) {
+        [detailView setLeftConnectButton:twitterBtn];
+        if (websiteBtn) {
+            [detailView setMiddleConnectButton:websiteBtn];
+        }
+    }
+    else if (websiteBtn) {
+        [detailView setLeftConnectButton:websiteBtn];
+    }
 
     [scrollView addSubview:detailView];
 
@@ -142,4 +207,39 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
+
+- (void)buttonPress:(id)sender
+{
+    // TODO:
+    // if facebook/twitter/website is the target, open in a webview
+    // if directions is the target and iOS <6, open in a webview
+    // need to trim parenthesis out of phone numbers
+    
+    NSString *protocol, *address;
+    if ([sender tag] == SCEPlaceDetailButtonTagCall) {
+        protocol = @"tel";
+        address = [[self place] phone];
+    }
+    else if ([sender tag] == SCEPlaceDetailButtonTagDirections) {
+        protocol = @"http";
+        address = [NSString stringWithFormat:@"maps.apple.com/maps?daddr=%@", @"San+Francisco"];
+    }
+    else if ([sender tag] == SCEPlaceDetailButtonTagFacebook) {
+        protocol = @"http";
+        address = [NSString stringWithFormat:@"www.facebook.com/%@", [[self place] facebookId]];
+    }
+    else if ([sender tag] == SCEPlaceDetailButtonTagTwitter) {
+        protocol = @"http";
+        address = [NSString stringWithFormat:@"www.twitter.com/%@", [[self place] twitterUsername]];
+    }
+    else if ([sender tag] == SCEPlaceDetailButtonTagWebsite) {
+        protocol = @"http";
+        address = [[self place] url];
+    }
+    
+    NSURL *appUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@",
+                                          protocol, address]];
+    [[UIApplication sharedApplication] openURL:appUrl];
+}
+
 @end
