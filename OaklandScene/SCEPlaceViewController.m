@@ -99,7 +99,7 @@
     SCEPlace *p = [self place];
     // action buttons
     UIButton *dirBtn, *callBtn;
-    if ([p location].latitude != 0 && [p location].longitude != 0) {
+    if ([p daddr]) {
         dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
                                                 owner:self
                                               options:nil] objectAtIndex:0];
@@ -214,32 +214,27 @@
     // if facebook/twitter/website is the target, open in a webview
     // if directions is the target and iOS <6, open in a webview
     // need to trim parenthesis out of phone numbers
+    // if website doesn't have http, need to add it
     
-    NSString *protocol, *address;
+    NSString *urlString;
     if ([sender tag] == SCEPlaceDetailButtonTagCall) {
-        protocol = @"tel";
-        address = [[self place] phone];
+        urlString = [NSString stringWithFormat:@"tel://%@",[[self place] phone]];
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagDirections) {
-        protocol = @"http";
-        address = [NSString stringWithFormat:@"maps.apple.com/maps?daddr=%@", @"San+Francisco"];
+        urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", [[self place] daddr]];
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagFacebook) {
-        protocol = @"http";
-        address = [NSString stringWithFormat:@"www.facebook.com/%@", [[self place] facebookId]];
+        urlString = [NSString stringWithFormat:@"http://www.facebook.com/%@", [[self place] facebookId]];
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagTwitter) {
-        protocol = @"http";
-        address = [NSString stringWithFormat:@"www.twitter.com/%@", [[self place] twitterUsername]];
+        urlString = [NSString stringWithFormat:@"http://www.twitter.com/%@", [[self place] twitterUsername]];
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagWebsite) {
-        protocol = @"http";
-        address = [[self place] url];
+        urlString = [[self place] url];
+
     }
     
-    NSURL *appUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@",
-                                          protocol, address]];
-    [[UIApplication sharedApplication] openURL:appUrl];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
 
 @end

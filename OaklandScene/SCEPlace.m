@@ -103,4 +103,23 @@
     }
 }
 
+- (NSString *)daddr
+{
+    NSString *daddr = nil;
+    if ([self streetAddress]) {
+        if ([self postalCode]) {
+            daddr = [NSString stringWithFormat:@"%@, %@",
+                     [self streetAddress], [self postalCode]];
+        }
+        else {
+            daddr = [self streetAddress];
+        }
+    }
+    else if ([self location].latitude != 0 && [self location].longitude != 0) {
+        daddr = [NSString stringWithFormat:@"(%f,%f)",
+                 [self location].latitude, [self location].longitude];
+    }
+    return daddr;
+}
+
 @end

@@ -57,6 +57,7 @@
 @property (nonatomic, strong) NSArray *events;
 @property (nonatomic, strong) NSArray *specials;
 
-
+// returns the destination address to use in a maps url
+- (NSString *)daddr;
 
 @end

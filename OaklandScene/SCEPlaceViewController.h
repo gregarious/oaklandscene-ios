@@ -21,7 +21,6 @@ typedef enum {
 } SCEPlaceDetailButtonTag;
 
 - (id)initWithPlace:(SCEPlace *)p;
-
 - (void)buttonPress:(id)sender;
 
 @end
