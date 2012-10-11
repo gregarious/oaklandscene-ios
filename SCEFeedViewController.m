@@ -8,10 +8,10 @@
 
 #import <MapKit/MapKit.h>
 #import "SCEFeedViewController.h"
-#import "SCECategoryPickerDialogController.h"
 #import "SCEFeedView.h"
 #import "SCEMapView.h"
 #import "SCEResultsInfoBar.h"
+#import "SCECategoryPickerDialog.h"
 
 @interface SCEFeedViewController ()
 
@@ -59,7 +59,7 @@
     if ([self showResultsBar]) {
         resultsInfoBar = [[SCEResultsInfoBar alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 44)];
         [[resultsInfoBar categoryButton] setTarget:self];
-        [[resultsInfoBar categoryButton] setAction:@selector(displayFilterDialog:)];
+        [[resultsInfoBar categoryButton] setAction:@selector(displayPickerDialog:)];
         
         NSString *catLabel = [[self dataSource] feedView:feedViewContainer
                                         labelForCategory:[self getActiveCategoryIndex]];
@@ -186,15 +186,32 @@
     [[self navigationItem] setRightBarButtonItem:btn];
 }
 
-- (void)displayFilterDialog:(id)sender
+- (void)displayPickerDialog:(id)sender
 {
-    SCECategoryPickerDialogController *dialog = [[SCECategoryPickerDialogController alloc] init];
+    [self enableContentMask:SCEContentMaskSourcePicker];
     
-    [self presentModalViewController:dialog animated:YES];
-    [dialog setDelegate:self];
+    [categoryPickerDialog removeFromSuperview];
+    categoryPickerDialog = [[SCECategoryPickerDialog alloc] initWithFrame:[[self view] bounds]];
     
-    [[dialog categoryPicker] selectRow:[self getActiveCategoryIndex]
-                           inComponent:0 animated:NO];
+    UIPickerView *picker = [categoryPickerDialog picker];
+    [picker setShowsSelectionIndicator:YES];
+    [picker setDelegate:self];
+    [picker setDataSource:self];
+    [picker selectRow:[self getActiveCategoryIndex]
+          inComponent:0
+             animated:NO];
+
+    UIBarButtonItem *done;
+    done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                         target:self
+                                                         action:@selector(donePickingCategory:)];
+    [[categoryPickerDialog toolbar] setItems:@[done]];
+    [[self view] addSubview:categoryPickerDialog];
+    
+    [categoryPickerDialog sizeToFit];
+    
+    // disable the search bar
+    [[[self navigationItem] rightBarButtonItem] setEnabled:NO];
 }
 
 - (void)toggleViewMode:(id)sender
@@ -222,13 +239,12 @@
 }
 
 
-/**** UISearchBarDelegate & related methods ****/
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+- (void)enableContentMask:(NSInteger)viewTag
 {
     // set a mask view up to disable content interaction
     [contentMaskView removeFromSuperview];  // just in case it's already there
     contentMaskView = [[UIControl alloc] initWithFrame:[contentView frame]];
+    [contentMaskView setTag:viewTag];
     [contentMaskView setBackgroundColor:[UIColor blackColor]];
     [contentMaskView setAlpha:0.67];
     [[self view] insertSubview:contentMaskView aboveSubview:contentView];
@@ -238,6 +254,21 @@
     [contentMaskView addTarget:self
                         action:@selector(contentMaskTapped:)
               forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)disableContentMask
+{
+    [contentMaskView removeFromSuperview];
+    contentMaskView = nil;
+    [contentView setUserInteractionEnabled:YES];
+}
+
+/**** UISearchBarDelegate & related methods ****/
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [self enableContentMask:SCEContentMaskSourceSearch];
+    [[resultsInfoBar categoryButton] setEnabled:NO];
 }
 
 // on search submission, disalbe focus and update feed source
@@ -287,26 +318,44 @@
 // special action method to exit search bar focus via content mask tapping
 - (void)contentMaskTapped:(id)sender
 {
-    [self disableSearchFocus];
-    [searchBar setText:@""];
+    // TODO: fix tiny bug: the picker view goes to the right of the window,
+    //       so mask tap doesn't register to the right of it
+    if ([sender tag] == SCEContentMaskSourcePicker) {
+        [self disablePickerFocus];
+    }
+    else {
+        [self disableSearchFocus];
+        [searchBar setText:@""];
+    }
 }
 
 // internal method to handle the cleanup involved with giving up search focus
 - (void)disableSearchFocus
 {
     [searchBar resignFirstResponder];
-    [contentMaskView removeFromSuperview];
-    contentMaskView = nil;
-    [contentView setUserInteractionEnabled:YES];
+    [self disableContentMask];
+    [[resultsInfoBar categoryButton] setEnabled:YES];
 }
 
-/**** SCECategoryPickerDelegate methods ****/
-- (void)searchDialog:(SCECategoryPickerDialogController *)dialog
-didSubmitSearchWithCategoryRow:(NSInteger)categoryRow
+/**** UIPickerDelegate/DataSource & related methods ****/
+- (void)disablePickerFocus
 {
+    [categoryPickerDialog closeAnimationWithBlock:^(BOOL finished) {
+        [categoryPickerDialog removeFromSuperview];
+        categoryPickerDialog = nil;
+        [self disableContentMask];
+        // renable the search button -- needed to disable it since mask didn't cover it
+        [[[self navigationItem] rightBarButtonItem] setEnabled:YES];        
+    }];
+}
+
+- (void)donePickingCategory:(id)sender
+{
+    NSInteger categoryRow = [[categoryPickerDialog picker] selectedRowInComponent:0];
+    [self disablePickerFocus];
+
     [[self delegate] feedView:feedViewContainer
        didChooseCategoryIndex:categoryRow];
-    [self dismissModalViewControllerAnimated:YES];
 
     NSString *catLabel = [[self dataSource] feedView:feedViewContainer
                                     labelForCategory:categoryRow];

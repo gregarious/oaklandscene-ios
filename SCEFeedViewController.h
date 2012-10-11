@@ -13,14 +13,15 @@
 #import "SCEFeedViewDelegate.h"
 #import "SCEMapViewDataSource.h"
 
-@class SCEFeedView, SCEMapView, SCEResultsInfoBar;
+@class SCEFeedView, SCEMapView, SCEResultsInfoBar, SCECategoryPickerDialog;
 
 @interface SCEFeedViewController : UIViewController <UISearchBarDelegate,
                                                         UITableViewDataSource,
                                                         UITableViewDelegate,
                                                         SCEMapViewDataSource,
                                                         MKMapViewDelegate,
-                                                        SCECategoryPickerDelegate>
+                                                        UIPickerViewDataSource,
+                                                        UIPickerViewDelegate>
 {
     // subviews
     UISearchBar *searchBar;
@@ -33,12 +34,21 @@
     UITableView *tableView;
     SCEMapView *mapView;    // TODO: will probably subview once map mode development happens
 
+    SCECategoryPickerDialog *categoryPickerDialog;
+    
     // semi-transparent tappable layer to disable user input when search bar is first responder
     UIControl *contentMaskView;
     
     @protected
     SCEResultsInfoBar *resultsInfoBar;
 }
+
+enum {
+    SCEContentMaskSourcePicker = 2330,
+    SCEContentMaskSourceSearch = 2331
+};
+typedef NSUInteger SCEContentMaskSource;
+
 
 enum {
     SCEFeedViewModeTable = 0,
@@ -66,9 +76,13 @@ typedef NSUInteger SCEFeedViewMode;
 
 // responders to search related events
 - (void)enableSearchBar:(id)sender;
-- (void)displayFilterDialog:(id)sender;
+- (void)displayPickerDialog:(id)sender;
 
 - (void)disableInterface;
 - (void)enableInterface;
+
+- (void)disableContentMask;
+- (void)enableContentMask:(NSInteger)viewTag;
+
 
 @end
