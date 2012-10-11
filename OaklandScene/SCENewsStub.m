@@ -25,7 +25,7 @@
     // set publicate date
     // TODO: error handling?
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"YYYY-MM-dd"];
+    [fmt setDateFormat:@"yyyy-MM-dd"];
     [self setPublicationDate:[fmt dateFromString:[d objectForKey:@"publication_date"]]];
 }
 

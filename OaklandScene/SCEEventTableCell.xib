@@ -73,7 +73,7 @@
 							<object class="IBUILabel" id="1071314408">
 								<reference key="NSNextResponder" ref="972750395"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{80, 0}, {239, 27}}</string>
+								<string key="NSFrame">{{80, 2}, {239, 27}}</string>
 								<reference key="NSSuperview" ref="972750395"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="310765196"/>
@@ -83,8 +83,8 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText"/>
-								<object class="NSColor" key="IBUITextColor" id="887717503">
+								<string key="IBUIText">BASDOASDAS</string>
+								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
@@ -105,7 +105,7 @@
 							<object class="IBUILabel" id="310765196">
 								<reference key="NSNextResponder" ref="972750395"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{80, 18}, {225, 26}}</string>
+								<string key="NSFrame">{{80, 22}, {225, 26}}</string>
 								<reference key="NSSuperview" ref="972750395"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="744066991"/>
@@ -115,8 +115,8 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText"/>
-								<reference key="IBUITextColor" ref="887717503"/>
+								<string key="IBUIText">October 12, 2012</string>
+								<nil key="IBUITextColor"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
@@ -133,7 +133,7 @@
 							<object class="IBUILabel" id="744066991">
 								<reference key="NSNextResponder" ref="972750395"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{80, 35}, {225, 26}}</string>
+								<string key="NSFrame">{{80, 40}, {225, 26}}</string>
 								<reference key="NSSuperview" ref="972750395"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -142,9 +142,12 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText"/>
-								<reference key="IBUITextColor" ref="887717503"/>
-								<nil key="IBUIHighlightedColor"/>
+								<string key="IBUIText">at Cathedrals of lEa</string>
+								<object class="NSColor" key="IBUITextColor" id="160501762">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+								</object>
+								<reference key="IBUIHighlightedColor" ref="160501762"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">

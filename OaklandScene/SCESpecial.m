@@ -40,7 +40,7 @@ static NSMutableArray *generatedPlaces = nil;
     // process dates
     // TODO: error handling
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"YYYY-MM-dd"];
+    [fmt setDateFormat:@"yyyy-MM-dd"];
     
     id data = [d objectForKey:@"dstart"];
     if (data != [NSNull null]) {

@@ -92,10 +92,11 @@
     }
      
     // about subview
-    SCEAboutView* aboutView = [[SCEAboutView alloc] init];
-    [aboutView setAboutText:[[self place] description]];
-    [detailView setAboutView:aboutView];
-
+    if ([[self place] description] && [[[self place] description] length] > 0) {
+        SCEAboutView* aboutView = [[SCEAboutView alloc] init];
+        [aboutView setAboutText:[[self place] description]];
+        [detailView setAboutView:aboutView];
+    }
     
     SCEPlace *p = [self place];
     // action buttons
