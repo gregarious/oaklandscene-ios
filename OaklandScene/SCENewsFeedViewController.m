@@ -24,7 +24,7 @@
     if (self) {        
         // set up the tab bar entry
         [self setTitle:@"News"];
-        // TODO: add tab bar image
+        [[self tabBarItem] setImage:[UIImage imageNamed:@"news.png"]];
         
         [self setShowResultsBar:NO];    // disable results bar (no categories)
         

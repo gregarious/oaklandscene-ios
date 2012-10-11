@@ -31,7 +31,7 @@
     if (self) {
         // set up the tab bar entry
         [self setTitle:@"Places"];
-        [[self tabBarItem] setImage:[UIImage imageNamed:@"second"]];
+        [[self tabBarItem] setImage:[UIImage imageNamed:@"places.png"]];
         
         // configure nav bar
         [self addViewToggleButton];

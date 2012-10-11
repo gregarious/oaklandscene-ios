@@ -17,7 +17,6 @@
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *noticeText;
-@property (weak, nonatomic) IBOutlet UINavigationBar *headerLogo;
 @property (weak, nonatomic) IBOutlet UILabel *publishDate;
 @property (weak, nonatomic) IBOutlet UIImageView *picOfDayImage;
 

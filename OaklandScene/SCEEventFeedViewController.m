@@ -23,7 +23,7 @@
     if (self) {
         // set up the tab bar entry
         [self setTitle:@"Events"];
-        // TODO: add tab bar image
+        [[self tabBarItem] setImage:[UIImage imageNamed:@"events.png"]];
         
         // configure nav bar
 //        [[self navigationItem] setTitle:@"Upcoming Events"];

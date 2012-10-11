@@ -23,10 +23,9 @@
     if (self) {
         // set up the tab bar entry
         [self setTitle:@"Specials"];
-        // TODO: add tab bar image
+        [[self tabBarItem] setImage:[UIImage imageNamed:@"specials.png"]];
         
         // configure nav bar
-//        [[self navigationItem] setTitle:@"Available Specials"];
         [self addViewToggleButton];
         
         [self setShowResultsBar:NO];    // disable results bar (no categories)

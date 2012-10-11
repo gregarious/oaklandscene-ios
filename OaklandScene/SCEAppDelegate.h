@@ -17,7 +17,7 @@
     UIViewController *staticLaunchViewController;
     UITabBarController *tabBarController;
     
-    SCENoticesViewController *noticesViewController;
+    UIViewController *noticesViewController;
 }
 
 @property (strong, nonatomic) UIWindow *window;

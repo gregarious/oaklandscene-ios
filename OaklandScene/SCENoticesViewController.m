@@ -26,6 +26,10 @@
         [self pullNotice];
         
         [self setTitle:@"Notices"];
+        [[self tabBarItem] setImage:[UIImage imageNamed:@"notices.png"]];
+        
+        UIImage *logo = [UIImage imageNamed:@"titlebar_logo.png"];
+        [[self navigationItem] setTitleView:[[UIImageView alloc] initWithImage:logo]];
     }
     return self;
 }
@@ -45,7 +49,6 @@
 - (void)viewDidUnload {
     [self setPicOfDayImage:nil];
     [self setNoticeText:nil];
-    [self setHeaderLogo:nil];
     [self setPublishDate:nil];
     [super viewDidUnload];
 }

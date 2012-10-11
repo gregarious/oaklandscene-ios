@@ -22,6 +22,7 @@
 #import "SCESpecialStore.h"
 #import "SCENewsStore.h"
 #import "SCESplashView.h"
+#import "SCEUtils.h"
 
 // amount of time before stores should be synced from server (24 hrs)
 NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
@@ -36,7 +37,16 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
     SCESplashView *loadingView = [[SCESplashView alloc] initWithFrame:[[self window] bounds]];
     
     // create this now to give a chance for the image to load
-    noticesViewController = [[SCENoticesViewController alloc] init];
+    NSString *noticesNibName;
+    if([SCEUtils screenResolution] == SCEResolutionRetina4) {
+        noticesNibName = @"SCENoticesViewController4Inch";
+    }
+    else {
+        noticesNibName = @"SCENoticesViewController";
+    }
+    SCENoticesViewController *noticesInnerVC = [[SCENoticesViewController alloc] initWithNibName:noticesNibName
+                                                                       bundle:[NSBundle mainBundle]];
+    noticesViewController = [[UINavigationController alloc] initWithRootViewController:noticesInnerVC];
     
     staticLaunchViewController = [[UIViewController alloc] init];
     [staticLaunchViewController setWantsFullScreenLayout:YES];
