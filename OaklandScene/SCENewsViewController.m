@@ -30,6 +30,8 @@
     CGRect frame = [[[self parentViewController] view] bounds];
     UIScrollView *scrollView = [[UIScrollView alloc]
                                 initWithFrame:frame];
+    [scrollView setBackgroundColor:[UIColor whiteColor]];
+    [scrollView setBounces:NO];
     
     // set up the detailView
     SCENewsStubView *detailView = [[SCENewsStubView alloc] initWithFrame:frame];
