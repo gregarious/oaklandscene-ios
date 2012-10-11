@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+#import "SCEWebViewDelegate.h"
+
 @class SCENewsStub;
 
-@interface SCENewsViewController : UIViewController
+@interface SCENewsViewController : UIViewController <SCEWebViewDelegate>
 
 @property (nonatomic, strong) SCENewsStub *newsStub;
 

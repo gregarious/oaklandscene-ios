@@ -9,6 +9,7 @@
 #import "SCENewsViewController.h"
 #import "SCENewsStubView.h"
 #import "SCENewsStub.h"
+#import "SCEWebViewController.h"
 
 @implementation SCENewsViewController
 
@@ -76,11 +77,26 @@
 
 - (void)buttonPress:(id)sender
 {
-    // TODO: open in a webview and add http:// if necessary
+    // only handles website button. others handled by PlaceStubDelegate methods
+    NSString *urlString = [[self newsStub] url];
+    if (![urlString hasPrefix:@"http"]) {
+        urlString = [@"http://" stringByAppendingString:urlString];
+    }
     
-    // only handles website button
-    NSURL *url = [NSURL URLWithString:[[self newsStub] url]];
-    [[UIApplication sharedApplication] openURL:url];
+    // if we made it here, the request needs to be opened in a webview
+    SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
+    [webViewController setDelegate:self];
+    [self presentModalViewController:webViewController animated:YES];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    // have to do this post-presentation
+    [[webViewController webView] loadRequest:req];
+}
+
+- (void)didCloseWebView:(UIWebView *)view
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

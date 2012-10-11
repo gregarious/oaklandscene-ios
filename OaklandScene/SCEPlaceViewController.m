@@ -17,6 +17,7 @@
 #import "SCECategory.h"
 #import "SCECategoryList.h"
 #import "SCESimpleAnnotation.h"
+#import "SCEWebViewController.h"
 
 @implementation SCEPlaceViewController
 
@@ -213,17 +214,25 @@
     // TODO:
     // if facebook/twitter/website is the target, open in a webview
     // if directions is the target and iOS <6, open in a webview
-    // need to trim parenthesis out of phone numbers
     // if website doesn't have http, need to add it
     
     NSString *urlString;
     if ([sender tag] == SCEPlaceDetailButtonTagCall) {
         urlString = [NSString stringWithFormat:@"tel://%@",[[self place] phone]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+        return;
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagDirections) {
+        // check iOS version by looking for "MKDirectionsRequest" class: new in iOS6
         NSString *daddr = [[[self place] daddr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", daddr];
-        NSLog(@"%@", urlString);
+
+        // if iOS version supports Apple maps, launch in separate app
+        BOOL appleMapsSupport = (NSClassFromString(@"MKDirectionsRequest") != nil);
+        if (appleMapsSupport) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+            return;
+        }
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagFacebook) {
         urlString = [NSString stringWithFormat:@"http://www.facebook.com/%@", [[self place] facebookId]];
@@ -233,10 +242,28 @@
     }
     else if ([sender tag] == SCEPlaceDetailButtonTagWebsite) {
         urlString = [[self place] url];
-
+        if (![urlString hasPrefix:@"http"]) {
+            urlString = [@"http://" stringByAppendingString:urlString];
+        }
+    }
+    else {
+        return; // unrecognized sender tag; punt
     }
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+    // if we made it here, the request needs to be opened in a webview
+    SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
+    [webViewController setDelegate:self];
+    [self presentModalViewController:webViewController animated:YES];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+
+    // have to do this post-presentation
+    [[webViewController webView] loadRequest:req];
+}
+
+- (void)didCloseWebView:(UIWebView *)view
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

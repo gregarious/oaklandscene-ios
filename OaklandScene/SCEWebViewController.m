@@ -78,6 +78,7 @@
 
 - (void)closeButtonTapped:(id)sender
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [[self delegate] didCloseWebView:[self webView]];
 }
 
@@ -100,16 +101,19 @@
 /***** UIWebViewDelegate methods *****/
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self updateToolbar];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self updateToolbar];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self updateToolbar];
 }
 

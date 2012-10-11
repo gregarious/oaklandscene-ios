@@ -24,6 +24,8 @@
         imagePullInProgress = noticePullInProgress = NO;
         [self pullImage];
         [self pullNotice];
+        
+        [self setTitle:@"Notices"];
     }
     return self;
 }

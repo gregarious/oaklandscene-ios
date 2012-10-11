@@ -20,6 +20,7 @@
 #import "SCECategory.h"
 #import "SCECategoryList.h"
 #import "SCESimpleAnnotation.h"
+#import "SCEWebViewController.h"
 
 @implementation SCEEventViewController
 
@@ -214,20 +215,49 @@
 
 - (void)directionsButtonTapped
 {
-    // TODO: if directions is the target and iOS <6, open in a webview
+    NSString *daddr = [[[[self event] place] daddr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", daddr];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://maps.apple.com/maps?daddr=%@", [[[self event] place] daddr]];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];    
+    // if iOS version supports Apple maps, launch in separate app
+    BOOL appleMapsSupport = (NSClassFromString(@"MKDirectionsRequest") != nil);
+    if (appleMapsSupport) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+        return;
+    }
+    
+    // if we made it here, the request needs to be opened in a webview
+    SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
+    [webViewController setDelegate:self];
+    [self presentModalViewController:webViewController animated:YES];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    // have to do this post-presentation
+    [[webViewController webView] loadRequest:req];
 }
 
 - (void)buttonPress:(id)sender
 {
-    // TODO: open in a webview and add http:// if necessary
-    
     // only handles website button. others handled by PlaceStubDelegate methods
-    NSURL *url = [NSURL URLWithString:[[self event] url]];
-    [[UIApplication sharedApplication] openURL:url];
+    NSString *urlString = [[self event] url];
+    if (![urlString hasPrefix:@"http"]) {
+        urlString = [@"http://" stringByAppendingString:urlString];
+    }
+    
+    // if we made it here, the request needs to be opened in a webview
+    SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
+    [webViewController setDelegate:self];
+    [self presentModalViewController:webViewController animated:YES];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    // have to do this post-presentation
+    [[webViewController webView] loadRequest:req];
 }
 
+- (void)didCloseWebView:(UIWebView *)view
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 @end

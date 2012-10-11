@@ -7,10 +7,11 @@
 //
 
 #import "SCEPlaceStubDelegate.h"
+#import "SCEWebViewDelegate.h"
 
 @class SCESpecial;
 
-@interface SCESpecialViewController : UIViewController <SCEPlaceStubDelegate>
+@interface SCESpecialViewController : UIViewController <SCEPlaceStubDelegate, SCEWebViewDelegate>
 
 @property (nonatomic, strong) SCESpecial *special;
 

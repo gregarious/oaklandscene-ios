@@ -6,10 +6,12 @@
 //  Copyright (c) 2012 Scenable. All rights reserved.
 //
 
+#import "SCEWebViewDelegate.h"
+
 @class SCEPlace;
 @class SCEPlaceDetailView;
 
-@interface SCEPlaceViewController : UIViewController 
+@interface SCEPlaceViewController : UIViewController <SCEWebViewDelegate>
 @property (nonatomic, strong) SCEPlace *place;
 
 typedef enum {

@@ -7,11 +7,12 @@
 //
 
 #import "SCEPlaceStubDelegate.h"
+#import "SCEWebViewDelegate.h"
 
 @class SCEEvent;
 @class SCEEventDetailView;
 
-@interface SCEEventViewController : UIViewController <SCEPlaceStubDelegate>
+@interface SCEEventViewController : UIViewController <SCEPlaceStubDelegate, SCEWebViewDelegate>
 
 @property (nonatomic, strong) SCEEvent *event;
 

@@ -51,6 +51,27 @@
     [self setPhone:[d objectForKey:@"phone"]];
     [self setUrl:[d objectForKey:@"url"]];
     
+    // set up phone number (strip out all non-numeric, not dash chars)
+    id phoneData = [d objectForKey:@"phone"];
+    if (phoneData != nil && phoneData != [NSNull null]) {
+        NSString *phoneString = (NSString *)phoneData;
+        NSMutableString *stripped = [NSMutableString stringWithCapacity:phoneString.length];
+        
+        NSScanner *scanner = [NSScanner scannerWithString:phoneString];
+        NSCharacterSet *allowed = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+        
+        while ([scanner isAtEnd] == NO) {
+            NSString *buffer;
+            if ([scanner scanCharactersFromSet:allowed intoString:&buffer]) {
+                [stripped appendString:buffer];
+                
+            } else {
+                [scanner setScanLocation:([scanner scanLocation] + 1)];
+            }
+        }
+        [self setPhone:stripped];
+    }
+    
     // set up location-related properties
     NSDictionary *locationDict = [d objectForKey:@"location"];
     if (locationDict) {
