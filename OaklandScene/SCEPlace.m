@@ -48,7 +48,6 @@
     [self setDescription:[d objectForKey:@"description"]];
     [self setFacebookId:[d objectForKey:@"fb_id"]];
     [self setTwitterUsername:[d objectForKey:@"twitter_username"]];
-    [self setPhone:[d objectForKey:@"phone"]];
     [self setUrl:[d objectForKey:@"url"]];
     
     // set up phone number (strip out all non-numeric, not dash chars)

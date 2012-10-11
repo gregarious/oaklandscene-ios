@@ -41,7 +41,7 @@
 {
     MKCoordinateRegion region;
     region.center = CLLocationCoordinate2DMake(40.444053, -79.953187);
-    region.span.latitudeDelta = region.span.longitudeDelta = .05;
+    region.span.latitudeDelta = region.span.longitudeDelta = .02;
     return region;
 }
 

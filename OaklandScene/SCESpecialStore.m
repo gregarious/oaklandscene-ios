@@ -51,7 +51,7 @@
     
     // TODO: add time zone support
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"YYYY-MM-dd"];
+    [fmt setDateFormat:@"yyyy-MM-dd"];
     NSString *isoNowString = [fmt stringFromDate:[NSDate date]];
     
     NSString *urlString = [NSString stringWithFormat:@"%@&dexpires__gte=%@",

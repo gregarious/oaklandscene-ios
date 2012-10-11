@@ -63,35 +63,39 @@
 - (void)resizeToAnnotations
 {
     MKCoordinateRegion region;
-    
-    if ([[self annotations] count] == 0) {
-        // if no annotations, move to the default region
-        region = [self defaultRegion];
-    }
-    else {
-        // start with values that will immediately be overridden
-        CLLocationDegrees maxLat = -90,
-                          minLat = 90,
-                          maxLng = -180,
-                          minLng = 180;
 
-        for (id<MKAnnotation> ann in [self annotations]) {
-            // ignore the user location annotation from calculation
-            if(![ann isKindOfClass:[MKUserLocation class]]) {
-                CLLocationDegrees lat = [ann coordinate].latitude;
-                CLLocationDegrees lng = [ann coordinate].longitude;
-                maxLat = MAX(maxLat, lat);
-                minLat = MIN(minLat, lat);
-                maxLng = MAX(maxLng, lng);
-                minLng = MIN(minLng, lng);
-            }
+    // can't just use [annotations count], need to exclude MKUserLocation
+    BOOL hasAnnotations = NO;
+    
+    // start with values that will immediately be overridden
+    CLLocationDegrees maxLat = -90,
+                      minLat = 90,
+                      maxLng = -180,
+                      minLng = 180;
+
+    for (id<MKAnnotation> ann in [self annotations]) {
+        // ignore the user location annotation from calculation
+        if(![ann isKindOfClass:[MKUserLocation class]]) {
+            CLLocationDegrees lat = [ann coordinate].latitude;
+            CLLocationDegrees lng = [ann coordinate].longitude;
+            maxLat = MAX(maxLat, lat);
+            minLat = MIN(minLat, lat);
+            maxLng = MAX(maxLng, lng);
+            minLng = MIN(minLng, lng);
+            hasAnnotations = YES;
         }
+    }
+    
+    if (hasAnnotations) {
         region.center = CLLocationCoordinate2DMake(minLat+(maxLat-minLat)/2.0,
                                                    minLng+(maxLng-minLng)/2.0);
 
         // clamp span to at least .001 lat/lng
         region.span = MKCoordinateSpanMake(MAX(maxLat-minLat, .001) * 1.1,
                                            MAX(maxLng-minLng, .001) * 1.1);
+    }
+    else {
+        region = [self defaultRegion];
     }
     
     [self setRegion:region animated:YES];

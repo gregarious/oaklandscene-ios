@@ -31,7 +31,8 @@
         UILabel *label = [[UILabel alloc] init];
         [label setText:text];
         [label setFont:[UIFont systemFontOfSize:11]];
-        [label setBackgroundColor:[UIColor lightGrayColor]];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setTextColor:[UIColor colorWithWhite:0.6 alpha:1]];
         [label setFrame:CGRectMake(rasterX, 0, 0, 16)];
         [self addSubview:label];
         [label sizeToFit];

@@ -50,7 +50,7 @@
     
     // TODO: add time zone support
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"YYYY-MM-dd"];
+    [fmt setDateFormat:@"yyyy-MM-dd"];
     
     NSString *urlString = @"http://www.scenable.com/api/v1/news/?format=json&listed=true&limit=0";    
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]

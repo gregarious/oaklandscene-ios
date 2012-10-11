@@ -128,7 +128,12 @@
                 NSString *pub = [NSDateFormatter localizedStringFromDate:[n dtcreated]
                                                                dateStyle:NSDateFormatterLongStyle
                                                                timeStyle:NSDateFormatterShortStyle];
-                [[self publishDate] setText:pub];
+                if (pub) {
+                    [[self publishDate] setText:[@"Posted on " stringByAppendingString:pub]];
+                }
+                else {
+                    [[self publishDate] setText:nil];
+                }
             }
             noticePullInProgress = NO;
         }];

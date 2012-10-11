@@ -54,6 +54,27 @@
 					<object class="IBUIImageView" id="765201366">
 						<reference key="NSNextResponder" ref="933724569"/>
 						<int key="NSvFlags">292</int>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="IBUIImageView" id="983065866">
+								<reference key="NSNextResponder" ref="896039975"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{25, 0}, {245, 225}}</string>
+								<reference key="NSSuperview" ref="896039975"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="428091100"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC40MzgxODQzMDY2AA</bytes>
+								</object>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage" id="1040517717">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">pod_image_frame.png</string>
+								</object>
+							</object>
+						</array>
 						<string key="NSFrame">{{12, 33}, {296, 220}}</string>
 						<reference key="NSSuperview" ref="933724569"/>
 						<reference key="NSWindow"/>
@@ -133,7 +154,7 @@
 						<string key="NSFrame">{{0, 244}, {320, 39}}</string>
 						<reference key="NSSuperview" ref="933724569"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="428091100"/>
+						<reference key="NSNextKeyView" ref="896039975"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -161,6 +182,7 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">3</int>
+						<int key="IBUILineBreakMode">2</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
 							<double key="pointSize">13</double>

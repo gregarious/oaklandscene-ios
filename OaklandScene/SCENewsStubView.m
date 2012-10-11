@@ -44,12 +44,14 @@
         
         sourceNameLabel = [[UILabel alloc] init];
         [sourceNameLabel setBackgroundColor:[UIColor clearColor]];
-        [sourceNameLabel setFont:[UIFont systemFontOfSize:14]];
+        [sourceNameLabel setFont:[UIFont italicSystemFontOfSize:14]];
+        [sourceNameLabel setTextColor:[UIColor colorWithWhite:0.43 alpha:1]];
         [self addSubview:sourceNameLabel];
         
         publicationDateLabel = [[UILabel alloc] init];
         [publicationDateLabel setBackgroundColor:[UIColor clearColor]];
         [publicationDateLabel setFont:[UIFont systemFontOfSize:14]];
+        [publicationDateLabel setTextColor:[UIColor colorWithWhite:0.43 alpha:1]];
         [self addSubview:publicationDateLabel];
         
         staticSourceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 54, 0)];
@@ -64,8 +66,10 @@
         [blurbLabel setNumberOfLines:0];
         [self addSubview:blurbLabel];
         
-        openSourceButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [openSourceButton setTitle:@"Read full article in Safari"
+        openSourceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [openSourceButton setBackgroundImage:[UIImage imageNamed:@"view_article_btn.png"]
+                                    forState:UIControlStateNormal];
+        [openSourceButton setTitle:@"Read Full Article"
                           forState:UIControlStateNormal];
         [self addSubview:openSourceButton];
     }
@@ -80,6 +84,7 @@
     rasterY += [[self headlineLabel] frame].size.height + 12;
     
     [staticSourceLabel setFrame:CGRectMake(24, rasterY, 0, 0)];
+    [staticSourceLabel setFont:[UIFont italicSystemFontOfSize:14]];
     [staticSourceLabel sizeToFit];
     
     CGFloat rasterX = [staticSourceLabel frame].origin.x +

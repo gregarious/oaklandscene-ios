@@ -165,6 +165,12 @@
     
     [scrollView addSubview:detailView];
 
+    // about subview
+    SCEAboutView* aboutView = [[SCEAboutView alloc] init];
+    [aboutView setAboutText:[[self event] description]];
+    [detailView setAboutView:aboutView];
+    
+    
     // need to know the size of the detailView, so force layout and get size
     [detailView layoutSubviews];
     [detailView sizeToFit];
