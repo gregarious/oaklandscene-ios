@@ -29,6 +29,10 @@
                                                   target:self
                                                   action:@selector(closeButtonTapped:)];
     
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [activityIndicator setHidesWhenStopped:YES];
+    UIBarButtonItem *indicatorWrapperButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    
     UIBarButtonItem *spacer =
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                     target:nil
@@ -43,7 +47,7 @@
                                                     target:self
                                                     action:@selector(forwardButtonTapped:)];
     
-    [toolbar setItems:@[closeButton, spacer, backButton, forwardButton]];
+    [toolbar setItems:@[closeButton, indicatorWrapperButton, spacer, backButton, forwardButton]];
     [toolbar sizeToFit];
     
     CGRect frame = [[UIScreen mainScreen] applicationFrame];
@@ -78,7 +82,7 @@
 
 - (void)closeButtonTapped:(id)sender
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [activityIndicator stopAnimating];
     [[self delegate] didCloseWebView:[self webView]];
 }
 
@@ -101,19 +105,19 @@
 /***** UIWebViewDelegate methods *****/
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [activityIndicator startAnimating];
     [self updateToolbar];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [activityIndicator stopAnimating];
     [self updateToolbar];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [activityIndicator stopAnimating];
     [self updateToolbar];
 }
 

@@ -76,7 +76,7 @@ typedef NSUInteger SCEFeedCellType;
         _items = matches;
         
         if ([self items]) {
-            NSLog(@"Sync complete: %d matches", [[self items] count]);
+//            NSLog(@"Sync complete: %d matches", [[self items] count]);
             if ([[self items] count] == 0) {
                 // TODO: make this more efficient?
                 SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
@@ -92,7 +92,7 @@ typedef NSUInteger SCEFeedCellType;
             }
         }
         else {
-            NSLog(@"Sync failed: %@", err);
+//            NSLog(@"Sync failed: %@", err);
             // TODO: make this more efficient?
             SCEFeedStaticCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SCEFeedStaticCell"
                                                                     owner:self

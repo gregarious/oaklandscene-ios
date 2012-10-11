@@ -168,7 +168,7 @@
         
         // if we get a valid response, take the ids returned and return a places list with only those ids
         if(resp) {
-            NSLog(@"Found %d results", [[resp objects] count]);
+//            NSLog(@"Found %d results", [[resp objects] count]);
             NSMutableArray *matchingPlaces = [[NSMutableArray alloc] init];
             // create a new array of places from the ids returned (in order returned)
             for (NSDictionary* idObject in [resp objects]) {
@@ -187,7 +187,7 @@
         }
         if(returnBlock) {
             returnBlock(finalPlaces, err);
-            NSLog(@"%@", err);
+//            NSLog(@"%@", err);
         }
     }];
     
