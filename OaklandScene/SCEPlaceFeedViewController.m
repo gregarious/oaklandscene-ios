@@ -187,13 +187,13 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"Location update occurred");
-//    [feedSource setAnchorCoordinate:[[locations lastObject] coordinate]];
+//    NSLog(@"Location update occurred");
+    [feedSource setAnchorCoordinate:[[locations lastObject] coordinate]];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"locationManager didFailWithError: %@", error);
+//    NSLog(@"locationManager didFailWithError: %@", error);
 }
 
 @end

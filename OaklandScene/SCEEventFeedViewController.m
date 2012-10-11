@@ -69,7 +69,7 @@
         [self disableInterface];
         [contentStore syncContentWithCompletion:^(NSArray *items, NSError *err) {
             [feedSource syncWithCompletion:^(NSError *err) {
-                NSLog(@"cannot sync with store");
+//                NSLog(@"cannot sync with store");
                 [self enableInterface];
                 [tableView reloadData];
                 [mapView reloadDataAndAutoresize:YES];

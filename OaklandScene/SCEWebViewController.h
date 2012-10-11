@@ -14,6 +14,7 @@
     UIBarButtonItem *backButton;
     UIBarButtonItem *forwardButton;
     UIBarButtonItem *closeButton;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 @property (nonatomic, readonly) UIWebView *webView;

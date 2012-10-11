@@ -15,7 +15,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [SCEUtils logRect:frame withLabel:@"image frame"];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
         SCEResolution screenResolution = [SCEUtils screenResolution];
         if (screenResolution == SCEResolutionRetina4) {

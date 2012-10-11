@@ -73,10 +73,10 @@
     CGRect contentFrame = frame;
     contentFrame.origin.y += infoBarHeight;
 
-    // TODO: why do we have to add in the height of the status and tab bar
+    // TODO: why do we have to add in the height of the status and nav bar
     // manually? Shouldn't tab bar controller have given us a sane height?
-    contentFrame.size.height -= (20 + 49 + infoBarHeight);
-
+    contentFrame.size.height -= (20 + 44 + infoBarHeight);
+    
     // first load up the content view container
     contentView = [[UIView alloc] initWithFrame:contentFrame];
     [[self view] addSubview:contentView];

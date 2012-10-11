@@ -184,7 +184,7 @@
         
         // if we get a valid response, take the ids returned and return an events list with only those ids
         if(resp) {
-            NSLog(@"Found %d results", [[resp objects] count]);
+//            NSLog(@"Found %d results", [[resp objects] count]);
             NSMutableArray *matchingEvents = [[NSMutableArray alloc] init];
             // create a new array of events from the ids returned (in order returned)
             for (NSDictionary* idObject in [resp objects]) {
@@ -203,7 +203,7 @@
         }
         if(returnBlock) {
             returnBlock(finalEvents, err);
-            NSLog(@"%@", err);
+//            NSLog(@"%@", err);
         }
     }];
     

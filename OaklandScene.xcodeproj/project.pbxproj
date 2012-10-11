@@ -32,9 +32,7 @@
 		37642D9715F6A0670024B6A2 /* SCETodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642D9615F6A0670024B6A2 /* SCETodayViewController.m */; };
 		37642D9915F6A0670024B6A2 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9815F6A0670024B6A2 /* second.png */; };
 		37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9A15F6A0670024B6A2 /* second@2x.png */; };
-		37642DA115F6A0670024B6A2 /* SCETodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */; };
 		37642DD715F7B5980024B6A2 /* SCEFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */; };
-		37642DE315F7B69D0024B6A2 /* SCEFeedMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */; };
 		37642DEB15F7B7DD0024B6A2 /* SCEFeedTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */; };
 		37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */; };
 		37642DF515F7B8DC0024B6A2 /* SCEPlaceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37642DF415F7B8DC0024B6A2 /* SCEPlaceTableCell.m */; };
@@ -227,10 +225,8 @@
 		37642D9615F6A0670024B6A2 /* SCETodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCETodayViewController.m; sourceTree = "<group>"; };
 		37642D9815F6A0670024B6A2 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		37642D9A15F6A0670024B6A2 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		37642DA015F6A0670024B6A2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SCETodayViewController.xib; sourceTree = "<group>"; };
 		37642DD515F7B5980024B6A2 /* SCEFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEFeedViewController.h; path = ../SCEFeedViewController.h; sourceTree = "<group>"; };
 		37642DD615F7B5980024B6A2 /* SCEFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCEFeedViewController.m; path = ../SCEFeedViewController.m; sourceTree = "<group>"; };
-		37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEFeedMapViewController.xib; sourceTree = "<group>"; };
 		37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEFeedTableCell.h; path = ../SCEFeedTableCell.h; sourceTree = "<group>"; };
 		37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCEFeedTableCell.m; path = ../SCEFeedTableCell.m; sourceTree = "<group>"; };
 		37642DF115F7B8BE0024B6A2 /* SCEPlaceTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCEPlaceTableCell.xib; sourceTree = "<group>"; };
@@ -706,8 +702,6 @@
 				3764E7D71610EAC400F5977F /* SCEAboutView.m */,
 				37642DE915F7B7DD0024B6A2 /* SCEFeedTableCell.h */,
 				37642DEA15F7B7DD0024B6A2 /* SCEFeedTableCell.m */,
-				37642DE115F7B69D0024B6A2 /* SCEFeedMapViewController.xib */,
-				37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */,
 				3765EDD4160A39C7004E9225 /* SCEFeedLoadingCell.h */,
 				3765EDD5160A39C7004E9225 /* SCEFeedLoadingCell.m */,
 				3765EDDA160A3A07004E9225 /* SCEFeedLoadingCell.xib */,
@@ -1092,8 +1086,6 @@
 				37642D9415F6A0670024B6A2 /* first@2x.png in Resources */,
 				37642D9915F6A0670024B6A2 /* second.png in Resources */,
 				37642D9B15F6A0670024B6A2 /* second@2x.png in Resources */,
-				37642DA115F6A0670024B6A2 /* SCETodayViewController.xib in Resources */,
-				37642DE315F7B69D0024B6A2 /* SCEFeedMapViewController.xib in Resources */,
 				37642DF215F7B8BE0024B6A2 /* SCEPlaceTableCell.xib in Resources */,
 				37FCE90315F8DBCD00666F1D /* SCEEventTableCell.xib in Resources */,
 				37FCE90915F8DC8A00666F1D /* SCESpecialTableCell.xib in Resources */,
@@ -1272,14 +1264,6 @@
 				37642D8615F6A0670024B6A2 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		37642D9F15F6A0670024B6A2 /* SCETodayViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				37642DA015F6A0670024B6A2 /* en */,
-			);
-			name = SCETodayViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -90,7 +90,7 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
         if ([store lastSynced] == nil ||
             -[[store lastSynced] timeIntervalSinceNow] > staleSyncThreshold)
         {
-            NSLog(@"%@ out of date. Syncing now.", [store class]);
+//            NSLog(@"%@ out of date. Syncing now.", [store class]);
             [store syncContentWithCompletion:^void(NSArray *a, NSError *err) {
                 [self onContentStoreSync:err];
             }];

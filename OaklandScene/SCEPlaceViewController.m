@@ -98,96 +98,88 @@
         [detailView setAboutView:aboutView];
     }
     
-    SCEPlace *p = [self place];
-    // action buttons
-    UIButton *dirBtn, *callBtn;
+    SCEPlace *p = [self place]; // simple alias
+    
+    // Directions button
+    UIButton *dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
+                                                      owner:self
+                                                    options:nil] objectAtIndex:0];
+    [dirBtn setTag:SCEPlaceDetailButtonTagDirections];
+    [dirBtn addTarget:self
+               action:@selector(buttonPress:)
+     forControlEvents:UIControlEventTouchUpInside];
     if ([p daddr]) {
-        dirBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEDirectionsButton"
-                                                owner:self
-                                              options:nil] objectAtIndex:0];
-        [dirBtn setTag:SCEPlaceDetailButtonTagDirections];
-        [dirBtn addTarget:self
-                   action:@selector(buttonPress:)
-         forControlEvents:UIControlEventTouchUpInside];
+        [dirBtn setEnabled:YES];
     }
+    else {
+        [dirBtn setEnabled:NO];
+    }
+    [detailView setLeftActionButton:dirBtn];
     
+    // Call button
+    UIButton *callBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCECallButton"
+                                                       owner:self
+                                                     options:nil] objectAtIndex:0];
+    [callBtn setTag:SCEPlaceDetailButtonTagCall];
+    [callBtn addTarget:self
+                action:@selector(buttonPress:)
+      forControlEvents:UIControlEventTouchUpInside];
     if ([p phone] && [[p phone] length] >= 7) {
-        callBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCECallButton"
-                                                 owner:self
-                                               options:nil] objectAtIndex:0];
-        [callBtn setTag:SCEPlaceDetailButtonTagCall];
-        [callBtn addTarget:self
+        [callBtn setEnabled:YES];
+    }
+    else {
+        [callBtn setEnabled:NO];
+    }
+    [detailView setRightActionButton:callBtn];
+    
+    // Facebook button
+    UIButton *facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectFacebookButton"
+                                                           owner:self
+                                                         options:nil] objectAtIndex:0];
+    [facebookBtn setTag:SCEPlaceDetailButtonTagFacebook];
+    [facebookBtn addTarget:self
+                    action:@selector(buttonPress:)
+          forControlEvents:UIControlEventTouchUpInside];
+    if ([p facebookId] && [[p facebookId] length] > 0) {
+        [facebookBtn setEnabled:YES];
+    }
+    else {
+        [facebookBtn setEnabled:NO];
+    }
+    [detailView setLeftConnectButton:facebookBtn];
+    
+    // Twitter button
+    UIButton *twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectTwitterButton"
+                                                          owner:self
+                                                        options:nil] objectAtIndex:0];
+    [twitterBtn setTag:SCEPlaceDetailButtonTagTwitter];
+    [twitterBtn addTarget:self
                    action:@selector(buttonPress:)
          forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    // TODO: set up the button setting like an array, like UIToolbar
-    if (dirBtn) {
-        [detailView setLeftActionButton:dirBtn];
-        if (callBtn) {
-            [detailView setRightActionButton:callBtn];
-        }
-    }
-    else if (callBtn) {
-        [detailView setLeftActionButton:callBtn];
-    }
-    
-
-    UIButton *facebookBtn, *twitterBtn, *websiteBtn;
-    
-    if ([p facebookId] && [[p facebookId] length] > 0) {
-        facebookBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectFacebookButton"
-                                                     owner:self
-                                                   options:nil] objectAtIndex:0];
-        [facebookBtn setTag:SCEPlaceDetailButtonTagFacebook];
-        [facebookBtn addTarget:self
-                        action:@selector(buttonPress:)
-              forControlEvents:UIControlEventTouchUpInside];
-    }
-    
     if ([p twitterUsername] && [[p twitterUsername] length] > 0) {
-        twitterBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectTwitterButton"
-                                                    owner:self
-                                                  options:nil] objectAtIndex:0];
-        [twitterBtn setTag:SCEPlaceDetailButtonTagTwitter];
-        [twitterBtn addTarget:self
-                        action:@selector(buttonPress:)
-              forControlEvents:UIControlEventTouchUpInside];
+        [twitterBtn setEnabled:YES];
     }
+    else {
+        [twitterBtn setEnabled:NO];
+    }
+    [detailView setMiddleConnectButton:twitterBtn];
     
+    // Website button
+    UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
+                                                          owner:self
+                                                        options:nil] objectAtIndex:0];
+    [websiteBtn setTag:SCEPlaceDetailButtonTagWebsite];
+    [websiteBtn addTarget:self
+                   action:@selector(buttonPress:)
+         forControlEvents:UIControlEventTouchUpInside];
     if ([p url] && [[p url] length] > 0) {
-        websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
-                                                    owner:self
-                                                  options:nil] objectAtIndex:0];
-        [websiteBtn setTag:SCEPlaceDetailButtonTagWebsite];
-        [websiteBtn addTarget:self
-                       action:@selector(buttonPress:)
-             forControlEvents:UIControlEventTouchUpInside];
+        [websiteBtn setEnabled:YES];
     }
+    else {
+        [websiteBtn setEnabled:NO];
+    }
+    [detailView setRightConnectButton:websiteBtn];
     
-    // TODO: Bwahahaha. Set up the button setting like an array, like UIToolbar
-    if (facebookBtn) {
-        [detailView setLeftConnectButton:facebookBtn];
-        if (twitterBtn) {
-            [detailView setMiddleConnectButton:twitterBtn];
-            if (websiteBtn) {
-                [detailView setRightConnectButton:websiteBtn];
-            }
-        }
-        else if (websiteBtn) {
-            [detailView setMiddleConnectButton:websiteBtn];
-        }
-    }
-    else if (twitterBtn) {
-        [detailView setLeftConnectButton:twitterBtn];
-        if (websiteBtn) {
-            [detailView setMiddleConnectButton:websiteBtn];
-        }
-    }
-    else if (websiteBtn) {
-        [detailView setLeftConnectButton:websiteBtn];
-    }
-
     [scrollView addSubview:detailView];
 
     // need to know the size of the detailView, so force layout and get size
