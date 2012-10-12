@@ -155,7 +155,7 @@
     [detailView setPlaceStubView:placeStub];
 
     // NIB index 1 is the longer version of the website button
-    if ([[self event] url]) {
+    if ([[self event] url] && [[[self event] url] length] > 0) {
         UIButton *websiteBtn = [[[NSBundle mainBundle] loadNibNamed:@"SCEConnectWebsiteButton"
                                                               owner:self
                                                             options:nil] objectAtIndex:1];
@@ -236,6 +236,12 @@
     // if we made it here, the request needs to be opened in a webview
     SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
     [webViewController setDelegate:self];
+    
+    // before presenting, set it up so modal gets dismissed if app goes into background
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goToBackground)
+                                                 name:UIApplicationWillResignActiveNotification object:nil];
+    
     [self presentModalViewController:webViewController animated:YES];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -252,9 +258,15 @@
         urlString = [@"http://" stringByAppendingString:urlString];
     }
     
-    // if we made it here, the request needs to be opened in a webview
+    // present the site in a modal web view
     SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
     [webViewController setDelegate:self];
+    
+    // before presenting, set it up so modal gets dismissed if app goes into background
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goToBackground)
+                                                 name:UIApplicationWillResignActiveNotification object:nil];
+    
     [self presentModalViewController:webViewController animated:YES];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -266,6 +278,14 @@
 - (void)didCloseWebView:(UIWebView *)view
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)goToBackground
+{
+    [self dismissModalViewControllerAnimated:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillResignActiveNotification
+                                                  object:nil];
 }
 
 @end

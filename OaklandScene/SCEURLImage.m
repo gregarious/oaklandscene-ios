@@ -136,4 +136,9 @@ static NSMutableArray *sharedConnectionList = nil;
     }
 }
 
+- (void)clearStoredCache
+{
+    [self setStoredObjects:[NSMutableDictionary dictionary]];
+}
+
 @end

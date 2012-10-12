@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *placePageButton;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 
-@property (strong, nonatomic) id<SCEPlaceStubDelegate> delegate;
+@property (weak, nonatomic) id<SCEPlaceStubDelegate> delegate;
 
 - (IBAction)placePageButtonTapped:(id)sender;
 - (IBAction)directionsButtonTapped:(id)sender;

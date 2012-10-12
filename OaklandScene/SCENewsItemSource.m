@@ -26,7 +26,7 @@
 
 - (UITableViewCell *)feedView:(SCEFeedView *)feedView tableCellForItem:(id)item
 {
-    // TODO: currently depending this identifier existing. figure out better way to do this.
+    // TODO: currently depending on cell id existing. figure out better way to do this.
     
     SCENewsStub* newsItem = (SCENewsStub *)item;
     SCENewsTableCell *cell = [[feedView tableView] dequeueReusableCellWithIdentifier:@"SCENewsTableCell"];

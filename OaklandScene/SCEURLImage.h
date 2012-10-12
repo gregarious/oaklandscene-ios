@@ -35,4 +35,6 @@
 - (void)fetchImageWithURLString:(NSString *)url onCompletion:(void (^)(UIImage *, NSError *))block;
 - (void)fetchImageWithURLString:(NSString *)url onCompletion:(void (^)(UIImage *, NSError *))block forceRefresh:(BOOL)refresh;
 
+- (void)clearStoredCache;
+
 @end

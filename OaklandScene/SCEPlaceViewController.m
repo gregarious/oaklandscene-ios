@@ -206,11 +206,6 @@
 
 - (void)buttonPress:(id)sender
 {
-    // TODO:
-    // if facebook/twitter/website is the target, open in a webview
-    // if directions is the target and iOS <6, open in a webview
-    // if website doesn't have http, need to add it
-    
     NSString *urlString;
     if ([sender tag] == SCEPlaceDetailButtonTagCall) {
         urlString = [NSString stringWithFormat:@"tel://%@",[[self place] phone]];
@@ -248,6 +243,12 @@
     // if we made it here, the request needs to be opened in a webview
     SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
     [webViewController setDelegate:self];
+    
+    // before presenting, set it up so modal gets dismissed if app goes into background
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goToBackground)
+                                                 name:UIApplicationWillResignActiveNotification object:nil];
+    
     [self presentModalViewController:webViewController animated:YES];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -259,6 +260,14 @@
 - (void)didCloseWebView:(UIWebView *)view
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)goToBackground
+{
+    [self dismissModalViewControllerAnimated:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillResignActiveNotification
+                                                  object:nil];
 }
 
 @end

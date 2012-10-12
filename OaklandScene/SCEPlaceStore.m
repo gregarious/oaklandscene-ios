@@ -91,7 +91,7 @@
     // read in raw JSON data and hand it off to a SCEAPIResponse instance to interpret
     // TODO: error handling for NSData and/or JSON read?
     
-    NSString* filename = [[NSBundle mainBundle] pathForResource:@"places-10032012"
+    NSString* filename = [[NSBundle mainBundle] pathForResource:@"places-bootstrap"
                                                          ofType:@"json"];
 
     NSData* fileData = [NSData dataWithContentsOfFile:filename];

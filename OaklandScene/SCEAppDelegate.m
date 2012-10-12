@@ -23,6 +23,7 @@
 #import "SCENewsStore.h"
 #import "SCESplashView.h"
 #import "SCEUtils.h"
+#import "SCEURLImage.h"
 
 // amount of time before stores should be synced from server (24 hrs)
 NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
@@ -115,7 +116,7 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
         }
     }
     
-    // if we make it here, all the stores are synced
+    // if we make it here, all stores finished their attempts to sync
     if (syncErrorDuringLoad) {
         [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
                                     message:@"There was a problem retreiving the most recent information."
@@ -149,6 +150,11 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    [[SCEURLImageStore sharedStore] clearStoredCache];
 }
 
 /*

@@ -37,6 +37,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // in case async data pull beat us to the punch, set the content now
+    if ([[self notice] content]) {
+        [[self noticeText] setText:[[self notice] content]];
+    }
+    if ([[[self featuredImage] urlImage] image]) {
+        [[self picOfDayImage] setImage:[[[self featuredImage] urlImage] image]];
+    }
+    
     // Do any additional setup after loading the view from its nib.
 }
 

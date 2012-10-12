@@ -32,7 +32,7 @@
     
     // these two feed content subviews displayed mutually-exclusively
     UITableView *tableView;
-    SCEMapView *mapView;    // TODO: will probably subview once map mode development happens
+    SCEMapView *mapView;
 
     SCECategoryPickerDialog *categoryPickerDialog;
     
@@ -41,6 +41,9 @@
     
     @protected
     SCEResultsInfoBar *resultsInfoBar;
+    
+    @private
+    NSString *lastSearchQuery;
 }
 
 enum {
@@ -57,8 +60,8 @@ enum {
 typedef NSUInteger SCEFeedViewMode;
 
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
-@property (nonatomic, strong) id <SCEFeedViewDataSource> dataSource;
-@property (nonatomic, strong) id <SCEFeedViewDelegate> delegate;
+@property (nonatomic, weak) id <SCEFeedViewDataSource> dataSource;
+@property (nonatomic, weak) id <SCEFeedViewDelegate> delegate;
 
 // NOTE: this must be set before view is loaded
 // TODO: fix this behavior?

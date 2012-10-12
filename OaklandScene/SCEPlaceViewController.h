@@ -24,5 +24,6 @@ typedef enum {
 
 - (id)initWithPlace:(SCEPlace *)p;
 - (void)buttonPress:(id)sender;
+- (void)goToBackground;
 
 @end

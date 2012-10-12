@@ -18,7 +18,7 @@
 }
 
 @property (nonatomic, readonly) UIWebView *webView;
-@property (nonatomic, strong) id<SCEWebViewDelegate> delegate;
+@property (nonatomic, weak) id<SCEWebViewDelegate> delegate;
 
 - (void)closeButtonTapped:(id)sender;
 - (void)backButtonTapped:(id)sender;

@@ -18,5 +18,6 @@
 
 - (id)initWithEvent:(SCEEvent *)e;
 - (void)buttonPress:(id)sender;
+- (void)goToBackground;
 
 @end
