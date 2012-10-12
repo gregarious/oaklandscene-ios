@@ -276,9 +276,10 @@
 
 /**** UISearchBarDelegate & related methods ****/
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)sb
 {
     [self enableContentMask:SCEContentMaskSourceSearch];
+    lastSearchQuery = [sb text];
     [[resultsInfoBar categoryButton] setEnabled:NO];
 }
 
@@ -336,7 +337,7 @@
     }
     else {
         [self disableSearchFocus];
-        [searchBar setText:@""];
+        [searchBar setText:lastSearchQuery];
     }
 }
 

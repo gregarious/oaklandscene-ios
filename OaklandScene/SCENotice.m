@@ -16,7 +16,7 @@
 - (void)readFromJSONDictionary:(NSDictionary *)d
 {
     [self setContent:[d objectForKey:@"content"]];
-    [self setContent:[d objectForKey:@"title"]];
+    [self setTitle:[d objectForKey:@"title"]];
 
     id dtcreatedString = [d objectForKey:@"dtcreated"];
     if (dtcreatedString && dtcreatedString != [NSNull null]) {

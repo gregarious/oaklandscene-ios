@@ -176,6 +176,12 @@
     // if we made it here, the request needs to be opened in a webview
     SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
     [webViewController setDelegate:self];
+    
+    // before presenting, set it up so modal gets dismissed if app goes into background
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goToBackground)
+                                                 name:UIApplicationWillResignActiveNotification object:nil];
+    
     [self presentModalViewController:webViewController animated:YES];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -188,5 +194,14 @@
 {
     [self dismissModalViewControllerAnimated:YES];
 }
+
+- (void)goToBackground
+{
+    [self dismissModalViewControllerAnimated:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillResignActiveNotification
+                                                  object:nil];
+}
+
 
 @end

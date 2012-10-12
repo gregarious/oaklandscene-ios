@@ -16,5 +16,6 @@
 
 - (id)initWithNewsStub:(SCENewsStub *)s;
 - (void)buttonPress:(id)sender;
+- (void)goToBackground;
 
 @end

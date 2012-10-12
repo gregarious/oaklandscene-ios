@@ -46,6 +46,8 @@
 		3765EDDD160A3A25004E9225 /* SCEFeedStaticCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3765EDDC160A3A25004E9225 /* SCEFeedStaticCell.xib */; };
 		37711246162611CF00DFCF28 /* SCENotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 37711245162611CF00DFCF28 /* SCENotice.m */; };
 		3771124A162611DA00DFCF28 /* SCEFeaturedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 37711249162611DA00DFCF28 /* SCEFeaturedImage.m */; };
+		37839DC216288428003CC133 /* single_bkgd_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 37839DC016288428003CC133 /* single_bkgd_full.png */; };
+		37839DC316288428003CC133 /* single_bkgd_full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 37839DC116288428003CC133 /* single_bkgd_full@2x.png */; };
 		37ADB74E1620E1E100C104B9 /* SCENewsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB74D1620E1E100C104B9 /* SCENewsStore.m */; };
 		37ADB7511621E15D00C104B9 /* SCENewsItemSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB7501621E15C00C104B9 /* SCENewsItemSource.m */; };
 		37ADB7541621E6A800C104B9 /* SCENewsStubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37ADB7531621E6A800C104B9 /* SCENewsStubView.m */; };
@@ -246,6 +248,8 @@
 		37711245162611CF00DFCF28 /* SCENotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENotice.m; sourceTree = "<group>"; };
 		37711248162611DA00DFCF28 /* SCEFeaturedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEFeaturedImage.h; sourceTree = "<group>"; };
 		37711249162611DA00DFCF28 /* SCEFeaturedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEFeaturedImage.m; sourceTree = "<group>"; };
+		37839DC016288428003CC133 /* single_bkgd_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = single_bkgd_full.png; path = backgrounds/single_bkgd_full.png; sourceTree = "<group>"; };
+		37839DC116288428003CC133 /* single_bkgd_full@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "single_bkgd_full@2x.png"; path = "backgrounds/single_bkgd_full@2x.png"; sourceTree = "<group>"; };
 		37ADB74C1620E1E100C104B9 /* SCENewsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsStore.h; sourceTree = "<group>"; };
 		37ADB74D1620E1E100C104B9 /* SCENewsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCENewsStore.m; sourceTree = "<group>"; };
 		37ADB74F1621E15C00C104B9 /* SCENewsItemSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCENewsItemSource.h; sourceTree = "<group>"; };
@@ -475,10 +479,10 @@
 		374759E5160286F2009CBA55 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */,
-				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
 				37642E0615F7BBE10024B6A2 /* SCEPlaceFeedViewController.h */,
 				37642E0715F7BBE20024B6A2 /* SCEPlaceFeedViewController.m */,
+				37642DF915F7B9DA0024B6A2 /* SCEPlaceViewController.h */,
+				37642DFA15F7B9DA0024B6A2 /* SCEPlaceViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -871,6 +875,8 @@
 			children = (
 				4FC696D7162764E3000A0C7F /* pic_of_day_image_frame2.png */,
 				4FC696D8162764E3000A0C7F /* pic_of_day_image_frame2@2x.png */,
+				37839DC016288428003CC133 /* single_bkgd_full.png */,
+				37839DC116288428003CC133 /* single_bkgd_full@2x.png */,
 				4FB7556716236C3400B768D6 /* cell_bkgd_nothumb.png */,
 				37C6FE6A16278413008F8386 /* single_bkgd_strip.png */,
 				37C6FE6B16278413008F8386 /* single_bkgd_strip@2x.png */,
@@ -1146,6 +1152,8 @@
 				37C6FE6C16278413008F8386 /* single_bkgd_strip.png in Resources */,
 				37C6FE6D16278413008F8386 /* single_bkgd_strip@2x.png in Resources */,
 				37C6FE8716287C80008F8386 /* places-bootstrap.json in Resources */,
+				37839DC216288428003CC133 /* single_bkgd_full.png in Resources */,
+				37839DC316288428003CC133 /* single_bkgd_full@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

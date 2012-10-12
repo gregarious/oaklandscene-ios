@@ -41,6 +41,9 @@
     
     @protected
     SCEResultsInfoBar *resultsInfoBar;
+    
+    @private
+    NSString *lastSearchQuery;
 }
 
 enum {

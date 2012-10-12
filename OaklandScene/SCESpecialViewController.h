@@ -16,5 +16,5 @@
 @property (nonatomic, strong) SCESpecial *special;
 
 - (id)initWithSpecial:(SCESpecial *)s;
-
+- (void)goToBackground;
 @end

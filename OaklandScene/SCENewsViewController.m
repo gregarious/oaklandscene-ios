@@ -85,9 +85,14 @@
         urlString = [@"http://" stringByAppendingString:urlString];
     }
     
-    // if we made it here, the request needs to be opened in a webview
+    // present the article in a modal web view
     SCEWebViewController *webViewController = [[SCEWebViewController alloc] init];
     [webViewController setDelegate:self];
+    // before presenting, set it up so modal gets dismissed if app goes into background
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goToBackground)
+                                                 name:UIApplicationWillResignActiveNotification object:nil];
+
     [self presentModalViewController:webViewController animated:YES];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
@@ -99,6 +104,14 @@
 - (void)didCloseWebView:(UIWebView *)view
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)goToBackground
+{
+    [self dismissModalViewControllerAnimated:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillResignActiveNotification
+                                                  object:nil];
 }
 
 @end
