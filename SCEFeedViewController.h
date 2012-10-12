@@ -57,8 +57,8 @@ enum {
 typedef NSUInteger SCEFeedViewMode;
 
 @property (nonatomic, assign) SCEFeedViewMode viewMode;
-@property (nonatomic, strong) id <SCEFeedViewDataSource> dataSource;
-@property (nonatomic, strong) id <SCEFeedViewDelegate> delegate;
+@property (nonatomic, weak) id <SCEFeedViewDataSource> dataSource;
+@property (nonatomic, weak) id <SCEFeedViewDelegate> delegate;
 
 // NOTE: this must be set before view is loaded
 // TODO: fix this behavior?

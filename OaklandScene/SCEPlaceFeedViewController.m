@@ -65,6 +65,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [locationManager setDelegate:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

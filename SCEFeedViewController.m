@@ -124,6 +124,14 @@
     // search bar and mask are set to be nil when off screen
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if ([self viewMode] == SCEFeedViewModeTable) {
+        NSIndexPath *ip = [tableView indexPathForSelectedRow];
+        [tableView deselectRowAtIndexPath:ip animated:NO];
+    }
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -152,6 +160,7 @@
     
     if (viewMode == SCEFeedViewModeTable) {
         contentSubview = tableView;
+        
     }
     else if (viewMode == SCEFeedViewModeMap) {
         contentSubview = mapView;
@@ -162,7 +171,7 @@
                               userInfo:nil];
     }
     
-    [self viewWillAppear:NO];   // call manually to allow view to reorganize its data based on view mode
+    [self viewWillAppear:NO];   // simulate message system would usually send
     [contentView addSubview:contentSubview];
 }
 
