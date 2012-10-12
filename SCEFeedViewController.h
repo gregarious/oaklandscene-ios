@@ -32,7 +32,7 @@
     
     // these two feed content subviews displayed mutually-exclusively
     UITableView *tableView;
-    SCEMapView *mapView;    // TODO: will probably subview once map mode development happens
+    SCEMapView *mapView;
 
     SCECategoryPickerDialog *categoryPickerDialog;
     

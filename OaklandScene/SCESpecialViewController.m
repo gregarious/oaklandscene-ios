@@ -88,8 +88,6 @@
         [[placeStub placePageButton] setEnabled:NO];
     }
     
-    // TODO: hook up button actions
-    
     // redeem prompt
     SCESpecialRedeemPrompt *redeemPrompt = [[[NSBundle mainBundle] loadNibNamed:@"SCESpecialRedeemPrompt"
                                                                           owner:self

@@ -85,16 +85,6 @@
     
     [[resultsInfoBar reloadButton] setTarget:self];
     [[resultsInfoBar reloadButton] setAction:@selector(refreshMapResults:)];
-    
-    // TODO: need to figure out how to handle this
-    // if the main store is loaded, reset the feed
-//    if ([contentStore isLoaded]) {
-//        [self resetFeedFilters];
-//    }
-//    else {
-//        [self addStaticMessageToFeed:@"Places could not be loaded"];
-//        [[[self navigationItem] rightBarButtonItem] setEnabled:FALSE];
-//    }
 }
 
 - (void)setViewMode:(SCEFeedViewMode)viewMode
