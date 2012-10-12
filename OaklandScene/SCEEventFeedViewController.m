@@ -57,7 +57,7 @@
     [tableView registerNib:[UINib nibWithNibName:@"SCEEventTableCell" bundle:nil]
            forCellReuseIdentifier:@"SCEEventTableCell"];
 
-    [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+    [[resultsInfoBar infoLabel] setText:@"happening soon"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -81,7 +81,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)sb
 {
     [super searchBarCancelButtonClicked:sb];
-    [[resultsInfoBar infoLabel] setText:@"upcoming soon"];
+    [[resultsInfoBar infoLabel] setText:@"happening soon"];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)sb

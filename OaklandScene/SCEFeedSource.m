@@ -228,7 +228,8 @@ typedef NSUInteger SCEFeedCellType;
         [[feedView mapView] reloadDataAndAutoresize:NO];
         
         // update the info bar text
-        if ([CLLocationManager locationServicesEnabled]) {
+        if ([CLLocationManager locationServicesEnabled] &&
+            [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
             [[[feedView resultsInfoBar] infoLabel] setText:@"closest to you"];
         }
         else {

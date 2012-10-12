@@ -80,7 +80,8 @@
 
     // set up the labels that will be in the results info bar
     mapResultsBarLabel = @"";
-    if ([CLLocationManager locationServicesEnabled]) {
+    if ([CLLocationManager locationServicesEnabled] &&
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
         tableResultsBarLabel = @"closest to you";
     }
     else {
@@ -174,7 +175,10 @@
 {
     [super searchBarCancelButtonClicked:sb];
     mapResultsBarLabel = @"";
-    if ([CLLocationManager locationServicesEnabled]) {
+    
+    // TODO: this is crap. obviously.
+    if ([CLLocationManager locationServicesEnabled] &&
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
         tableResultsBarLabel = @"closest to you";
     }
     else {
