@@ -123,7 +123,6 @@ NSTimeInterval staleSyncThreshold = 60 * 60 * 24;
                                    delegate:nil
                           cancelButtonTitle:@"Ok"
                           otherButtonTitles:nil] show];
-
     }
 
     // only create a new tab bar if it's the first load

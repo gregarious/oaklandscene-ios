@@ -127,6 +127,12 @@
 {
     [activityIndicator stopAnimating];
     [self updateToolbar];
+    [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+                                message:@"There was a problem connecting to this website. Please make sure your device is connected to the internet."
+                               delegate:nil
+                      cancelButtonTitle:@"Ok"
+                      otherButtonTitles:nil] show];
+
 }
 
 @end
