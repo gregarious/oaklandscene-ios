@@ -128,12 +128,13 @@
     [activityIndicator stopAnimating];
     [self updateToolbar];
     
-    // TODO: why does this erroneously get called sometime? (e.g. FB link for Miller dentist)
-    [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                message:@"There was a problem connecting to this website."
-                               delegate:nil
-                      cancelButtonTitle:@"Ok"
-                      otherButtonTitles:nil] show];
+    // TODO: can't use this now. gets called erreneously for every back button call, and
+    //       some sites (e.g. FB link for Miller dentist)
+//    [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
+//                                message:@"There was a problem connecting to this website."
+//                               delegate:nil
+//                      cancelButtonTitle:@"Ok"
+//                      otherButtonTitles:nil] show];
 
 }
 
