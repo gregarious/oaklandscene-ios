@@ -33,17 +33,19 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         
         // set up the background images
-        CGSize sz;
-        UIImageView *windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_bkgd.png"]];
-        sz = [[windowBackground image] size];
-        [windowBackground setFrame:CGRectMake(0, 0, sz.width, sz.height)];
+        UIImageView *windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_bkgd_strip.png"]];
+        [self addSubview:windowBackground];
+        
+        windowBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_bkgd_strip.png"]];
+        CGRect wbFrame = [windowBackground frame];
+        wbFrame.origin.x = frame.size.width - wbFrame.size.width;
+        [windowBackground setFrame:wbFrame];
+        [self addSubview:windowBackground];
         
         UIImageView *contentBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_content_bkgd.png"]];
-        sz = [[contentBackground image] size];
-        [contentBackground setFrame:CGRectMake(12, 160, sz.width, sz.height)];
-        
-        // add the subviews
-        [self addSubview:windowBackground];
+        CGRect cbFrame = [contentBackground frame];
+        cbFrame.origin = CGPointMake(12, 160);
+        [contentBackground setFrame:cbFrame];
         [self addSubview:contentBackground];
     }
     return self;
