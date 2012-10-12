@@ -74,6 +74,14 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewDidUnload
+{
+    backButton = nil;
+    forwardButton = nil;
+    closeButton = nil;
+    activityIndicator = nil;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

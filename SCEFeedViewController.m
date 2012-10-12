@@ -115,6 +115,7 @@
     [super viewDidUnload];
     
     resultsInfoBar = nil;
+    contentSubview = nil;
     contentView = nil;
     tableView = nil;
     mapView = nil;

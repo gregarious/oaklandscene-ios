@@ -206,11 +206,6 @@
 
 - (void)buttonPress:(id)sender
 {
-    // TODO:
-    // if facebook/twitter/website is the target, open in a webview
-    // if directions is the target and iOS <6, open in a webview
-    // if website doesn't have http, need to add it
-    
     NSString *urlString;
     if ([sender tag] == SCEPlaceDetailButtonTagCall) {
         urlString = [NSString stringWithFormat:@"tel://%@",[[self place] phone]];
