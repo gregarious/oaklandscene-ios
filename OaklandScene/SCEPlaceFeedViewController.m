@@ -80,7 +80,12 @@
 
     // set up the labels that will be in the results info bar
     mapResultsBarLabel = @"";
-    tableResultsBarLabel = @"closest to you";
+    if ([CLLocationManager locationServicesEnabled]) {
+        tableResultsBarLabel = @"closest to you";
+    }
+    else {
+            tableResultsBarLabel = @"";
+    }
     [self refreshResultsBarLabel];
     
     [[resultsInfoBar reloadButton] setTarget:self];
@@ -169,7 +174,12 @@
 {
     [super searchBarCancelButtonClicked:sb];
     mapResultsBarLabel = @"";
-    tableResultsBarLabel = @"closest to you";
+    if ([CLLocationManager locationServicesEnabled]) {
+        tableResultsBarLabel = @"closest to you";
+    }
+    else {
+        tableResultsBarLabel = @"";
+    }
     [self refreshResultsBarLabel];
 }
 

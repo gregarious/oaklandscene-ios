@@ -127,8 +127,10 @@
 {
     [activityIndicator stopAnimating];
     [self updateToolbar];
+    
+    // TODO: why does this erroneously get called sometime? (e.g. FB link for Miller dentist)
     [[[UIAlertView alloc] initWithTitle:@"Connection Problem"
-                                message:@"There was a problem connecting to this website. Please make sure your device is connected to the internet."
+                                message:@"There was a problem connecting to this website."
                                delegate:nil
                       cancelButtonTitle:@"Ok"
                       otherButtonTitles:nil] show];
